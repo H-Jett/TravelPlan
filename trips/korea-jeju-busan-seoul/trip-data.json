@@ -66,7 +66,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T13:51:09.306Z"
+        "generatedAt": "2026-09-20T14:08:43.875Z"
       },
       "busan": {
         "fingerprint": "8d69b92823219bde",
@@ -103,7 +103,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T13:51:09.313Z"
+        "generatedAt": "2026-09-20T14:08:43.881Z"
       },
       "seoul": {
         "fingerprint": "2c273a83409a3c92",
@@ -140,7 +140,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T13:51:09.326Z"
+        "generatedAt": "2026-09-20T14:08:43.894Z"
       }
     }
   },
@@ -2997,7 +2997,7 @@
             "d2-05"
           ],
           [
-            "d2-08"
+            "d2-07"
           ]
         ]
       },
@@ -3017,7 +3017,7 @@
             "d3-03"
           ],
           [
-            "d3-05"
+            "d3-06"
           ]
         ]
       },
@@ -3552,6 +3552,13 @@
                 ],
                 "x": 1341.56,
                 "y": 301.23
+              },
+              {
+                "items": [
+                  "d2-07"
+                ],
+                "x": 945.04,
+                "y": 334.93
               }
             ]
           },
@@ -3592,6 +3599,13 @@
                 ],
                 "x": 161.31,
                 "y": 525.81
+              },
+              {
+                "items": [
+                  "d3-06"
+                ],
+                "x": 327.49,
+                "y": 471.07
               }
             ]
           },

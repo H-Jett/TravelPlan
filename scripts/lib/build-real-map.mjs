@@ -216,14 +216,30 @@ export async function rebuildRegion(region, { tripData, tripDir, tileCache, logg
     };
   });
 
+  // 模板写进 dailyLayouts 的 `places` 是**去过重**的（build-map.mjs: `[...new Set(ids)]`），
+  // 但它自己的 `transport` 是按**未去重**的 `ids` 算出来的 —— 于是往返日（首尾同一点）
+  // 两者差一格：places 比 transport 短 1。第 1 段的这一步不自洽被原样带过来，
+  // 我们若照 `daily.places.slice(0, -1)` 重算 transport，就会把最后一段（回程）整段丢掉，
+  // 地图上那一天少一个交通图钉（Day 2 城山→济州市区、Day 3 狭才→济州市区都栽在这）。
+  // `region.routes` 里存着当日**未去重**、且已按区域裁过的点序列，正是该用的那一条。
+  const routeSeqByDay = new Map((region.routes || []).map((route) => [String(route.day), route.placeIds || []]));
+  const sameIds = (a, b) => a.length === b.length && a.every((id, index) => id === b[index]);
+
   const dailyLayouts = Object.fromEntries(Object.entries(region.dailyLayouts || {}).map(([day, daily]) => {
     const uniqueIds = [...new Set(daily.places.filter((id) => placeById.has(id)))];
     const labelsForDay = Object.fromEntries(uniqueIds.map((id) => {
       const place = placeById.get(id);
       return [id, { x: place.tx, y: place.ty, anchor: place.anchor }];
     }));
-    const transport = daily.places.slice(0, -1)
-      .map((id, index) => ({ id, next: daily.places[index + 1], item: daily.transport?.[index] }))
+    // 模板自己的不变量是 `transport.length === 未去重序列.length - 1`。
+    // 两个条件都满足才采用 route 序列：段数对得上、且它去重后就是 daily.places。
+    // 任一不满足（例如 route 与 dailyLayouts 不同源、或磁盘上是上一次已被本模块改短的旧值）
+    // 就退回原行为 —— 宁可少一段，也不凭猜测拼出一段不存在的交通。
+    const seq = (routeSeqByDay.get(day) || []).filter((id) => placeById.has(id));
+    const seqMatches = seq.length - 1 === (daily.transport?.length ?? -1) && sameIds([...new Set(seq)], uniqueIds);
+    const ordered = seqMatches ? seq : daily.places;
+    const transport = ordered.slice(0, -1)
+      .map((id, index) => ({ id, next: ordered[index + 1], item: daily.transport?.[index] }))
       .filter((entry) => placeById.has(entry.id) && placeById.has(entry.next))
       .map((entry) => ({ items: entry.item?.items || [], ...midpoint(placeById.get(entry.id), placeById.get(entry.next)) }));
     return [day, { ...daily, places: uniqueIds, labels: labelsForDay, transport }];
