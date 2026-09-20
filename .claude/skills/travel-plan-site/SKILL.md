@@ -166,6 +166,36 @@ npm run new -- --slug <slug> --title "<标题>" --dest "<主要目的地>" --sta
    根节点是 `"2.0-lite"`，而 `config.schemaVersion` 是 `"1.0.0"`、`map.schemaVersion` 是 `"1.0-lite"`。
    用 sed 全局替换 `schemaVersion` 会把子节点一起改坏。
 
+6. **顶层有一半字段根本不显示在页面上 —— 写数据前先看下面这张表。**
+   模板只渲染一部分字段，其余在 `home/site/trips/<slug>/trip-data.json` 里躺着、**永远不进 DOM**。
+   最容易踩的是 `issuesAndUncertainties`：它看起来是「待确认事项」的正式去处，
+   写进去却一个字都不会出现在页面上 —— 于是页面呈现出一份「看起来很确定」的行程，
+   而作者以为已经把不确定处标出来了。
+
+   | 会显示 | 怎么显示 |
+   |---|---|
+   | `days[].schedule[].{time,text,type}` | 日程项正文（`text` 是唯一可写长文的地方） |
+   | `days[].notes[]` | 该日卡片底部的细节说明 |
+   | `days[].costReferences[]` | 费用标签（`item · CUR amount`，`app.js:371 costText`） |
+   | `ticketPlanning.items[].{name,requirement,guidance[],officialUrl}` | 门票卡 + 弹窗；`guidance` 用「·」连接，`officialUrl` 渲染成可点链接 |
+   | `preTrip.todoItems[]` | 出行前准备清单（可勾选，存 localStorage） |
+   | `flights[]` / `flightJourneys[]` | 航班模块 |
+   | `mapLinks.navigationPlaces[]` | 日程项上的 📍 导航按钮 |
+   | **不显示** | **原因** |
+   | `issuesAndUncertainties` | 契约文档写明「是否渲染由 Config/Core 能力决定」，本模板没有这个能力；`app.js` 从不读它 |
+   | `accommodations` / `bookingsAndTickets` | 同样不被 `app.js` 读取（`bookingsAndTickets` 只被 `validate-lite.mjs` 校验存在性） |
+   | `ticketPlanning.items[].price` | **弹窗只渲染 `requirement`/`guidance`/链接**，`price` 读了但不输出 —— 票价要写进 `guidance[]` 或该日的 `costReferences[]` |
+   | `groundTransport.*` | `driving=false` 时不渲染；日程里的交通方式请写进 `schedule[].text` |
+
+   推论：**「待补充」「需现场确认」这类话必须写进 `days[].notes[]` 或 `preTrip.todoItems[]`**，
+   写进 `issuesAndUncertainties` 等于没写。
+
+7. **查证结果要可点、可复核，就把出处放进 `guidance` / `notes` / `officialUrl`。**
+   模板没有通用的「来源」字段，但 `ticketPlanning.items[].officialUrl` 会渲染成
+   「打开官方页面 ↗」，是放官网链接的天然位置。价格、班次、开放时间这类会变的事实，
+   写进 `notes`/`guidance` 时**带上查证日期**（如「2026-09 查证」），
+   否则半年后没人分得清哪些还成立。
+
 ### 3. 构建
 
 ```bash
