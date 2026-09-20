@@ -9,8 +9,123 @@
     "timeZone": "Asia/Shanghai",
     "assets": {
       "routeMaps": [
-        "assets/maps/templates/template-07-compact-basin.webp"
+        "assets/maps/regions/chengdu.png",
+        "assets/maps/regions/dujiangyan.png",
+        "assets/maps/regions/leshan.png"
       ]
+    },
+    "realMaps": {
+      "chengdu": {
+        "fingerprint": "eeae5d5a8bd2b71b",
+        "file": "assets/maps/regions/chengdu.png",
+        "zoom": 12,
+        "tileRange": {
+          "x0": 3231,
+          "y0": 1680,
+          "x1": 3237,
+          "y1": 1686
+        },
+        "tiles": 49,
+        "canvas": {
+          "width": 1448,
+          "height": 1316
+        },
+        "source": {
+          "width": 1792,
+          "height": 1792
+        },
+        "cropped": {
+          "width": 1516,
+          "height": 1378
+        },
+        "contentAspect": 0.9471,
+        "canvasAspect": 1.1,
+        "clampedAspect": true,
+        "geoBounds": {
+          "north": 30.694133,
+          "west": 103.9848,
+          "south": 30.286857,
+          "east": 104.5047
+        },
+        "attribution": "© OpenStreetMap contributors",
+        "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "reused": true,
+        "generatedAt": "2026-09-20T12:47:23.267Z"
+      },
+      "dujiangyan": {
+        "fingerprint": "752ef3f8880e7895",
+        "file": "assets/maps/regions/dujiangyan.png",
+        "zoom": 14,
+        "tileRange": {
+          "x0": 12903,
+          "y0": 6706,
+          "x1": 12909,
+          "y1": 6712
+        },
+        "tiles": 49,
+        "canvas": {
+          "width": 1448,
+          "height": 1316
+        },
+        "source": {
+          "width": 1792,
+          "height": 1792
+        },
+        "cropped": {
+          "width": 1726,
+          "height": 1569
+        },
+        "contentAspect": 0.3629,
+        "canvasAspect": 1.1,
+        "clampedAspect": true,
+        "geoBounds": {
+          "north": 31.006456,
+          "west": 103.518131,
+          "south": 30.891036,
+          "east": 103.666169
+        },
+        "attribution": "© OpenStreetMap contributors",
+        "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "reused": true,
+        "generatedAt": "2026-09-20T12:47:23.269Z"
+      },
+      "leshan": {
+        "fingerprint": "8693b19a4260a1d6",
+        "file": "assets/maps/regions/leshan.png",
+        "zoom": 12,
+        "tileRange": {
+          "x0": 3223,
+          "y0": 1695,
+          "x1": 3229,
+          "y1": 1696
+        },
+        "tiles": 14,
+        "canvas": {
+          "width": 1448,
+          "height": 426
+        },
+        "source": {
+          "width": 1792,
+          "height": 512
+        },
+        "cropped": {
+          "width": 1461,
+          "height": 431
+        },
+        "contentAspect": 7.8496,
+        "canvasAspect": 3.4,
+        "clampedAspect": true,
+        "geoBounds": {
+          "north": 29.610873,
+          "west": 103.302524,
+          "south": 29.482592,
+          "east": 103.803876
+        },
+        "attribution": "© OpenStreetMap contributors",
+        "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
+        "reused": true,
+        "generatedAt": "2026-09-20T12:47:23.273Z"
+      }
     }
   },
   "config": {
@@ -697,6 +812,7 @@
       "title": "峨眉山 → 成都 ✈ 北京",
       "locations": [
         "峨眉山站",
+        "成都东站",
         "天府机场",
         "北京首都"
       ],
@@ -708,7 +824,7 @@
           "text": "C6302 峨眉山 → 成都东（1 小时 20 分）",
           "placeIds": [
             "p-emei-base",
-            "p-ct-airport"
+            "p-ct-east"
           ]
         },
         {
@@ -1212,85 +1328,136 @@
     "mapMode": "template-auto",
     "title": "成都 · 峨眉 · 乐山 行程示意图",
     "disclaimer": "本图为模板化行程示意图，仅表达地点相对方位与路线顺序，不代表真实比例或精确地理边界。",
-    "region": {
-      "id": "chengdu-emei-leshan",
-      "label": "成都 · 峨眉 · 乐山",
-      "countryCode": "CN",
-      "heading": "CHENGDU / 成都 · 峨眉 · 乐山",
-      "description": "川西人文与山岳 5 日行程示意图"
-    },
     "places": [
       {
         "id": "p-ct-airport",
         "nameZh": "天府机场",
         "name": "TFU Airport",
         "countryCode": "CN",
+        "mapRegionId": "chengdu",
         "cityOrArea": "成都",
-        "query": "成都天府国际机场"
+        "query": "成都天府国际机场",
+        "geo": {
+          "lat": 30.315,
+          "lng": 104.4377
+        }
       },
       {
         "id": "p-kuanzhai",
         "nameZh": "宽窄巷子",
         "name": "Kuanzhai Alley",
         "countryCode": "CN",
+        "mapRegionId": "chengdu",
         "cityOrArea": "成都",
-        "query": "成都 宽窄巷子"
+        "query": "成都 宽窄巷子",
+        "geo": {
+          "lat": 30.6661,
+          "lng": 104.0518
+        }
       },
       {
         "id": "p-renmin",
         "nameZh": "人民公园",
         "name": "People's Park",
         "countryCode": "CN",
+        "mapRegionId": "chengdu",
         "cityOrArea": "成都",
-        "query": "成都 人民公园 鹤鸣茶社"
+        "query": "成都 人民公园 鹤鸣茶社",
+        "geo": {
+          "lat": 30.6592,
+          "lng": 104.0561
+        }
       },
       {
         "id": "p-taikoo",
         "nameZh": "太古里",
         "name": "Taikoo Li",
         "countryCode": "CN",
+        "mapRegionId": "chengdu",
         "cityOrArea": "成都",
-        "query": "成都 远洋太古里"
+        "query": "成都 远洋太古里",
+        "geo": {
+          "lat": 30.6558,
+          "lng": 104.0813
+        }
       },
       {
         "id": "p-dujiangyan",
         "nameZh": "都江堰",
         "name": "Dujiangyan",
         "countryCode": "CN",
+        "mapRegionId": "dujiangyan",
         "cityOrArea": "都江堰市",
-        "query": "都江堰景区 离堆公园"
+        "query": "都江堰景区 离堆公园",
+        "geo": {
+          "lat": 30.9985,
+          "lng": 103.6132
+        }
       },
       {
         "id": "p-qingcheng",
         "nameZh": "青城山",
         "name": "Mount Qingcheng",
         "countryCode": "CN",
+        "mapRegionId": "dujiangyan",
         "cityOrArea": "都江堰市",
-        "query": "青城山前山 景区入口"
+        "query": "青城山前山 景区入口",
+        "geo": {
+          "lat": 30.899,
+          "lng": 103.5711
+        }
       },
       {
         "id": "p-leshan",
         "nameZh": "乐山大佛",
         "name": "Leshan Buddha",
         "countryCode": "CN",
+        "mapRegionId": "leshan",
         "cityOrArea": "乐山市",
-        "query": "乐山大佛 景区北门"
+        "query": "乐山大佛 景区北门",
+        "geo": {
+          "lat": 29.5469,
+          "lng": 103.7693
+        }
       },
       {
         "id": "p-emei-base",
         "nameZh": "报国寺",
         "name": "Baoguo Temple",
         "countryCode": "CN",
+        "mapRegionId": "leshan",
         "cityOrArea": "峨眉山市",
-        "query": "峨眉山 报国寺"
+        "query": "峨眉山 报国寺",
+        "geo": {
+          "lat": 29.5707,
+          "lng": 103.4407
+        }
       },
       {
         "id": "p-emei-golden",
         "nameZh": "峨眉山金顶",
         "name": "Golden Summit",
         "countryCode": "CN",
+        "mapRegionId": "leshan",
         "cityOrArea": "峨眉山市",
-        "query": "峨眉山 金顶"
+        "query": "峨眉山 金顶",
+        "geo": {
+          "lat": 29.5228,
+          "lng": 103.3371
+        }
+      },
+      {
+        "id": "p-ct-east",
+        "nameZh": "成都东站",
+        "name": "Chengdu East Railway Station",
+        "countryCode": "CN",
+        "mapRegionId": "chengdu",
+        "cityOrArea": "成都",
+        "query": "成都东站",
+        "geo": {
+          "lat": 30.6312,
+          "lng": 104.1389
+        }
       }
     ],
     "routes": [
@@ -1362,64 +1529,94 @@
         "day": 5,
         "placeIds": [
           "p-emei-base",
+          "p-ct-east",
           "p-ct-airport"
         ],
         "scheduleItems": [
           [
             "d5-01"
+          ],
+          [
+            "d5-02"
           ]
         ]
       }
     ],
-    "dailyRoutes": []
-  },
-  "routeMap": {
-    "defaultRegionId": "chengdu-emei-leshan",
+    "dailyRoutes": [],
     "regions": [
       {
-        "id": "chengdu-emei-leshan",
-        "label": "成都 · 峨眉 · 乐山",
+        "id": "chengdu",
+        "label": "成都市区",
         "countryCode": "CN",
-        "scope": "template-schematic",
-        "mapMode": "frozen-template",
-        "templateId": "compact-basin",
-        "mapModeReason": "compact-city-route",
+        "heading": "CHENGDU / 成都市区",
+        "description": "成都市区 1 日行程示意图"
+      },
+      {
+        "id": "dujiangyan",
+        "label": "都江堰 · 青城山",
+        "countryCode": "CN",
+        "heading": "DUJIANGYAN / 都江堰 · 青城山",
+        "description": "都江堰 · 青城山 1 日行程示意图"
+      },
+      {
+        "id": "leshan",
+        "label": "乐山 · 峨眉山",
+        "countryCode": "CN",
+        "heading": "LESHAN / 乐山 · 峨眉山",
+        "description": "乐山 · 峨眉山 2 日行程示意图"
+      }
+    ],
+    "defaultRegionId": "chengdu"
+  },
+  "routeMap": {
+    "defaultRegionId": "chengdu",
+    "regions": [
+      {
+        "id": "chengdu",
+        "label": "成都市区",
+        "countryCode": "CN",
+        "scope": "real-basemap",
+        "mapMode": "web-mercator-osm",
+        "templateId": "upland-basin",
+        "mapModeReason": "real-basemap-osm-tiles",
         "mapModeMetrics": {
-          "placeCount": 9,
-          "geoPlaceCount": 0,
-          "widthKm": 0,
-          "heightKm": 0,
-          "spanKm": 0,
-          "averageNearestKm": 0,
+          "placeCount": 5,
+          "geoPlaceCount": 5,
+          "widthKm": 36.88,
+          "heightKm": 38.97,
+          "spanKm": 53.77,
+          "averageNearestKm": 11.14,
           "components": 1,
-          "largestLegKm": 0,
-          "jumpRatio": 0
+          "largestLegKm": 53.77,
+          "jumpRatio": 1.19
         },
         "days": [
           1,
-          2,
-          3,
-          4,
           5
         ],
         "canvas": {
           "width": 1448,
-          "height": 1086
+          "height": 1316
         },
         "projection": {
-          "type": "relative-schematic",
-          "bounds": null
+          "type": "web-mercator",
+          "bounds": {
+            "north": 30.694133,
+            "west": 103.9848,
+            "south": 30.286857,
+            "east": 104.5047
+          }
         },
-        "baseImage": "assets/maps/templates/template-07-compact-basin.webp",
+        "baseImage": "assets/maps/regions/chengdu.png",
         "title": "成都 · 峨眉 · 乐山 行程示意图",
-        "ariaLabel": "成都 · 峨眉 · 乐山模板化旅行路线示意图，共5天",
-        "description": "川西人文与山岳 5 日行程示意图",
-        "disclaimer": "本图为模板化行程示意图，仅表达地点相对方位与路线顺序，不代表真实比例或精确地理边界。",
+        "ariaLabel": "成都市区真实地图旅行路线图，共2天",
+        "description": "成都市区 1 日行程示意图",
+        "disclaimer": "本图底图为 OpenStreetMap 真实地图，地点按真实经纬度做墨卡托投影定位；标注位置为避免重叠做过微调，国际航段不在图内。",
         "heading": {
-          "text": "CHENGDU / 成都 · 峨眉 · 乐山",
           "x": 33,
           "y": 105,
-          "size": 40
+          "size": 40,
+          "text": "CHENGDU / 成都市区"
         },
         "legend": {
           "x": 35,
@@ -1438,79 +1635,35 @@
               "p-taikoo"
             ],
             "paths": [
-              "M244 189 C349.2 159.0 454.3 159.0 553.33 189 C666.7 219.0 780.0 219.0 886.67 189 C991.8 159.0 1097.0 159.0 1196 189"
+              "M1261.39 1225.24 C874.2 860.1 508.8 474.4 186.61 90.76 C188.4 99.5 192.5 107.1 198.58 113.09 C223.5 109.8 247.4 113.6 268.77 124.1"
             ],
             "overviewPaths": [
-              "M244 189 C349.2 159.0 454.3 159.0 553.33 189 C666.7 219.0 780.0 219.0 886.67 189 C991.8 159.0 1097.0 159.0 1196 189"
-            ]
-          },
-          {
-            "day": 2,
-            "color": "#e77e22",
-            "placeIds": [
-              "p-taikoo",
-              "p-dujiangyan",
-              "p-qingcheng"
-            ],
-            "paths": [
-              "M1196 189 C1166.0 303.2 1166.0 417.5 1196 525 C1090.8 555.0 985.7 555.0 886.67 525"
-            ],
-            "overviewPaths": [
-              "M1196 189 C1166.0 303.2 1166.0 417.5 1196 525 C1090.8 555.0 985.7 555.0 886.67 525"
-            ]
-          },
-          {
-            "day": 3,
-            "color": "#618344",
-            "placeIds": [
-              "p-taikoo",
-              "p-leshan",
-              "p-emei-base"
-            ],
-            "paths": [
-              "M1196 189 C991.4 329.8 772.9 444.1 553.33 525 C448.2 495.0 343.0 495.0 244 525"
-            ],
-            "overviewPaths": [
-              "M1196 189 C991.4 329.8 772.9 444.1 553.33 525 C448.2 495.0 343.0 495.0 244 525"
-            ]
-          },
-          {
-            "day": 4,
-            "color": "#209aaa",
-            "placeIds": [
-              "p-emei-base",
-              "p-emei-golden"
-            ],
-            "paths": [
-              "M244 525 C388.5 663.7 550.4 778.0 720 861"
-            ],
-            "overviewPaths": [
-              "M244 525 C388.5 663.7 550.4 778.0 720 861"
+              "M1261.39 1225.24 C874.2 860.1 508.8 474.4 186.61 90.76 C188.4 99.5 192.5 107.1 198.58 113.09 C223.5 109.8 247.4 113.6 268.77 124.1"
             ]
           },
           {
             "day": 5,
             "color": "#8865a5",
             "placeIds": [
-              "p-emei-base",
+              "p-ct-east",
               "p-ct-airport"
             ],
             "paths": [
-              "M244 525 C214.0 410.8 214.0 296.5 244 189"
+              "M429.19 203.71 C735.4 532.1 1018.3 879.4 1261.39 1225.24"
             ],
             "overviewPaths": [
-              "M244 525 C214.0 410.8 214.0 296.5 244 189"
+              "M429.19 203.71 C735.4 532.1 1018.3 879.4 1261.39 1225.24"
             ]
           }
         ],
         "places": [
           {
             "id": "p-ct-airport",
-            "x": 244,
-            "y": 189,
+            "x": 1261.39,
+            "y": 1225.24,
             "color": "#397dc1",
-            "tx": 382,
-            "ty": 101,
+            "tx": 1263.39,
+            "ty": 1225.24,
             "size": 24,
             "anchor": "start",
             "lines": [
@@ -1518,6 +1671,10 @@
               "天府机场"
             ],
             "query": "成都天府国际机场",
+            "geo": {
+              "lat": 30.315,
+              "lng": 104.4377
+            },
             "days": [
               1,
               5
@@ -1525,11 +1682,11 @@
           },
           {
             "id": "p-kuanzhai",
-            "x": 553.33,
-            "y": 189,
+            "x": 186.61,
+            "y": 90.76,
             "color": "#397dc1",
-            "tx": 631.33,
-            "ty": 127,
+            "tx": 186.61,
+            "ty": 244.76,
             "size": 24,
             "anchor": "start",
             "lines": [
@@ -1537,17 +1694,21 @@
               "宽窄巷子"
             ],
             "query": "成都 宽窄巷子",
+            "geo": {
+              "lat": 30.6661,
+              "lng": 104.0518
+            },
             "days": [
               1
             ]
           },
           {
             "id": "p-renmin",
-            "x": 886.67,
-            "y": 189,
+            "x": 198.58,
+            "y": 113.09,
             "color": "#397dc1",
-            "tx": 964.67,
-            "ty": 127,
+            "tx": 198.58,
+            "ty": 303.09,
             "size": 24,
             "anchor": "start",
             "lines": [
@@ -1555,17 +1716,21 @@
               "人民公园"
             ],
             "query": "成都 人民公园 鹤鸣茶社",
+            "geo": {
+              "lat": 30.6592,
+              "lng": 104.0561
+            },
             "days": [
               1
             ]
           },
           {
             "id": "p-taikoo",
-            "x": 1196,
-            "y": 189,
+            "x": 268.77,
+            "y": 124.1,
             "color": "#397dc1",
-            "tx": 1118,
-            "ty": 265,
+            "tx": 183.77,
+            "ty": 247.1,
             "size": 24,
             "anchor": "end",
             "lines": [
@@ -1573,102 +1738,34 @@
               "太古里"
             ],
             "query": "成都 远洋太古里",
+            "geo": {
+              "lat": 30.6558,
+              "lng": 104.0813
+            },
             "days": [
-              1,
-              2,
-              3
+              1
             ]
           },
           {
-            "id": "p-dujiangyan",
-            "x": 1196,
-            "y": 525,
-            "color": "#e77e22",
-            "tx": 1058,
-            "ty": 437,
-            "size": 24,
-            "anchor": "end",
-            "lines": [
-              "Dujiangyan /",
-              "都江堰"
-            ],
-            "query": "都江堰景区 离堆公园",
-            "days": [
-              2
-            ]
-          },
-          {
-            "id": "p-qingcheng",
-            "x": 886.67,
-            "y": 525,
-            "color": "#e77e22",
-            "tx": 1024.67,
-            "ty": 627,
+            "id": "p-ct-east",
+            "x": 429.19,
+            "y": 203.71,
+            "color": "#8865a5",
+            "tx": 447.19,
+            "ty": 203.71,
             "size": 24,
             "anchor": "start",
             "lines": [
-              "Mount Qingcheng /",
-              "青城山"
+              "Chengdu East Railway Station /",
+              "成都东站"
             ],
-            "query": "青城山前山 景区入口",
+            "query": "成都东站",
+            "geo": {
+              "lat": 30.6312,
+              "lng": 104.1389
+            },
             "days": [
-              2
-            ]
-          },
-          {
-            "id": "p-leshan",
-            "x": 553.33,
-            "y": 525,
-            "color": "#618344",
-            "tx": 585.33,
-            "ty": 493,
-            "size": 24,
-            "anchor": "start",
-            "lines": [
-              "Leshan Buddha /",
-              "乐山大佛"
-            ],
-            "query": "乐山大佛 景区北门",
-            "days": [
-              3
-            ]
-          },
-          {
-            "id": "p-emei-base",
-            "x": 244,
-            "y": 525,
-            "color": "#618344",
-            "tx": 212,
-            "ty": 493,
-            "size": 24,
-            "anchor": "end",
-            "lines": [
-              "Baoguo Temple /",
-              "报国寺"
-            ],
-            "query": "峨眉山 报国寺",
-            "days": [
-              3,
-              4,
               5
-            ]
-          },
-          {
-            "id": "p-emei-golden",
-            "x": 720,
-            "y": 861,
-            "color": "#209aaa",
-            "tx": 798,
-            "ty": 799,
-            "size": 24,
-            "anchor": "start",
-            "lines": [
-              "Golden Summit /",
-              "峨眉山金顶"
-            ],
-            "query": "峨眉山 金顶",
-            "days": [
-              4
             ]
           }
         ],
@@ -1677,11 +1774,7 @@
           "p-kuanzhai",
           "p-renmin",
           "p-taikoo",
-          "p-dujiangyan",
-          "p-qingcheng",
-          "p-leshan",
-          "p-emei-base",
-          "p-emei-golden"
+          "p-ct-east"
         ],
         "dailyLayouts": {
           "1": {
@@ -1693,23 +1786,23 @@
             ],
             "labels": {
               "p-ct-airport": {
-                "x": 382,
-                "y": 101,
+                "x": 1263.39,
+                "y": 1225.24,
                 "anchor": "start"
               },
               "p-kuanzhai": {
-                "x": 631.33,
-                "y": 127,
+                "x": 186.61,
+                "y": 244.76,
                 "anchor": "start"
               },
               "p-renmin": {
-                "x": 964.67,
-                "y": 127,
+                "x": 198.58,
+                "y": 303.09,
                 "anchor": "start"
               },
               "p-taikoo": {
-                "x": 1118,
-                "y": 265,
+                "x": 183.77,
+                "y": 247.1,
                 "anchor": "end"
               }
             },
@@ -1718,102 +1811,384 @@
                 "items": [
                   "d1-03"
                 ],
-                "x": 398.67,
-                "y": 189
+                "x": 724,
+                "y": 1316
               },
               {
                 "items": [
                   "d1-05"
                 ],
-                "x": 720,
-                "y": 189
+                "x": 192.6,
+                "y": 203.85
               },
               {
                 "items": [
                   "d1-06"
                 ],
-                "x": 1041.34,
-                "y": 189
+                "x": 233.68,
+                "y": 237.19
               }
             ]
           },
+          "5": {
+            "places": [
+              "p-ct-east",
+              "p-ct-airport"
+            ],
+            "labels": {
+              "p-ct-east": {
+                "x": 447.19,
+                "y": 203.71,
+                "anchor": "start"
+              },
+              "p-ct-airport": {
+                "x": 1263.39,
+                "y": 1225.24,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d5-02"
+                ],
+                "x": 845.29,
+                "y": 1428.95
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "dujiangyan",
+        "label": "都江堰 · 青城山",
+        "countryCode": "CN",
+        "scope": "real-basemap",
+        "mapMode": "web-mercator-osm",
+        "templateId": "urban-radial",
+        "mapModeReason": "real-basemap-osm-tiles",
+        "mapModeMetrics": {
+          "placeCount": 2,
+          "geoPlaceCount": 2,
+          "widthKm": 4.01,
+          "heightKm": 11.04,
+          "spanKm": 11.77,
+          "averageNearestKm": 11.77,
+          "components": 1,
+          "largestLegKm": 11.77,
+          "jumpRatio": 1
+        },
+        "days": [
+          2
+        ],
+        "canvas": {
+          "width": 1448,
+          "height": 1316
+        },
+        "projection": {
+          "type": "web-mercator",
+          "bounds": {
+            "north": 31.006456,
+            "west": 103.518131,
+            "south": 30.891036,
+            "east": 103.666169
+          }
+        },
+        "baseImage": "assets/maps/regions/dujiangyan.png",
+        "title": "成都 · 峨眉 · 乐山 行程示意图",
+        "ariaLabel": "都江堰 · 青城山真实地图旅行路线图，共1天",
+        "description": "都江堰 · 青城山 1 日行程示意图",
+        "disclaimer": "本图底图为 OpenStreetMap 真实地图，地点按真实经纬度做墨卡托投影定位；标注位置为避免重叠做过微调，国际航段不在图内。",
+        "heading": {
+          "x": 33,
+          "y": 105,
+          "size": 40,
+          "text": "DUJIANGYAN / 都江堰 · 青城山"
+        },
+        "legend": {
+          "x": 35,
+          "y": 168,
+          "gap": 43
+        },
+        "annotations": [],
+        "routes": [
+          {
+            "day": 2,
+            "color": "#e77e22",
+            "placeIds": [
+              "p-dujiangyan",
+              "p-qingcheng"
+            ],
+            "paths": [
+              "M929.89 90.76 C761.7 466.2 621.7 852.0 518.11 1225.24"
+            ],
+            "overviewPaths": [
+              "M929.89 90.76 C761.7 466.2 621.7 852.0 518.11 1225.24"
+            ]
+          }
+        ],
+        "places": [
+          {
+            "id": "p-dujiangyan",
+            "x": 929.89,
+            "y": 90.76,
+            "color": "#e77e22",
+            "tx": 931.89,
+            "ty": 90.76,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Dujiangyan /",
+              "都江堰"
+            ],
+            "query": "都江堰景区 离堆公园",
+            "geo": {
+              "lat": 30.9985,
+              "lng": 103.6132
+            },
+            "days": [
+              2
+            ]
+          },
+          {
+            "id": "p-qingcheng",
+            "x": 518.11,
+            "y": 1225.24,
+            "color": "#e77e22",
+            "tx": 520.11,
+            "ty": 1225.24,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Mount Qingcheng /",
+              "青城山"
+            ],
+            "query": "青城山前山 景区入口",
+            "geo": {
+              "lat": 30.899,
+              "lng": 103.5711
+            },
+            "days": [
+              2
+            ]
+          }
+        ],
+        "overviewPlaceIds": [
+          "p-dujiangyan",
+          "p-qingcheng"
+        ],
+        "dailyLayouts": {
           "2": {
             "places": [
-              "p-taikoo",
               "p-dujiangyan",
               "p-qingcheng"
             ],
             "labels": {
-              "p-taikoo": {
-                "x": 1118,
-                "y": 265,
-                "anchor": "end"
-              },
               "p-dujiangyan": {
-                "x": 1058,
-                "y": 437,
-                "anchor": "end"
+                "x": 931.89,
+                "y": 90.76,
+                "anchor": "start"
               },
               "p-qingcheng": {
-                "x": 1024.67,
-                "y": 627,
+                "x": 520.11,
+                "y": 1225.24,
                 "anchor": "start"
               }
             },
             "transport": [
-              {
-                "items": [
-                  "d2-01"
-                ],
-                "x": 1196,
-                "y": 357
-              },
               {
                 "items": [
                   "d2-03"
                 ],
-                "x": 1041.34,
-                "y": 525
+                "x": 724,
+                "y": 1316
               }
             ]
+          }
+        }
+      },
+      {
+        "id": "leshan",
+        "label": "乐山 · 峨眉山",
+        "countryCode": "CN",
+        "scope": "real-basemap",
+        "mapMode": "web-mercator-osm",
+        "templateId": "upland-basin",
+        "mapModeReason": "real-basemap-osm-tiles",
+        "mapModeMetrics": {
+          "placeCount": 3,
+          "geoPlaceCount": 3,
+          "widthKm": 41.74,
+          "heightKm": 5.32,
+          "spanKm": 41.9,
+          "averageNearestKm": 18.2,
+          "components": 1,
+          "largestLegKm": 31.89,
+          "jumpRatio": 1
+        },
+        "days": [
+          3,
+          4
+        ],
+        "canvas": {
+          "width": 1448,
+          "height": 426
+        },
+        "projection": {
+          "type": "web-mercator",
+          "bounds": {
+            "north": 29.610873,
+            "west": 103.302524,
+            "south": 29.482592,
+            "east": 103.803876
+          }
+        },
+        "baseImage": "assets/maps/regions/leshan.png",
+        "title": "成都 · 峨眉 · 乐山 行程示意图",
+        "ariaLabel": "乐山 · 峨眉山真实地图旅行路线图，共2天",
+        "description": "乐山 · 峨眉山 2 日行程示意图",
+        "disclaimer": "本图底图为 OpenStreetMap 真实地图，地点按真实经纬度做墨卡托投影定位；标注位置为避免重叠做过微调，国际航段不在图内。",
+        "heading": {
+          "x": 33,
+          "y": 105,
+          "size": 40,
+          "text": "LESHAN / 乐山 · 峨眉山"
+        },
+        "legend": {
+          "x": 35,
+          "y": 168,
+          "gap": 43
+        },
+        "annotations": [],
+        "routes": [
+          {
+            "day": 3,
+            "color": "#618344",
+            "placeIds": [
+              "p-leshan",
+              "p-emei-base"
+            ],
+            "paths": [
+              "M1348.14 212.51 C1023.0 215.5 700.3 188.7 399.08 133.47"
+            ],
+            "overviewPaths": [
+              "M1348.14 212.51 C1023.0 215.5 700.3 188.7 399.08 133.47"
+            ]
           },
+          {
+            "day": 4,
+            "color": "#209aaa",
+            "placeIds": [
+              "p-emei-base",
+              "p-emei-golden"
+            ],
+            "paths": [
+              "M399.08 133.47 C283.3 161.1 181.5 215.1 99.86 292.53"
+            ],
+            "overviewPaths": [
+              "M399.08 133.47 C283.3 161.1 181.5 215.1 99.86 292.53"
+            ]
+          }
+        ],
+        "places": [
+          {
+            "id": "p-leshan",
+            "x": 1348.14,
+            "y": 212.51,
+            "color": "#618344",
+            "tx": 1346.14,
+            "ty": 212.51,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Leshan Buddha /",
+              "乐山大佛"
+            ],
+            "query": "乐山大佛 景区北门",
+            "geo": {
+              "lat": 29.5469,
+              "lng": 103.7693
+            },
+            "days": [
+              3
+            ]
+          },
+          {
+            "id": "p-emei-base",
+            "x": 399.08,
+            "y": 133.47,
+            "color": "#618344",
+            "tx": 487.08,
+            "ty": 133.47,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Baoguo Temple /",
+              "报国寺"
+            ],
+            "query": "峨眉山 报国寺",
+            "geo": {
+              "lat": 29.5707,
+              "lng": 103.4407
+            },
+            "days": [
+              3,
+              4
+            ]
+          },
+          {
+            "id": "p-emei-golden",
+            "x": 99.86,
+            "y": 292.53,
+            "color": "#209aaa",
+            "tx": 101.86,
+            "ty": 292.53,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Golden Summit /",
+              "峨眉山金顶"
+            ],
+            "query": "峨眉山 金顶",
+            "geo": {
+              "lat": 29.5228,
+              "lng": 103.3371
+            },
+            "days": [
+              4
+            ]
+          }
+        ],
+        "overviewPlaceIds": [
+          "p-leshan",
+          "p-emei-base",
+          "p-emei-golden"
+        ],
+        "dailyLayouts": {
           "3": {
             "places": [
-              "p-taikoo",
               "p-leshan",
               "p-emei-base"
             ],
             "labels": {
-              "p-taikoo": {
-                "x": 1118,
-                "y": 265,
-                "anchor": "end"
-              },
               "p-leshan": {
-                "x": 585.33,
-                "y": 493,
-                "anchor": "start"
+                "x": 1346.14,
+                "y": 212.51,
+                "anchor": "end"
               },
               "p-emei-base": {
-                "x": 212,
-                "y": 493,
-                "anchor": "end"
+                "x": 487.08,
+                "y": 133.47,
+                "anchor": "start"
               }
             },
             "transport": [
               {
                 "items": [
-                  "d3-02"
-                ],
-                "x": 874.66,
-                "y": 357
-              },
-              {
-                "items": [
                   "d3-04"
                 ],
-                "x": 398.67,
-                "y": 525
+                "x": 873.61,
+                "y": 345.98
               }
             ]
           },
@@ -1824,13 +2199,13 @@
             ],
             "labels": {
               "p-emei-base": {
-                "x": 212,
-                "y": 493,
-                "anchor": "end"
+                "x": 487.08,
+                "y": 133.47,
+                "anchor": "start"
               },
               "p-emei-golden": {
-                "x": 798,
-                "y": 799,
+                "x": 101.86,
+                "y": 292.53,
                 "anchor": "start"
               }
             },
@@ -1839,35 +2214,8 @@
                 "items": [
                   "d4-02"
                 ],
-                "x": 482,
-                "y": 693
-              }
-            ]
-          },
-          "5": {
-            "places": [
-              "p-emei-base",
-              "p-ct-airport"
-            ],
-            "labels": {
-              "p-emei-base": {
-                "x": 212,
-                "y": 493,
-                "anchor": "end"
-              },
-              "p-ct-airport": {
-                "x": 382,
-                "y": 101,
-                "anchor": "start"
-              }
-            },
-            "transport": [
-              {
-                "items": [
-                  "d5-01"
-                ],
-                "x": 244,
-                "y": 357
+                "x": 249.47,
+                "y": 426
               }
             ]
           }

@@ -25,7 +25,7 @@ import { createHash } from "node:crypto";
 import { CANVAS_WIDTH, geoToCanvas, planWindow, windowGeoBounds } from "./mercator.mjs";
 import { fetchTiles, tilesForWindow } from "./tiles.mjs";
 import { buildMosaic } from "./mosaic.mjs";
-import { layoutLabels } from "./label-layout.mjs";
+import { layoutLabels, chromeBox } from "./label-layout.mjs";
 
 /**
  * 真实底图的免责声明，覆盖 trip-data.json 里手写的那条。
@@ -102,22 +102,8 @@ function linesFor(place) {
   return secondary ? [`${primary} /`, secondary] : [primary];
 }
 
-/**
- * 标题 + 图例占用的版面，标签布局要避开它。
- * 这两个值沿用模板默认（build-map.mjs:479-480），实测在新画布上放得下：
- * 4 行图例排到 y≈303，而最矮的新画布是 426。
- */
-function chromeBox(routeCount) {
-  const heading = { x: 33, y: 105, size: 40 };
-  const legend = { x: 35, y: 168, gap: 43 };
-  const legendBottom = legend.y + Math.max(0, routeCount - 1) * legend.gap + 6;
-  return {
-    heading,
-    legend,
-    reserved: { x: 18, y: 56, width: 300, height: legendBottom + 10 - 56 },
-    legendBottom,
-  };
-}
+/* chromeBox 已挪到 label-layout.mjs —— verify-projection.mjs 要拿同一个盒子复核，
+   两处各写一份迟早会漂移。 */
 
 /**
  * 处理一个已存在的 region，返回重建后的 region。
@@ -171,7 +157,8 @@ export async function rebuildRegion(region, { tripData, tripDir, tileCache, logg
   const positions = new Map(geos.map((geo) => [geo.id, geoToCanvas(geo, window)]));
 
   // 5. 标签布局（不使用模板的 labelFor，见 label-layout.mjs）
-  const { heading, legend, reserved, legendBottom } = chromeBox(region.routes.length);
+  const headingText = region.heading?.text || region.label;
+  const { heading, legend, reserved, legendBottom } = chromeBox(region.routes.length, headingText);
   const labelInputs = region.places.map((place) => {
     const point = positions.get(place.id);
     const src = mapPlaces.get(place.id);
@@ -252,7 +239,7 @@ export async function rebuildRegion(region, { tripData, tripDir, tileCache, logg
     canvas: { width: window.canvasWidth, height: window.canvasHeight },
     projection: { type: "web-mercator", bounds },
     baseImage: `assets/maps/regions/${fileName}`,
-    heading: { ...heading, text: region.heading?.text || region.label },
+    heading: { ...heading, text: headingText },
     legend,
     scope: "real-basemap",
     mapMode: "web-mercator-osm",

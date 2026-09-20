@@ -74,6 +74,35 @@ export function estimateLabelWidth(lines, fontSize) {
   return Math.max(...lines.map((line) => estimateLineWidth(line, fontSize)));
 }
 
+/**
+ * 标题 + 图例（chrome）占用的版面，标签布局要避开它。
+ * 位置沿用模板默认（build-map.mjs:479-480），实测在新画布上放得下：
+ * 4 行图例排到 y≈303，而最矮的新画布是 426。
+ *
+ * **宽度不能写死 300。** 标题是「英文名 / 中文名」，长度随目的地变：
+ * 模板默认的 300px 只够装下「JEJU / 济州岛」这类短标题（实测 254px），
+ * 而成都的「CHENGDU / 成都市区」实测 396px、都江堰的「DUJIANGYAN / 都江堰 · 青城山」570px。
+ * 写死 300 时求解器以为标题只占到 x=318，就把标签摆在 318 边上，
+ * 视觉上正好压在标题尾巴 —— 实测成都市区总览的 人民公园 / 太古里 两处标签
+ * 各被标题压了 22px、24px，而求解器自己报「0 处压字」（它按错误的盒子判的）。
+ * 所以按真实字宽算，再留 6px 余量。
+ *
+ * 定义放在这里而不是 build-real-map.mjs：`verify-projection.mjs` 要拿**同一个盒子**
+ * 复核求解结果，两处各写一份迟早会漂移。
+ */
+export function chromeBox(routeCount, headingText, { fontSize = 40 } = {}) {
+  const heading = { x: 33, y: 105, size: fontSize };
+  const legend = { x: 35, y: 168, gap: 43 };
+  const legendBottom = legend.y + Math.max(0, routeCount - 1) * legend.gap + 6;
+  const headingRight = heading.x + estimateLineWidth(headingText || "", heading.size) + 6;
+  return {
+    heading,
+    legend,
+    reserved: { x: 18, y: 56, width: Math.max(300, headingRight - 18), height: legendBottom + 10 - 56 },
+    legendBottom,
+  };
+}
+
 /** 基线到 em 盒顶部的距离（实测 21.1px @ font-size 24）。 */
 const ASCENT = 21.1;
 /** em 盒底部到最后一行的距离（实测：两行盒高 57.38 = 21.1 + 31 + 5.28）。 */
