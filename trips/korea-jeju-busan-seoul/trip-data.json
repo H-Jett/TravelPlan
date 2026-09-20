@@ -66,7 +66,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T17:08:14.004Z"
+        "generatedAt": "2026-09-20T17:12:12.906Z"
       },
       "busan": {
         "fingerprint": "312406b87e66cc8f",
@@ -103,7 +103,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T17:08:14.010Z"
+        "generatedAt": "2026-09-20T17:12:12.913Z"
       },
       "seoul": {
         "fingerprint": "2c273a83409a3c92",
@@ -140,7 +140,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T17:08:14.024Z"
+        "generatedAt": "2026-09-20T17:12:12.927Z"
       }
     }
   },
@@ -219,7 +219,7 @@
         "utcOffset": "+09:00"
       },
       "notes": [
-        "来源：用户提供的订单截图；舱位与航站楼信息未提供。"
+        "舱位与航站楼信息未确认。"
       ]
     },
     {
@@ -248,7 +248,7 @@
         "utcOffset": "+09:00"
       },
       "notes": [
-        "来源：用户提供的订单。舱位 Economy；到达国内线航站楼（订票页航站楼代码 D）。",
+        "舱位 Economy；到达国内线航站楼。",
         "每日执飞，B737-800，与大韩航空 KE5192 代码共享。"
       ]
     },
@@ -276,7 +276,7 @@
         "utcOffset": "+09:00"
       },
       "notes": [
-        "来源：用户提供的订单。成人 2 名、一般车厢（일반실）。"
+        "成人 2 名、一般车厢（일반실）。"
       ]
     },
     {
@@ -305,10 +305,7 @@
         "time": "14:40",
         "utcOffset": "+08:00"
       },
-      "connectionFromPrevious": null,
-      "notes": [
-        "来源：用户提供的订单截图。"
-      ]
+      "connectionFromPrevious": null
     },
     {
       "id": "f-back-2",
@@ -338,7 +335,7 @@
       },
       "connectionFromPrevious": true,
       "notes": [
-        "来源：用户提供的订单截图。威海同日中转，候机约 8 小时 40 分。"
+        "威海同日中转，候机约 8 小时 40 分。"
       ]
     }
   ],
@@ -2056,7 +2053,7 @@
           "已出票：KTX 066，10/1 釜山 19:12 → 首尔站 21:35，2 名成人一般车厢",
           "成人单程基准价 54,400 KRW（2026-09-01 SRT 并入 KTX 后从 59,800 下调）",
           "KTX 无安检，发车前 20 分钟到站取票进站即可",
-          "釜山站到站方式见 10/1 行程：엘시티→중동역→서면换 1 号线→부산역，门到门 60–70 分钟"
+          "釜山站到站方式见 10/1 行程，门到门约 60–70 分钟"
         ],
         "officialUrl": "https://www.letskorail.com",
         "flightId": "leg-ktx-1"
@@ -2107,7 +2104,7 @@
         ],
         "officialUrl": "https://www.busanxthesky.com/xthesky/xthesky.php",
         "guidance": [
-          "运营方官网 成人 29,000 / 儿童 26,000 KRW；釜山市旅游门户标 27,000 / 24,000，两处官方口径不一致",
+          "成人 29,000 / 儿童 26,000 KRW；也有渠道写 27,000 / 24,000，以现场或线上预订价为准",
           "10:00–21:00，末次入场 20:30，全年无休，无需预约（线上预订通常更便宜）",
           "99 楼星巴克在观景台内部，必须持观景台门票才能进入"
         ]
@@ -2267,7 +2264,7 @@
       "导航 App：Kakao Map",
       "入境前两天填写入境卡"
     ],
-    "missingNote": "行程来自用户提供的机票截图与攻略草稿。已按 2026-09-20 核实的官方来源补齐：各段城际交通与班次、市内公交票价与换乘规则、景点开放时间与休息日、门票价格、预约要求与官方链接。住宿仍未定。少数官方口径本身冲突或缺失的项（翰林公园末次售票 17:00/17:30、海女表演时刻、机场大巴 600 路票价两栏不一致）已在对应日期的备注里写明冲突，未择一当定论。",
+    "missingNote": "住宿仍未定。少数信息本身有冲突或缺失（翰林公园末次售票 17:00 / 17:30、海女表演时刻、机场大巴 600 路票价两栏不一致、涉地可支与海东龙宫寺是否收门票），已在对应日期写明，未择一当定论。",
     "missingTitle": ""
   },
   "mapLinks": {
