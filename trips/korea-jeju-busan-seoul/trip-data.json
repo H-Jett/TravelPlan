@@ -1,0 +1,4177 @@
+{
+  "$schema": "../../template/schemas/trip-data.schema.json",
+  "schemaVersion": "2.0-lite",
+  "config": {
+    "schemaVersion": "1.0.0",
+    "modules": {
+      "flights": true,
+      "overview": true,
+      "itinerary": true,
+      "driving": false,
+      "todo": true,
+      "ledger": false
+    },
+    "language": "zh-CN",
+    "persistence": {
+      "mode": "local",
+      "note": "本站只部署到 GitHub Pages（纯静态）。Todo 勾选与门票状态仅保存在访问者本机浏览器，换设备不同步。"
+    }
+  },
+  "metadata": {
+    "tripId": "korea-jeju-busan-seoul",
+    "title": "济州 · 釜山 · 首尔 10 日",
+    "subtitle": "韩国三城 · 2026 国庆",
+    "language": "zh-CN",
+    "timeZone": "Asia/Seoul",
+    "assets": {
+      "routeMaps": [
+        "assets/maps/templates/template-04-urban.webp",
+        "assets/maps/templates/template-07-compact-basin.webp"
+      ]
+    }
+  },
+  "trip": {
+    "status": "planned",
+    "startDate": "2026-09-26",
+    "endDate": "2026-10-05",
+    "dayCount": 10,
+    "nightCountAway": 9,
+    "countries": [
+      {
+        "code": "KR",
+        "nameZh": "韩国",
+        "nameEn": "South Korea"
+      }
+    ],
+    "primaryDestinationCountries": [
+      "KR"
+    ],
+    "primaryDestinationName": "济州 · 釜山 · 首尔",
+    "primaryDestinationNameEn": "JEJU · BUSAN · SEOUL",
+    "citiesAndAreas": [
+      "济州岛",
+      "釜山",
+      "首尔"
+    ],
+    "routeSummary": "南京 ✈ 济州岛 → 牛岛 · 城山 → 涯月 · 狭才 → 釜山 → 首尔 ✈ 威海 ✈ 南京",
+    "groupSize": null
+  },
+  "flightJourneys": [
+    {
+      "id": "j-out",
+      "title": "去程 · 南京 → 济州",
+      "sequence": 1
+    },
+    {
+      "id": "j-back",
+      "title": "回程 · 首尔 → 威海 → 南京",
+      "sequence": 2
+    }
+  ],
+  "flights": [
+    {
+      "id": "f-out-1",
+      "journeyId": "j-out",
+      "sequence": 1,
+      "airline": {
+        "name": "Spring Airlines",
+        "nameZh": "春秋航空"
+      },
+      "flightNumber": "9C6149",
+      "departure": {
+        "airportCode": "NKG",
+        "airportName": "南京禄口国际机场",
+        "city": "南京",
+        "date": "2026-09-26",
+        "time": "19:45",
+        "utcOffset": "+08:00"
+      },
+      "arrival": {
+        "airportCode": "CJU",
+        "airportName": "济州国际机场",
+        "city": "济州",
+        "date": "2026-09-26",
+        "time": "22:30",
+        "utcOffset": "+09:00"
+      },
+      "notes": [
+        "来源：用户提供的订单截图；舱位与航站楼信息未提供。"
+      ]
+    },
+    {
+      "id": "f-back-1",
+      "journeyId": "j-back",
+      "sequence": 1,
+      "airline": {
+        "name": "China Eastern Airlines",
+        "nameZh": "中国东方航空"
+      },
+      "flightNumber": "MU2018",
+      "departure": {
+        "airportCode": "ICN",
+        "airportName": "首尔仁川国际机场",
+        "terminal": "T1",
+        "city": "首尔",
+        "date": "2026-10-05",
+        "time": "14:15",
+        "utcOffset": "+09:00"
+      },
+      "arrival": {
+        "airportCode": "WEH",
+        "airportName": "威海大水泊机场",
+        "city": "威海",
+        "date": "2026-10-05",
+        "time": "14:40",
+        "utcOffset": "+08:00"
+      },
+      "connectionFromPrevious": null,
+      "notes": [
+        "韩国时间 14:15 起飞、中国时间 14:40 落地，时差 1 小时。"
+      ]
+    },
+    {
+      "id": "f-back-2",
+      "journeyId": "j-back",
+      "sequence": 2,
+      "airline": {
+        "name": "China Eastern Airlines",
+        "nameZh": "中国东方航空"
+      },
+      "flightNumber": "MU9788",
+      "departure": {
+        "airportCode": "WEH",
+        "airportName": "威海大水泊机场",
+        "city": "威海",
+        "date": "2026-10-05",
+        "time": "23:20",
+        "utcOffset": "+08:00"
+      },
+      "arrival": {
+        "airportCode": "NKG",
+        "airportName": "南京禄口国际机场",
+        "terminal": "T2",
+        "city": "南京",
+        "date": "2026-10-06",
+        "time": "01:10",
+        "utcOffset": "+08:00"
+      },
+      "connectionFromPrevious": true,
+      "notes": [
+        "威海同日中转，候机约 8 小时 40 分；落地南京为次日 10/6 凌晨。"
+      ]
+    }
+  ],
+  "accommodations": [],
+  "groundTransport": {
+    "rentalCar": null,
+    "rentalChecklist": [],
+    "drivingNotes": [],
+    "drivingReferenceLinks": [],
+    "plannedRoadLegs": [],
+    "publicTransitAndRail": []
+  },
+  "days": [
+    {
+      "id": "day-1",
+      "day": 1,
+      "sequence": 1,
+      "date": "2026-09-26",
+      "title": "南京 ✈ 济州 · 抵达",
+      "locations": [
+        "南京禄口",
+        "济州国际机场",
+        "济州市区"
+      ],
+      "schedule": [
+        {
+          "id": "d1-01",
+          "type": "transfer",
+          "time": "17:45",
+          "text": "南京禄口国际机场办理值机与托运（国际航班建议提前 2 小时）",
+          "placeIds": []
+        },
+        {
+          "id": "d1-02",
+          "type": "flight",
+          "time": "19:45",
+          "text": "9C6149 南京禄口 ✈ 济州国际（当地时间 22:30 落地，飞行约 1 小时 45 分）",
+          "placeIds": []
+        },
+        {
+          "id": "d1-03",
+          "type": "transfer",
+          "time": "22:30",
+          "text": "抵达济州国际机场，办理入境、提取行李",
+          "placeIds": []
+        },
+        {
+          "id": "d1-04",
+          "type": "transfer",
+          "time": "23:15",
+          "text": "济州机场 → 济州市区（莲洞）住宿，打车约 15 分钟；机场巴士亦可",
+          "placeIds": [
+            "p-jeju-airport",
+            "p-jeju-city"
+          ]
+        },
+        {
+          "id": "d1-05",
+          "type": "check-in",
+          "time": "23:45",
+          "text": "酒店入住（住宿信息待补充）",
+          "placeIds": []
+        }
+      ],
+      "notes": [
+        "济州比南京快 1 小时（韩国 UTC+9）。9C6149 为当地时间 19:45 起飞、22:30 落地，按韩国时间安排接机。"
+      ]
+    },
+    {
+      "id": "day-2",
+      "day": 2,
+      "sequence": 2,
+      "date": "2026-09-27",
+      "title": "牛岛 · 城山日出峰",
+      "locations": [
+        "济州市",
+        "城山港",
+        "牛岛",
+        "城山日出峰"
+      ],
+      "schedule": [
+        {
+          "id": "d2-01",
+          "type": "transfer",
+          "time": "07:30",
+          "text": "济州市区打车前往济州国际机场，转乘 111 路公交（全程约 2 小时）",
+          "placeIds": [
+            "p-jeju-city",
+            "p-seongsan-port"
+          ]
+        },
+        {
+          "id": "d2-02",
+          "type": "transfer",
+          "time": "09:30",
+          "text": "抵达城山港，凭护照在售票处购买牛岛往返船票",
+          "placeIds": [],
+          "ticketIds": [
+            "t-udo-ferry"
+          ]
+        },
+        {
+          "id": "d2-03",
+          "type": "ferry",
+          "time": "10:00",
+          "text": "乘船前往牛岛（航程约 20 分钟）",
+          "placeIds": [
+            "p-seongsan-port",
+            "p-udo"
+          ]
+        },
+        {
+          "id": "d2-04",
+          "type": "attraction",
+          "time": "10:30",
+          "text": "牛岛租助力自行车环岛：牛岛峰、东岸鲸窟、下牛木洞海水浴场",
+          "placeIds": []
+        },
+        {
+          "id": "d2-05",
+          "type": "ferry",
+          "time": "15:30",
+          "text": "乘船返回城山港，下船后打车前往城山日出峰",
+          "placeIds": [
+            "p-udo",
+            "p-seongsan"
+          ]
+        },
+        {
+          "id": "d2-06",
+          "type": "hike",
+          "time": "16:30",
+          "text": "登城山日出峰（约 1 小时往返，上坡台阶较多）",
+          "placeIds": []
+        },
+        {
+          "id": "d2-07",
+          "type": "restaurant",
+          "time": "18:30",
+          "text": "返回济州市区晚餐（黑猪肉 / BHC 炸鸡 / 东门市场，见下方导航）",
+          "placeIds": []
+        },
+        {
+          "id": "d2-08",
+          "type": "transfer",
+          "time": "20:00",
+          "text": "城山 → 济州市区（111 路公交或打车）",
+          "placeIds": [
+            "p-seongsan",
+            "p-jeju-city"
+          ]
+        }
+      ],
+      "notes": [
+        "上岛需凭护照购买船票，务必带实体护照。",
+        "牛岛船票已列入「每日行程」的门票清单，行前确认是否需要提前预约。",
+        "也可直接在济州报名一日团，省去公交与租车环节。"
+      ]
+    },
+    {
+      "id": "day-3",
+      "day": 3,
+      "sequence": 3,
+      "date": "2026-09-28",
+      "title": "涯月邑 · 狭才海水浴场",
+      "locations": [
+        "济州市",
+        "涯月邑",
+        "狭才海水浴场"
+      ],
+      "schedule": [
+        {
+          "id": "d3-01",
+          "type": "transfer",
+          "time": "09:30",
+          "text": "济州市区乘 202 路公交前往涯月邑",
+          "placeIds": [
+            "p-jeju-city",
+            "p-aewol"
+          ]
+        },
+        {
+          "id": "d3-02",
+          "type": "attraction",
+          "time": "10:30",
+          "text": "涯月邑海岸道路散步 + 咖啡店（汉潭海岸散步路一带）",
+          "placeIds": []
+        },
+        {
+          "id": "d3-03",
+          "type": "transfer",
+          "time": "13:30",
+          "text": "继续乘 202 路公交前往狭才海水浴场",
+          "placeIds": [
+            "p-aewol",
+            "p-hyeopjae"
+          ]
+        },
+        {
+          "id": "d3-04",
+          "type": "attraction",
+          "time": "14:30",
+          "text": "狭才海水浴场：翡翠色海水与挟才窟",
+          "placeIds": []
+        },
+        {
+          "id": "d3-05",
+          "type": "transfer",
+          "time": "18:00",
+          "text": "乘 202 路公交返回济州市区",
+          "placeIds": [
+            "p-hyeopjae",
+            "p-jeju-city"
+          ]
+        }
+      ],
+      "notes": [
+        "全天靠 202 路公交串联，上下车均刷卡（T-money）；班次间隔较长，回程留意末班时间。"
+      ]
+    },
+    {
+      "id": "day-4",
+      "day": 4,
+      "sequence": 4,
+      "date": "2026-09-29",
+      "title": "济州购物半天 ✈ 釜山",
+      "locations": [
+        "济州市",
+        "济州国际机场",
+        "釜山金海机场",
+        "釜山西面"
+      ],
+      "schedule": [
+        {
+          "id": "d4-01",
+          "type": "shopping",
+          "time": "09:30",
+          "text": "济州市区购物：olive young / 新罗免税店",
+          "placeIds": []
+        },
+        {
+          "id": "d4-02",
+          "type": "transfer",
+          "time": "13:00",
+          "text": "前往济州国际机场，办理值机",
+          "placeIds": [
+            "p-jeju-city",
+            "p-jeju-airport"
+          ]
+        },
+        {
+          "id": "d4-03",
+          "type": "flight",
+          "time": "15:00",
+          "text": "济州 ✈ 釜山（航班号与时刻待补充）",
+          "placeIds": []
+        },
+        {
+          "id": "d4-04",
+          "type": "transfer",
+          "time": "17:00",
+          "text": "金海国际机场 → 釜山西面住宿（轻轨 + 地铁或打车）",
+          "placeIds": [
+            "p-gimhae-airport",
+            "p-busan-city"
+          ]
+        },
+        {
+          "id": "d4-05",
+          "type": "check-in",
+          "time": "18:00",
+          "text": "酒店入住（住宿信息待补充）",
+          "placeIds": []
+        }
+      ],
+      "notes": [
+        "济州 → 釜山的航班号与时刻待补充（用户资料仅标注 ✈️）。"
+      ]
+    },
+    {
+      "id": "day-5",
+      "day": 5,
+      "sequence": 5,
+      "date": "2026-09-30",
+      "title": "松岛 · 甘川 · 白浅滩 · 广安里",
+      "locations": [
+        "釜山",
+        "松岛",
+        "甘川文化村",
+        "白浅滩文化村",
+        "广安里"
+      ],
+      "schedule": [
+        {
+          "id": "d5-01",
+          "type": "transfer",
+          "time": "09:00",
+          "text": "釜山西面 → 松岛（地铁 + 公交）",
+          "placeIds": [
+            "p-busan-city",
+            "p-songdo"
+          ]
+        },
+        {
+          "id": "d5-02",
+          "type": "cable-car",
+          "time": "09:40",
+          "text": "松岛海上缆车 + 松岛天空步道",
+          "placeIds": []
+        },
+        {
+          "id": "d5-03",
+          "type": "transfer",
+          "time": "11:30",
+          "text": "松岛 → 甘川文化村",
+          "placeIds": [
+            "p-songdo",
+            "p-gamcheon"
+          ]
+        },
+        {
+          "id": "d5-04",
+          "type": "attraction",
+          "time": "12:00",
+          "text": "甘川文化村（小王子台阶、彩色屋舍）",
+          "placeIds": []
+        },
+        {
+          "id": "d5-05",
+          "type": "transfer",
+          "time": "14:30",
+          "text": "甘川文化村 → 白浅滩文化村（影岛）",
+          "placeIds": [
+            "p-gamcheon",
+            "p-huinyeoul"
+          ]
+        },
+        {
+          "id": "d5-06",
+          "type": "attraction",
+          "time": "15:00",
+          "text": "白浅滩文化村（海岸隧道、绝影海岸散步路）",
+          "placeIds": []
+        },
+        {
+          "id": "d5-07",
+          "type": "transfer",
+          "time": "17:00",
+          "text": "白浅滩 → 广安里海水浴场",
+          "placeIds": [
+            "p-huinyeoul",
+            "p-gwangalli"
+          ]
+        },
+        {
+          "id": "d5-08",
+          "type": "attraction",
+          "time": "17:40",
+          "text": "广安里海水浴场 + 广安大桥夜景",
+          "placeIds": []
+        },
+        {
+          "id": "d5-09",
+          "type": "restaurant",
+          "time": "19:30",
+          "text": "晚餐：1988 韩牛店",
+          "placeIds": []
+        }
+      ],
+      "notes": [
+        "四个点跨影岛与市区，地铁 + 公交串联；甘川与白浅滩均为坡地村落，穿好走的鞋。"
+      ]
+    },
+    {
+      "id": "day-6",
+      "day": 6,
+      "sequence": 6,
+      "date": "2026-10-01",
+      "title": "青沙埔小镰仓 · 海云台蓝线公园",
+      "locations": [
+        "釜山",
+        "青沙埔",
+        "海云台",
+        "BUSAN X the SKY"
+      ],
+      "schedule": [
+        {
+          "id": "d6-01",
+          "type": "transfer",
+          "time": "09:30",
+          "text": "釜山市区 → 青沙埔（地铁 + 公交）",
+          "placeIds": [
+            "p-busan-city",
+            "p-cheongsapo"
+          ]
+        },
+        {
+          "id": "d6-02",
+          "type": "attraction",
+          "time": "10:00",
+          "text": "青沙埔小镰仓：青沙埔灯塔、海岸线铁路",
+          "placeIds": []
+        },
+        {
+          "id": "d6-03",
+          "type": "rail",
+          "time": "12:00",
+          "text": "海云台蓝线公园海岸列车（尾浦 — 松亭段）",
+          "placeIds": [
+            "p-cheongsapo",
+            "p-haeundae"
+          ]
+        },
+        {
+          "id": "d6-04",
+          "type": "attraction",
+          "time": "14:00",
+          "text": "海云台海水浴场",
+          "placeIds": []
+        },
+        {
+          "id": "d6-05",
+          "type": "transfer",
+          "time": "16:30",
+          "text": "海云台 → BUSAN X the SKY",
+          "placeIds": [
+            "p-haeundae",
+            "p-x-the-sky"
+          ]
+        },
+        {
+          "id": "d6-06",
+          "type": "attraction",
+          "time": "17:00",
+          "text": "BUSAN X the SKY 星巴克（俯瞰海云台与广安大桥）",
+          "placeIds": []
+        }
+      ],
+      "notes": [
+        "海云台蓝线公园海岸列车建议提前购票或早去排队；青沙埔 ↔ 海云台可搭海岸列车直达。"
+      ]
+    },
+    {
+      "id": "day-7",
+      "day": 7,
+      "sequence": 7,
+      "date": "2026-10-02",
+      "title": "釜山 → 首尔 · 光化门 · 景福宫 · 明洞 · 首尔塔",
+      "locations": [
+        "釜山",
+        "首尔",
+        "光化门",
+        "景福宫",
+        "北村韩屋村",
+        "明洞",
+        "南山首尔塔",
+        "梨泰院"
+      ],
+      "schedule": [
+        {
+          "id": "d7-01",
+          "type": "train",
+          "time": "08:00",
+          "text": "釜山 → 首尔（方式与班次待补充）",
+          "placeIds": [
+            "p-busan-city",
+            "p-seoul-station"
+          ]
+        },
+        {
+          "id": "d7-02",
+          "type": "transfer",
+          "time": "11:30",
+          "text": "首尔站 → 光化门广场（地铁）",
+          "placeIds": [
+            "p-seoul-station",
+            "p-gwanghwamun"
+          ]
+        },
+        {
+          "id": "d7-03",
+          "type": "attraction",
+          "time": "12:00",
+          "text": "光化门广场",
+          "placeIds": []
+        },
+        {
+          "id": "d7-04",
+          "type": "walk",
+          "time": "12:30",
+          "text": "步行前往景福宫（守门将换岗仪式）",
+          "placeIds": [
+            "p-gwanghwamun",
+            "p-gyeongbokgung"
+          ]
+        },
+        {
+          "id": "d7-05",
+          "type": "attraction",
+          "time": "13:30",
+          "text": "景福宫 + 国立古宫博物馆一带",
+          "placeIds": []
+        },
+        {
+          "id": "d7-06",
+          "type": "walk",
+          "time": "15:30",
+          "text": "步行前往北村韩屋村（韩服体验可选）",
+          "placeIds": [
+            "p-gyeongbokgung",
+            "p-bukchon"
+          ]
+        },
+        {
+          "id": "d7-07",
+          "type": "transfer",
+          "time": "17:30",
+          "text": "北村 → 明洞（地铁）",
+          "placeIds": [
+            "p-bukchon",
+            "p-myeongdong"
+          ]
+        },
+        {
+          "id": "d7-08",
+          "type": "attraction",
+          "time": "18:00",
+          "text": "明洞夜市与商圈",
+          "placeIds": []
+        },
+        {
+          "id": "d7-09",
+          "type": "cable-car",
+          "time": "20:00",
+          "text": "明洞 → 南山首尔塔（缆车或南山循环巴士）",
+          "placeIds": [
+            "p-myeongdong",
+            "p-namsan-tower"
+          ]
+        },
+        {
+          "id": "d7-10",
+          "type": "transfer",
+          "time": "22:00",
+          "text": "首尔塔 → 梨泰院",
+          "placeIds": [
+            "p-namsan-tower",
+            "p-itaewon"
+          ]
+        }
+      ],
+      "notes": [
+        "釜山 → 首尔的交通方式与班次待补充（用户资料未注明）。",
+        "首尔当天点位密集，景福宫 → 北村 → 明洞可步行/地铁串联；首尔塔建议傍晚上山看夜景。"
+      ]
+    },
+    {
+      "id": "day-8",
+      "day": 8,
+      "sequence": 8,
+      "date": "2026-10-03",
+      "title": "梨大 · 延世 · 弘大 · 汝矣岛汉江公园",
+      "locations": [
+        "首尔",
+        "梨花女子大学",
+        "延世大学",
+        "弘益大学",
+        "汝矣岛汉江公园"
+      ],
+      "schedule": [
+        {
+          "id": "d8-01",
+          "type": "transfer",
+          "time": "09:30",
+          "text": "首尔市区 → 梨花女子大学（地铁 2 号线）",
+          "placeIds": [
+            "p-seoul-station",
+            "p-ewha"
+          ]
+        },
+        {
+          "id": "d8-02",
+          "type": "attraction",
+          "time": "10:00",
+          "text": "梨花女子大学（ECC 下沉校园、梨花墙）",
+          "placeIds": []
+        },
+        {
+          "id": "d8-03",
+          "type": "walk",
+          "time": "11:30",
+          "text": "步行前往延世大学（两校相邻）",
+          "placeIds": [
+            "p-ewha",
+            "p-yonsei"
+          ]
+        },
+        {
+          "id": "d8-04",
+          "type": "attraction",
+          "time": "12:00",
+          "text": "延世大学校园 + 新村一带午餐",
+          "placeIds": []
+        },
+        {
+          "id": "d8-05",
+          "type": "transfer",
+          "time": "14:00",
+          "text": "新村 → 弘益大学（弘大商圈）",
+          "placeIds": [
+            "p-yonsei",
+            "p-hongdae"
+          ]
+        },
+        {
+          "id": "d8-06",
+          "type": "attraction",
+          "time": "14:30",
+          "text": "弘大商圈：街头表演、独立小店",
+          "placeIds": []
+        },
+        {
+          "id": "d8-07",
+          "type": "transfer",
+          "time": "17:00",
+          "text": "弘大 → 汝矣岛汉江公园（地铁）",
+          "placeIds": [
+            "p-hongdae",
+            "p-yeouido"
+          ]
+        },
+        {
+          "id": "d8-08",
+          "type": "attraction",
+          "time": "17:40",
+          "text": "汝矣岛汉江公园（汉江夜景、炸鸡啤酒）",
+          "placeIds": []
+        }
+      ],
+      "notes": [
+        "梨大与延世相邻，可步行串联；弘大傍晚最热闹，汉江公园适合看夜景收尾。"
+      ]
+    },
+    {
+      "id": "day-9",
+      "day": 9,
+      "sequence": 9,
+      "date": "2026-10-04",
+      "title": "东大门 · 圣水洞 · 清潭洞 · 狎鸥亭 · 江南",
+      "locations": [
+        "首尔",
+        "东大门",
+        "圣水洞",
+        "清潭洞",
+        "狎鸥亭",
+        "江南"
+      ],
+      "schedule": [
+        {
+          "id": "d9-01",
+          "type": "transfer",
+          "time": "09:30",
+          "text": "首尔市区 → 东大门（地铁）",
+          "placeIds": [
+            "p-seoul-station",
+            "p-dongdaemun"
+          ]
+        },
+        {
+          "id": "d9-02",
+          "type": "shopping",
+          "time": "10:00",
+          "text": "东大门：DDP 设计广场、批发市场",
+          "placeIds": []
+        },
+        {
+          "id": "d9-03",
+          "type": "transfer",
+          "time": "12:30",
+          "text": "东大门 → 圣水洞",
+          "placeIds": [
+            "p-dongdaemun",
+            "p-seongsu"
+          ]
+        },
+        {
+          "id": "d9-04",
+          "type": "shopping",
+          "time": "13:00",
+          "text": "圣水洞：咖啡街、Pop-up 与选物店",
+          "placeIds": []
+        },
+        {
+          "id": "d9-05",
+          "type": "transfer",
+          "time": "15:30",
+          "text": "圣水洞 → 清潭洞",
+          "placeIds": [
+            "p-seongsu",
+            "p-cheongdam"
+          ]
+        },
+        {
+          "id": "d9-06",
+          "type": "shopping",
+          "time": "16:00",
+          "text": "清潭洞：名品街、免税店",
+          "placeIds": []
+        },
+        {
+          "id": "d9-07",
+          "type": "transfer",
+          "time": "17:30",
+          "text": "清潭洞 → 狎鸥亭",
+          "placeIds": [
+            "p-cheongdam",
+            "p-apgujeong"
+          ]
+        },
+        {
+          "id": "d9-08",
+          "type": "shopping",
+          "time": "18:00",
+          "text": "狎鸥亭罗德奥街",
+          "placeIds": []
+        },
+        {
+          "id": "d9-09",
+          "type": "transfer",
+          "time": "19:30",
+          "text": "狎鸥亭 → 江南",
+          "placeIds": [
+            "p-apgujeong",
+            "p-gangnam"
+          ]
+        },
+        {
+          "id": "d9-10",
+          "type": "shopping",
+          "time": "20:00",
+          "text": "江南：晚餐 + 商圈（整理行李）",
+          "placeIds": []
+        }
+      ],
+      "notes": [
+        "全天购物线，从江北一路往江南；免税店提货需出示护照与机票。"
+      ]
+    },
+    {
+      "id": "day-10",
+      "day": 10,
+      "sequence": 10,
+      "date": "2026-10-05",
+      "title": "首尔 ✈ 威海 ✈ 南京",
+      "locations": [
+        "首尔",
+        "仁川国际机场",
+        "威海大水泊",
+        "南京禄口"
+      ],
+      "schedule": [
+        {
+          "id": "d10-01",
+          "type": "transfer",
+          "time": "11:00",
+          "text": "首尔市区 → 仁川国际机场 T1（机场快线 AR﻿EX 或机场巴士，预留 3 小时）",
+          "placeIds": [
+            "p-seoul-station",
+            "p-icn"
+          ]
+        },
+        {
+          "id": "d10-02",
+          "type": "flight",
+          "time": "14:15",
+          "text": "MU2018 首尔仁川 T1 ✈ 威海大水泊（飞行约 1 小时 25 分）",
+          "placeIds": []
+        },
+        {
+          "id": "d10-03",
+          "type": "transfer",
+          "time": "14:40",
+          "text": "抵达威海大水泊，办理中转、重新托运",
+          "placeIds": []
+        },
+        {
+          "id": "d10-04",
+          "type": "flight",
+          "time": "23:20",
+          "text": "MU9788 威海大水泊 ✈ 南京禄口 T2",
+          "placeIds": []
+        },
+        {
+          "id": "d10-05",
+          "type": "transfer",
+          "time": "01:10",
+          "text": "10/6 01:10 抵达南京禄口 T2，行程结束",
+          "placeIds": []
+        }
+      ],
+      "notes": [
+        "韩国比中国快 1 小时：MU2018 按韩国时间 14:15 起飞，按中国时间 14:40 落地威海，飞行约 1 小时 25 分。",
+        "MU9788 于 10/5 23:20 从威海起飞，10/6 01:10 抵达南京禄口 T2，行程按 10/5 结束计。",
+        "国际航班建议提前 3 小时抵达仁川机场 T1。"
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "p-jeju-airport",
+      "nameZh": "济州国际机场",
+      "name": "Jeju International Airport",
+      "cityOrArea": "济州",
+      "googleMapsQuery": "济州国际机场 CJU"
+    },
+    {
+      "id": "p-jeju-city",
+      "nameZh": "济州市区（莲洞）",
+      "name": "Jeju City (Yeondong)",
+      "cityOrArea": "济州",
+      "googleMapsQuery": "济州市 莲洞"
+    },
+    {
+      "id": "p-seongsan-port",
+      "nameZh": "城山港",
+      "name": "Seongsan Port",
+      "cityOrArea": "西归浦",
+      "googleMapsQuery": "济州 城山港 客运码头"
+    },
+    {
+      "id": "p-udo",
+      "nameZh": "牛岛",
+      "name": "Udo Island",
+      "cityOrArea": "济州",
+      "googleMapsQuery": "济州 牛岛"
+    },
+    {
+      "id": "p-seongsan",
+      "nameZh": "城山日出峰",
+      "name": "Seongsan Ilchulbong",
+      "cityOrArea": "西归浦",
+      "googleMapsQuery": "济州 城山日出峰"
+    },
+    {
+      "id": "p-aewol",
+      "nameZh": "涯月邑",
+      "name": "Aewol",
+      "cityOrArea": "济州",
+      "googleMapsQuery": "济州 涯月邑 汉潭海岸散步路"
+    },
+    {
+      "id": "p-hyeopjae",
+      "nameZh": "狭才海水浴场",
+      "name": "Hyeopjae Beach",
+      "cityOrArea": "济州",
+      "googleMapsQuery": "济州 狭才海水浴场"
+    },
+    {
+      "id": "p-gimhae-airport",
+      "nameZh": "金海国际机场",
+      "name": "Gimhae International Airport",
+      "cityOrArea": "釜山",
+      "googleMapsQuery": "釜山 金海国际机场 PUS"
+    },
+    {
+      "id": "p-busan-city",
+      "nameZh": "釜山西面（市区）",
+      "name": "Busan (Seomyeon)",
+      "cityOrArea": "釜山",
+      "googleMapsQuery": "釜山 西面"
+    },
+    {
+      "id": "p-songdo",
+      "nameZh": "松岛海上缆车",
+      "name": "Songdo Marine Cable Car",
+      "cityOrArea": "釜山",
+      "googleMapsQuery": "釜山 松岛海上缆车"
+    },
+    {
+      "id": "p-gamcheon",
+      "nameZh": "甘川文化村",
+      "name": "Gamcheon Culture Village",
+      "cityOrArea": "釜山",
+      "googleMapsQuery": "釜山 甘川文化村"
+    },
+    {
+      "id": "p-huinyeoul",
+      "nameZh": "白浅滩文化村",
+      "name": "Huinnyeoul Culture Village",
+      "cityOrArea": "釜山",
+      "googleMapsQuery": "釜山 白浅滩文化村"
+    },
+    {
+      "id": "p-gwangalli",
+      "nameZh": "广安里海水浴场",
+      "name": "Gwangalli Beach",
+      "cityOrArea": "釜山",
+      "googleMapsQuery": "釜山 广安里海水浴场"
+    },
+    {
+      "id": "p-cheongsapo",
+      "nameZh": "青沙埔",
+      "name": "Cheongsapo",
+      "cityOrArea": "釜山",
+      "googleMapsQuery": "釜山 青沙埔 小镰仓"
+    },
+    {
+      "id": "p-haeundae",
+      "nameZh": "海云台海水浴场",
+      "name": "Haeundae Beach",
+      "cityOrArea": "釜山",
+      "googleMapsQuery": "釜山 海云台海水浴场"
+    },
+    {
+      "id": "p-x-the-sky",
+      "nameZh": "BUSAN X the SKY",
+      "name": "BUSAN X the SKY",
+      "cityOrArea": "釜山",
+      "googleMapsQuery": "釜山 X the SKY 观景台"
+    },
+    {
+      "id": "p-seoul-station",
+      "nameZh": "首尔站（市区）",
+      "name": "Seoul Station",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔站"
+    },
+    {
+      "id": "p-gwanghwamun",
+      "nameZh": "光化门广场",
+      "name": "Gwanghwamun Square",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 光化门广场"
+    },
+    {
+      "id": "p-gyeongbokgung",
+      "nameZh": "景福宫",
+      "name": "Gyeongbokgung Palace",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 景福宫"
+    },
+    {
+      "id": "p-bukchon",
+      "nameZh": "北村韩屋村",
+      "name": "Bukchon Hanok Village",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 北村韩屋村"
+    },
+    {
+      "id": "p-myeongdong",
+      "nameZh": "明洞",
+      "name": "Myeongdong",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 明洞"
+    },
+    {
+      "id": "p-namsan-tower",
+      "nameZh": "南山首尔塔",
+      "name": "N Seoul Tower",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 南山首尔塔"
+    },
+    {
+      "id": "p-itaewon",
+      "nameZh": "梨泰院",
+      "name": "Itaewon",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 梨泰院"
+    },
+    {
+      "id": "p-ewha",
+      "nameZh": "梨花女子大学",
+      "name": "Ewha Womans University",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 梨花女子大学"
+    },
+    {
+      "id": "p-yonsei",
+      "nameZh": "延世大学",
+      "name": "Yonsei University",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 延世大学"
+    },
+    {
+      "id": "p-hongdae",
+      "nameZh": "弘益大学（弘大）",
+      "name": "Hongik University (Hongdae)",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 弘大"
+    },
+    {
+      "id": "p-yeouido",
+      "nameZh": "汝矣岛汉江公园",
+      "name": "Yeouido Hangang Park",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 汝矣岛汉江公园"
+    },
+    {
+      "id": "p-dongdaemun",
+      "nameZh": "东大门",
+      "name": "Dongdaemun",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 东大门"
+    },
+    {
+      "id": "p-seongsu",
+      "nameZh": "圣水洞",
+      "name": "Seongsu-dong",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 圣水洞"
+    },
+    {
+      "id": "p-cheongdam",
+      "nameZh": "清潭洞",
+      "name": "Cheongdam-dong",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 清潭洞"
+    },
+    {
+      "id": "p-apgujeong",
+      "nameZh": "狎鸥亭",
+      "name": "Apgujeong",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 狎鸥亭 罗德奥街"
+    },
+    {
+      "id": "p-gangnam",
+      "nameZh": "江南",
+      "name": "Gangnam",
+      "cityOrArea": "首尔",
+      "googleMapsQuery": "首尔 江南"
+    },
+    {
+      "id": "p-icn",
+      "nameZh": "仁川国际机场 T1",
+      "name": "Incheon International Airport T1",
+      "cityOrArea": "仁川",
+      "googleMapsQuery": "仁川国际机场 T1"
+    }
+  ],
+  "restaurants": [
+    {
+      "placeId": "r-jeju-blackpork",
+      "name": "石墙黑猪肉",
+      "city": "济州",
+      "mealKinds": [
+        "晚餐"
+      ],
+      "specialties": [
+        "黑猪肉烤肉"
+      ],
+      "googleMapsQuery": "济州 黑猪肉 烤肉"
+    },
+    {
+      "placeId": "r-bhc",
+      "name": "BHC 炸鸡",
+      "city": "济州",
+      "mealKinds": [
+        "晚餐",
+        "夜宵"
+      ],
+      "specialties": [
+        "韩式炸鸡"
+      ],
+      "googleMapsQuery": "济州 BHC 炸鸡"
+    },
+    {
+      "placeId": "r-dongmun",
+      "name": "东门市场",
+      "city": "济州",
+      "mealKinds": [
+        "午餐",
+        "晚餐"
+      ],
+      "specialties": [
+        "小吃",
+        "海鲜"
+      ],
+      "googleMapsQuery": "济州 东门市场"
+    },
+    {
+      "placeId": "r-1988-hanwoo",
+      "name": "1988 韩牛店",
+      "city": "釜山",
+      "mealKinds": [
+        "晚餐"
+      ],
+      "specialties": [
+        "韩牛烤肉"
+      ],
+      "googleMapsQuery": "釜山 1988 韩牛"
+    }
+  ],
+  "bookingsAndTickets": [
+    {
+      "id": "b-1",
+      "type": "flight",
+      "name": "9C6149 南京 → 济州（2026-09-26）",
+      "status": "用户已订"
+    },
+    {
+      "id": "b-2",
+      "type": "flight",
+      "name": "MU2018 首尔 → 威海（2026-10-05）",
+      "status": "用户已订"
+    },
+    {
+      "id": "b-3",
+      "type": "flight",
+      "name": "MU9788 威海 → 南京（2026-10-05）",
+      "status": "用户已订"
+    },
+    {
+      "id": "b-4",
+      "type": "flight",
+      "name": "济州 → 釜山（2026-09-29）",
+      "status": "待补充航班信息"
+    },
+    {
+      "id": "b-5",
+      "type": "train",
+      "name": "釜山 → 首尔（2026-10-02）",
+      "status": "待补充交通方式"
+    },
+    {
+      "id": "b-6",
+      "type": "stay",
+      "name": "住宿（济州 / 釜山 / 首尔）",
+      "status": "待补充"
+    }
+  ],
+  "ticketPlanning": {
+    "statusStorage": "local",
+    "statusStorageNote": "购票勾选状态保存在访问者本机浏览器 localStorage，不上传、不跨设备同步。",
+    "items": [
+      {
+        "id": "t-udo-ferry",
+        "name": "牛岛往返渡轮船票",
+        "attraction": {
+          "nameZh": "牛岛",
+          "name": "Udo Island"
+        },
+        "requirement": "needs-confirmation",
+        "purchaseStatus": "needed",
+        "day": 2,
+        "dayId": "day-2",
+        "placeIds": [
+          "p-seongsan-port",
+          "p-udo"
+        ],
+        "scheduleItemIds": [
+          "d2-02"
+        ],
+        "guidance": [
+          "凭护照在城山港售票处购票（用户资料：用护照坐船）",
+          "航程约 20 分钟",
+          "是否需要提前预约、票价与班次，用户资料未提供，行前确认"
+        ]
+      }
+    ]
+  },
+  "preTrip": {
+    "todoItems": [
+      {
+        "id": "todo-01",
+        "text": "订 9/26 南京 → 济州 9C6149 机票（已出票）",
+        "completed": true
+      },
+      {
+        "id": "todo-02",
+        "text": "订 10/5 首尔 → 威海 → 南京 MU2018 / MU9788 机票（已出票）",
+        "completed": true
+      },
+      {
+        "id": "todo-03",
+        "text": "订 9/29 济州 → 釜山 机票（航班信息待补充）",
+        "completed": false
+      },
+      {
+        "id": "todo-04",
+        "text": "订 10/2 釜山 → 首尔 交通（方式与班次待补充）",
+        "completed": false
+      },
+      {
+        "id": "todo-05",
+        "text": "订住宿：济州 9/26–9/29、釜山 9/29–10/2、首尔 10/2–10/5",
+        "completed": false
+      },
+      {
+        "id": "todo-06",
+        "text": "带德标转换插头（韩国插座为双圆孔 220V）",
+        "completed": false
+      },
+      {
+        "id": "todo-07",
+        "text": "办 T-money 交通卡（公交 / 地铁通用，便利店可充值）",
+        "completed": false
+      },
+      {
+        "id": "todo-08",
+        "text": "备好护照实体件 + 电子版备份（牛岛乘船、免税店提货均需出示）",
+        "completed": false
+      },
+      {
+        "id": "todo-09",
+        "text": "买韩国流量卡 / eSIM",
+        "completed": false
+      },
+      {
+        "id": "todo-10",
+        "text": "手机装好打车 App：滴滴 / 高德 / Uber",
+        "completed": false
+      },
+      {
+        "id": "todo-11",
+        "text": "手机装好 Kakao Map（韩国本地导航）",
+        "completed": false
+      },
+      {
+        "id": "todo-12",
+        "text": "入境前两天填写入境卡",
+        "completed": false
+      }
+    ],
+    "preparationsExplicitlyMentioned": [
+      "德标转换插头",
+      "T-money 卡",
+      "护照（牛岛乘船需出示）",
+      "流量卡",
+      "打车 App：滴滴 / 高德 / Uber",
+      "导航 App：Kakao Map",
+      "入境前两天填写入境卡"
+    ],
+    "missingNote": "行程来自用户提供的机票截图与攻略草稿。住宿、济州→釜山及釜山→首尔的交通、各景点门票信息未提供，已在「待确认事项」中列出。"
+  },
+  "mapLinks": {
+    "providedGoogleMapsLinks": [],
+    "note": "韩国本地导航以 Kakao Map 为准（用户资料）；本站的地点按钮默认用 Google Maps 查询串打开。",
+    "cityLevelNavigationDisabled": false,
+    "navigationPolicy": {
+      "noNavigationTypes": [
+        "flight",
+        "note",
+        "rest"
+      ],
+      "selfNavigationTypes": [
+        "drive",
+        "return",
+        "transfer",
+        "check-in",
+        "check-out",
+        "restaurant",
+        "attraction",
+        "walk",
+        "hike"
+      ]
+    },
+    "navigationPlaces": [
+      {
+        "id": "nav-udo",
+        "label": "牛岛",
+        "query": "韩国 牛岛",
+        "matchTerms": [
+          "牛岛"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-seongsan",
+        "label": "城山日出峰",
+        "query": "韩国 城山日出峰",
+        "matchTerms": [
+          "城山日出峰",
+          "城山"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-aewol",
+        "label": "涯月邑",
+        "query": "韩国 涯月邑",
+        "matchTerms": [
+          "涯月"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-hyeopjae",
+        "label": "狭才海水浴场",
+        "query": "韩国 狭才海水浴场",
+        "matchTerms": [
+          "狭才"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-dongmun",
+        "label": "东门市场",
+        "query": "韩国 东门市场",
+        "matchTerms": [
+          "东门市场"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-songdo",
+        "label": "松岛海上缆车",
+        "query": "韩国 松岛海上缆车",
+        "matchTerms": [
+          "松岛"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-gamcheon",
+        "label": "甘川文化村",
+        "query": "韩国 甘川文化村",
+        "matchTerms": [
+          "甘川"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-huinyeoul",
+        "label": "白浅滩文化村",
+        "query": "韩国 白浅滩文化村",
+        "matchTerms": [
+          "白浅滩"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-gwangalli",
+        "label": "广安里海水浴场",
+        "query": "韩国 广安里海水浴场",
+        "matchTerms": [
+          "广安里"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-cheongsapo",
+        "label": "青沙埔",
+        "query": "韩国 青沙埔",
+        "matchTerms": [
+          "青沙埔"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-haeundae",
+        "label": "海云台",
+        "query": "韩国 海云台",
+        "matchTerms": [
+          "海云台"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-xthesky",
+        "label": "BUSAN X the SKY",
+        "query": "韩国 BUSAN X the SKY",
+        "matchTerms": [
+          "X the SKY"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-gwanghwamun",
+        "label": "光化门广场",
+        "query": "韩国 光化门广场",
+        "matchTerms": [
+          "光化门"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-gyeongbok",
+        "label": "景福宫",
+        "query": "韩国 景福宫",
+        "matchTerms": [
+          "景福宫"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-bukchon",
+        "label": "北村韩屋村",
+        "query": "韩国 北村韩屋村",
+        "matchTerms": [
+          "北村"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-myeongdong",
+        "label": "明洞",
+        "query": "韩国 明洞",
+        "matchTerms": [
+          "明洞"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-namsan",
+        "label": "南山首尔塔",
+        "query": "韩国 南山首尔塔",
+        "matchTerms": [
+          "首尔塔",
+          "南山"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-itaewon",
+        "label": "梨泰院",
+        "query": "韩国 梨泰院",
+        "matchTerms": [
+          "梨泰院"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-ewha",
+        "label": "梨花女子大学",
+        "query": "韩国 梨花女子大学",
+        "matchTerms": [
+          "梨花女子大学",
+          "梨大"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-yonsei",
+        "label": "延世大学",
+        "query": "韩国 延世大学",
+        "matchTerms": [
+          "延世大学"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-hongdae",
+        "label": "弘益大学（弘大）",
+        "query": "韩国 弘益大学（弘大）",
+        "matchTerms": [
+          "弘益大学",
+          "弘大"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-yeouido",
+        "label": "汝矣岛汉江公园",
+        "query": "韩国 汝矣岛汉江公园",
+        "matchTerms": [
+          "汝矣岛"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-dongdaemun",
+        "label": "东大门",
+        "query": "韩国 东大门",
+        "matchTerms": [
+          "东大门"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-seongsu",
+        "label": "圣水洞",
+        "query": "韩国 圣水洞",
+        "matchTerms": [
+          "圣水洞"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-cheongdam",
+        "label": "清潭洞",
+        "query": "韩国 清潭洞",
+        "matchTerms": [
+          "清潭洞"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-apgujeong",
+        "label": "狎鸥亭",
+        "query": "韩国 狎鸥亭",
+        "matchTerms": [
+          "狎鸥亭"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-gangnam",
+        "label": "江南",
+        "query": "韩国 江南",
+        "matchTerms": [
+          "江南"
+        ],
+        "priority": 2
+      }
+    ]
+  },
+  "issuesAndUncertainties": [
+    "住宿信息未提供：济州 9/26–9/29、釜山 9/29–10/2、首尔 10/2–10/5 的具体酒店待补充。",
+    "9/29 济州 → 釜山的航班号与时刻待补充（用户资料仅标注 ✈️）。",
+    "10/2 釜山 → 首尔的交通方式与班次待补充。",
+    "除牛岛渡轮外，景福宫、南山首尔塔、松岛海上缆车、BUSAN X the SKY 等是否需预约或购票，用户资料未说明，行前请自行确认。",
+    "地图示意图只覆盖韩国境内的济州岛、釜山、首尔三地；南京 ↔ 济州、首尔 ↔ 威海 ↔ 南京属于国际航段，按地区拆图后无法连线，故不出现在示意图上。",
+    "本页是公开页面：航班号、出行日期与行程安排，任何拿到链接的人都能看到。若需分享，请自行判断是否要保留这些信息。"
+  ],
+  "map": {
+    "schemaVersion": "1.0-lite",
+    "mapMode": "template-auto",
+    "templateId": "auto",
+    "defaultRegionId": "jeju",
+    "title": "济州 · 釜山 · 首尔 行程示意图",
+    "disclaimer": "本图为模板化行程示意图，按真实经纬度投影到模板底图上，仅表达地点的相对方位与路线顺序，不代表精确地理边界；国际航段不在图内。",
+    "regions": [
+      {
+        "id": "jeju",
+        "label": "济州岛",
+        "countryCode": "KR",
+        "heading": "JEJU / 济州岛",
+        "description": "济州岛 4 日行程示意图"
+      },
+      {
+        "id": "busan",
+        "label": "釜山",
+        "countryCode": "KR",
+        "heading": "BUSAN / 釜山",
+        "description": "釜山 3 日行程示意图"
+      },
+      {
+        "id": "seoul",
+        "label": "首尔",
+        "countryCode": "KR",
+        "heading": "SEOUL / 首尔",
+        "description": "首尔 4 日行程示意图"
+      }
+    ],
+    "places": [
+      {
+        "id": "p-jeju-airport",
+        "nameZh": "济州国际机场",
+        "name": "Jeju International Airport",
+        "countryCode": "KR",
+        "mapRegionId": "jeju",
+        "cityOrArea": "济州",
+        "query": "济州国际机场 CJU",
+        "geo": {
+          "lat": 33.5104,
+          "lng": 126.4914
+        },
+        "labelOffset": {
+          "x": -18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-jeju-city",
+        "nameZh": "济州市区（莲洞）",
+        "name": "Jeju City (Yeondong)",
+        "countryCode": "KR",
+        "mapRegionId": "jeju",
+        "cityOrArea": "济州",
+        "query": "济州市 莲洞",
+        "geo": {
+          "lat": 33.489,
+          "lng": 126.4983
+        },
+        "labelOffset": {
+          "x": 18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-seongsan-port",
+        "nameZh": "城山港",
+        "name": "Seongsan Port",
+        "countryCode": "KR",
+        "mapRegionId": "jeju",
+        "cityOrArea": "西归浦",
+        "query": "济州 城山港 客运码头",
+        "geo": {
+          "lat": 33.4747,
+          "lng": 126.928
+        },
+        "labelOffset": {
+          "x": 24,
+          "y": -23
+        }
+      },
+      {
+        "id": "p-udo",
+        "nameZh": "牛岛",
+        "name": "Udo Island",
+        "countryCode": "KR",
+        "mapRegionId": "jeju",
+        "cityOrArea": "济州",
+        "query": "济州 牛岛",
+        "geo": {
+          "lat": 33.505,
+          "lng": 126.95
+        },
+        "labelOffset": {
+          "x": -17,
+          "y": -13
+        }
+      },
+      {
+        "id": "p-seongsan",
+        "nameZh": "城山日出峰",
+        "name": "Seongsan Ilchulbong",
+        "countryCode": "KR",
+        "mapRegionId": "jeju",
+        "cityOrArea": "西归浦",
+        "query": "济州 城山日出峰",
+        "geo": {
+          "lat": 33.4587,
+          "lng": 126.9425
+        },
+        "labelOffset": {
+          "x": -8,
+          "y": 50
+        }
+      },
+      {
+        "id": "p-aewol",
+        "nameZh": "涯月邑",
+        "name": "Aewol",
+        "countryCode": "KR",
+        "mapRegionId": "jeju",
+        "cityOrArea": "济州",
+        "query": "济州 涯月邑 汉潭海岸散步路",
+        "geo": {
+          "lat": 33.463,
+          "lng": 126.309
+        },
+        "labelOffset": {
+          "x": -18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-hyeopjae",
+        "nameZh": "狭才海水浴场",
+        "name": "Hyeopjae Beach",
+        "countryCode": "KR",
+        "mapRegionId": "jeju",
+        "cityOrArea": "济州",
+        "query": "济州 狭才海水浴场",
+        "geo": {
+          "lat": 33.394,
+          "lng": 126.239
+        },
+        "labelOffset": {
+          "x": 18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-gimhae-airport",
+        "nameZh": "金海国际机场",
+        "name": "Gimhae International Airport",
+        "countryCode": "KR",
+        "mapRegionId": "busan",
+        "cityOrArea": "釜山",
+        "query": "釜山 金海国际机场 PUS",
+        "geo": {
+          "lat": 35.1795,
+          "lng": 128.9382
+        },
+        "labelOffset": {
+          "x": 18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-busan-city",
+        "nameZh": "釜山西面（市区）",
+        "name": "Busan (Seomyeon)",
+        "countryCode": "KR",
+        "mapRegionId": "busan",
+        "cityOrArea": "釜山",
+        "query": "釜山 西面",
+        "geo": {
+          "lat": 35.1579,
+          "lng": 129.0594
+        },
+        "labelOffset": {
+          "x": -18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-songdo",
+        "nameZh": "松岛海上缆车",
+        "name": "Songdo Marine Cable Car",
+        "countryCode": "KR",
+        "mapRegionId": "busan",
+        "cityOrArea": "釜山",
+        "query": "釜山 松岛海上缆车",
+        "geo": {
+          "lat": 35.076,
+          "lng": 129.023
+        },
+        "labelOffset": {
+          "x": -18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-gamcheon",
+        "nameZh": "甘川文化村",
+        "name": "Gamcheon Culture Village",
+        "countryCode": "KR",
+        "mapRegionId": "busan",
+        "cityOrArea": "釜山",
+        "query": "釜山 甘川文化村",
+        "geo": {
+          "lat": 35.0975,
+          "lng": 129.0105
+        },
+        "labelOffset": {
+          "x": -18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-huinyeoul",
+        "nameZh": "白浅滩文化村",
+        "name": "Huinnyeoul Culture Village",
+        "countryCode": "KR",
+        "mapRegionId": "busan",
+        "cityOrArea": "釜山",
+        "query": "釜山 白浅滩文化村",
+        "geo": {
+          "lat": 35.0785,
+          "lng": 129.043
+        },
+        "labelOffset": {
+          "x": 18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-gwangalli",
+        "nameZh": "广安里海水浴场",
+        "name": "Gwangalli Beach",
+        "countryCode": "KR",
+        "mapRegionId": "busan",
+        "cityOrArea": "釜山",
+        "query": "釜山 广安里海水浴场",
+        "geo": {
+          "lat": 35.153,
+          "lng": 129.118
+        },
+        "labelOffset": {
+          "x": -24,
+          "y": 38
+        }
+      },
+      {
+        "id": "p-cheongsapo",
+        "nameZh": "青沙埔",
+        "name": "Cheongsapo",
+        "countryCode": "KR",
+        "mapRegionId": "busan",
+        "cityOrArea": "釜山",
+        "query": "釜山 青沙埔 小镰仓",
+        "geo": {
+          "lat": 35.163,
+          "lng": 129.199
+        },
+        "labelOffset": {
+          "x": 18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-haeundae",
+        "nameZh": "海云台海水浴场",
+        "name": "Haeundae Beach",
+        "countryCode": "KR",
+        "mapRegionId": "busan",
+        "cityOrArea": "釜山",
+        "query": "釜山 海云台海水浴场",
+        "geo": {
+          "lat": 35.1587,
+          "lng": 129.1604
+        },
+        "labelOffset": {
+          "x": -23,
+          "y": -13
+        }
+      },
+      {
+        "id": "p-x-the-sky",
+        "nameZh": "BUSAN X the SKY",
+        "name": "BUSAN X the SKY",
+        "countryCode": "KR",
+        "mapRegionId": "busan",
+        "cityOrArea": "釜山",
+        "query": "釜山 X the SKY 观景台",
+        "geo": {
+          "lat": 35.1595,
+          "lng": 129.172
+        },
+        "labelOffset": {
+          "x": 23,
+          "y": 13
+        }
+      },
+      {
+        "id": "p-seoul-station",
+        "nameZh": "首尔站（市区）",
+        "name": "Seoul Station",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔站",
+        "geo": {
+          "lat": 37.5547,
+          "lng": 126.9707
+        },
+        "labelOffset": {
+          "x": -3,
+          "y": 61
+        }
+      },
+      {
+        "id": "p-gwanghwamun",
+        "nameZh": "光化门广场",
+        "name": "Gwanghwamun Square",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 光化门广场",
+        "geo": {
+          "lat": 37.572,
+          "lng": 126.9769
+        },
+        "labelOffset": {
+          "x": 32,
+          "y": -32
+        }
+      },
+      {
+        "id": "p-gyeongbokgung",
+        "nameZh": "景福宫",
+        "name": "Gyeongbokgung Palace",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 景福宫",
+        "geo": {
+          "lat": 37.5796,
+          "lng": 126.977
+        },
+        "labelOffset": {
+          "x": -18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-bukchon",
+        "nameZh": "北村韩屋村",
+        "name": "Bukchon Hanok Village",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 北村韩屋村",
+        "geo": {
+          "lat": 37.5826,
+          "lng": 126.983
+        },
+        "labelOffset": {
+          "x": -40,
+          "y": -83
+        }
+      },
+      {
+        "id": "p-myeongdong",
+        "nameZh": "明洞",
+        "name": "Myeongdong",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 明洞",
+        "geo": {
+          "lat": 37.5636,
+          "lng": 126.9834
+        },
+        "labelOffset": {
+          "x": -23,
+          "y": 40
+        }
+      },
+      {
+        "id": "p-namsan-tower",
+        "nameZh": "南山首尔塔",
+        "name": "N Seoul Tower",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 南山首尔塔",
+        "geo": {
+          "lat": 37.5512,
+          "lng": 126.9882
+        },
+        "labelOffset": {
+          "x": 0,
+          "y": -70
+        }
+      },
+      {
+        "id": "p-itaewon",
+        "nameZh": "梨泰院",
+        "name": "Itaewon",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 梨泰院",
+        "geo": {
+          "lat": 37.5345,
+          "lng": 126.9946
+        },
+        "labelOffset": {
+          "x": 0,
+          "y": 104
+        }
+      },
+      {
+        "id": "p-ewha",
+        "nameZh": "梨花女子大学",
+        "name": "Ewha Womans University",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 梨花女子大学",
+        "geo": {
+          "lat": 37.5623,
+          "lng": 126.9469
+        },
+        "labelOffset": {
+          "x": -48,
+          "y": -83
+        }
+      },
+      {
+        "id": "p-yonsei",
+        "nameZh": "延世大学",
+        "name": "Yonsei University",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 延世大学",
+        "geo": {
+          "lat": 37.5658,
+          "lng": 126.9385
+        },
+        "labelOffset": {
+          "x": -18,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-hongdae",
+        "nameZh": "弘益大学（弘大）",
+        "name": "Hongik University (Hongdae)",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 弘大",
+        "geo": {
+          "lat": 37.5573,
+          "lng": 126.925
+        },
+        "labelOffset": {
+          "x": -2,
+          "y": 0
+        }
+      },
+      {
+        "id": "p-yeouido",
+        "nameZh": "汝矣岛汉江公园",
+        "name": "Yeouido Hangang Park",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 汝矣岛汉江公园",
+        "geo": {
+          "lat": 37.5285,
+          "lng": 126.934
+        },
+        "labelOffset": {
+          "x": -23,
+          "y": 40
+        }
+      },
+      {
+        "id": "p-dongdaemun",
+        "nameZh": "东大门",
+        "name": "Dongdaemun",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 东大门",
+        "geo": {
+          "lat": 37.5714,
+          "lng": 127.0095
+        },
+        "labelOffset": {
+          "x": 11,
+          "y": -61
+        }
+      },
+      {
+        "id": "p-seongsu",
+        "nameZh": "圣水洞",
+        "name": "Seongsu-dong",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 圣水洞",
+        "geo": {
+          "lat": 37.5446,
+          "lng": 127.056
+        },
+        "labelOffset": {
+          "x": 0,
+          "y": 10
+        }
+      },
+      {
+        "id": "p-cheongdam",
+        "nameZh": "清潭洞",
+        "name": "Cheongdam-dong",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 清潭洞",
+        "geo": {
+          "lat": 37.524,
+          "lng": 127.052
+        },
+        "labelOffset": {
+          "x": 0,
+          "y": 2
+        }
+      },
+      {
+        "id": "p-apgujeong",
+        "nameZh": "狎鸥亭",
+        "name": "Apgujeong",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 狎鸥亭 罗德奥街",
+        "geo": {
+          "lat": 37.527,
+          "lng": 127.033
+        },
+        "labelOffset": {
+          "x": -131,
+          "y": 77
+        }
+      },
+      {
+        "id": "p-gangnam",
+        "nameZh": "江南",
+        "name": "Gangnam",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "首尔",
+        "query": "首尔 江南",
+        "geo": {
+          "lat": 37.4979,
+          "lng": 127.0276
+        },
+        "labelOffset": {
+          "x": 24,
+          "y": -9
+        }
+      },
+      {
+        "id": "p-icn",
+        "nameZh": "仁川国际机场 T1",
+        "name": "Incheon International Airport T1",
+        "countryCode": "KR",
+        "mapRegionId": "seoul",
+        "cityOrArea": "仁川",
+        "query": "仁川国际机场 T1",
+        "geo": {
+          "lat": 37.4602,
+          "lng": 126.4407
+        },
+        "labelOffset": {
+          "x": 18,
+          "y": 0
+        }
+      }
+    ],
+    "routes": [
+      {
+        "day": 1,
+        "placeIds": [
+          "p-jeju-airport",
+          "p-jeju-city"
+        ],
+        "scheduleItems": [
+          [
+            "d1-04"
+          ]
+        ]
+      },
+      {
+        "day": 2,
+        "placeIds": [
+          "p-jeju-city",
+          "p-seongsan-port",
+          "p-udo",
+          "p-seongsan",
+          "p-jeju-city"
+        ],
+        "scheduleItems": [
+          [
+            "d2-01"
+          ],
+          [
+            "d2-03"
+          ],
+          [
+            "d2-05"
+          ],
+          [
+            "d2-08"
+          ]
+        ]
+      },
+      {
+        "day": 3,
+        "placeIds": [
+          "p-jeju-city",
+          "p-aewol",
+          "p-hyeopjae",
+          "p-jeju-city"
+        ],
+        "scheduleItems": [
+          [
+            "d3-01"
+          ],
+          [
+            "d3-03"
+          ],
+          [
+            "d3-05"
+          ]
+        ]
+      },
+      {
+        "day": 4,
+        "placeIds": [
+          "p-jeju-city",
+          "p-jeju-airport",
+          "p-gimhae-airport",
+          "p-busan-city"
+        ],
+        "scheduleItems": [
+          [
+            "d4-02"
+          ],
+          [
+            "d4-03"
+          ],
+          [
+            "d4-04"
+          ]
+        ]
+      },
+      {
+        "day": 5,
+        "placeIds": [
+          "p-busan-city",
+          "p-songdo",
+          "p-gamcheon",
+          "p-huinyeoul",
+          "p-gwangalli"
+        ],
+        "scheduleItems": [
+          [
+            "d5-01"
+          ],
+          [
+            "d5-03"
+          ],
+          [
+            "d5-05"
+          ],
+          [
+            "d5-07"
+          ]
+        ]
+      },
+      {
+        "day": 6,
+        "placeIds": [
+          "p-busan-city",
+          "p-cheongsapo",
+          "p-haeundae",
+          "p-x-the-sky"
+        ],
+        "scheduleItems": [
+          [
+            "d6-01"
+          ],
+          [
+            "d6-03"
+          ],
+          [
+            "d6-05"
+          ]
+        ]
+      },
+      {
+        "day": 7,
+        "placeIds": [
+          "p-seoul-station",
+          "p-gwanghwamun",
+          "p-gyeongbokgung",
+          "p-bukchon",
+          "p-myeongdong",
+          "p-namsan-tower",
+          "p-itaewon"
+        ],
+        "scheduleItems": [
+          [
+            "d7-02"
+          ],
+          [
+            "d7-04"
+          ],
+          [
+            "d7-06"
+          ],
+          [
+            "d7-07"
+          ],
+          [
+            "d7-09"
+          ],
+          [
+            "d7-10"
+          ]
+        ]
+      },
+      {
+        "day": 8,
+        "placeIds": [
+          "p-seoul-station",
+          "p-ewha",
+          "p-yonsei",
+          "p-hongdae",
+          "p-yeouido"
+        ],
+        "scheduleItems": [
+          [
+            "d8-01"
+          ],
+          [
+            "d8-03"
+          ],
+          [
+            "d8-05"
+          ],
+          [
+            "d8-07"
+          ]
+        ]
+      },
+      {
+        "day": 9,
+        "placeIds": [
+          "p-seoul-station",
+          "p-dongdaemun",
+          "p-seongsu",
+          "p-cheongdam",
+          "p-apgujeong",
+          "p-gangnam"
+        ],
+        "scheduleItems": [
+          [
+            "d9-01"
+          ],
+          [
+            "d9-03"
+          ],
+          [
+            "d9-05"
+          ],
+          [
+            "d9-07"
+          ],
+          [
+            "d9-09"
+          ]
+        ]
+      },
+      {
+        "day": 10,
+        "placeIds": [
+          "p-seoul-station",
+          "p-icn"
+        ],
+        "scheduleItems": [
+          [
+            "d10-01"
+          ]
+        ]
+      }
+    ],
+    "dailyRoutes": []
+  },
+  "routeMap": {
+    "defaultRegionId": "jeju",
+    "regions": [
+      {
+        "id": "jeju",
+        "label": "济州岛",
+        "countryCode": "KR",
+        "scope": "template-schematic",
+        "mapMode": "frozen-template",
+        "templateId": "urban-radial",
+        "mapModeReason": "dense-place-cluster",
+        "mapModeMetrics": {
+          "placeCount": 7,
+          "geoPlaceCount": 7,
+          "widthKm": 65.83,
+          "heightKm": 12.92,
+          "spanKm": 67.11,
+          "averageNearestKm": 4.78,
+          "components": 1,
+          "largestLegKm": 41.34,
+          "jumpRatio": 4.11
+        },
+        "days": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "canvas": {
+          "width": 1448,
+          "height": 1086
+        },
+        "projection": {
+          "type": "relative-schematic",
+          "bounds": null
+        },
+        "baseImage": "assets/maps/templates/template-04-urban.webp",
+        "title": "济州 · 釜山 · 首尔 行程示意图",
+        "ariaLabel": "济州岛模板化旅行路线示意图，共4天",
+        "description": "济州岛 4 日行程示意图",
+        "disclaimer": "本图为模板化行程示意图，按真实经纬度投影到模板底图上，仅表达地点的相对方位与路线顺序，不代表精确地理边界；国际航段不在图内。",
+        "heading": {
+          "text": "JEJU / 济州岛",
+          "x": 33,
+          "y": 105,
+          "size": 40
+        },
+        "legend": {
+          "x": 35,
+          "y": 168,
+          "gap": 43
+        },
+        "annotations": [],
+        "routes": [
+          {
+            "day": 1,
+            "color": "#397dc1",
+            "placeIds": [
+              "p-jeju-airport",
+              "p-jeju-city"
+            ],
+            "paths": [
+              "M744.14 429.88 C762.2 459.5 770.9 491.6 769.55 524.37"
+            ],
+            "overviewPaths": [
+              "M744.14 429.88 C762.2 459.5 770.9 491.6 769.55 524.37"
+            ]
+          },
+          {
+            "day": 2,
+            "color": "#e77e22",
+            "placeIds": [
+              "p-jeju-city",
+              "p-seongsan-port",
+              "p-udo",
+              "p-seongsan",
+              "p-jeju-city"
+            ],
+            "paths": [
+              "M769.55 524.37 C881.5 550.2 992.3 546.0 1095.45 512.16 C1113.2 481.6 1137.8 458.2 1167.77 443.47 C1165.4 478.5 1172.7 511.3 1189.19 540.12 C1045.4 564.7 902.7 559.4 769.55 524.37"
+            ],
+            "overviewPaths": [
+              "M769.55 524.37 C881.5 550.2 992.3 546.0 1095.45 512.16 C1113.2 481.6 1137.8 458.2 1167.77 443.47 C1165.4 478.5 1172.7 511.3 1189.19 540.12 C1045.4 564.7 902.7 559.4 769.55 524.37"
+            ]
+          },
+          {
+            "day": 3,
+            "color": "#618344",
+            "placeIds": [
+              "p-jeju-city",
+              "p-aewol",
+              "p-hyeopjae",
+              "p-jeju-city"
+            ],
+            "paths": [
+              "M769.55 524.37 C708.9 538.3 649.3 534.7 594.3 513.83 C564.2 533.6 541.9 560.0 528.62 591.44 C603.8 544.5 685.7 521.7 769.55 524.37"
+            ],
+            "overviewPaths": [
+              "M769.55 524.37 C708.9 538.3 649.3 534.7 594.3 513.83 C564.2 533.6 541.9 560.0 528.62 591.44 C603.8 544.5 685.7 521.7 769.55 524.37"
+            ]
+          },
+          {
+            "day": 4,
+            "color": "#209aaa",
+            "placeIds": [
+              "p-jeju-city",
+              "p-jeju-airport"
+            ],
+            "paths": [
+              "M769.55 524.37 C770.4 489.7 761.7 457.6 744.14 429.88"
+            ],
+            "overviewPaths": [
+              "M769.55 524.37 C770.4 489.7 761.7 457.6 744.14 429.88"
+            ]
+          }
+        ],
+        "places": [
+          {
+            "id": "p-jeju-airport",
+            "x": 744.14,
+            "y": 429.88,
+            "color": "#397dc1",
+            "tx": 726.14,
+            "ty": 429.88,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Jeju International Airport /",
+              "济州国际机场"
+            ],
+            "query": "济州国际机场 CJU",
+            "geo": {
+              "lat": 33.5104,
+              "lng": 126.4914
+            },
+            "days": [
+              1,
+              4
+            ]
+          },
+          {
+            "id": "p-jeju-city",
+            "x": 769.55,
+            "y": 524.37,
+            "color": "#397dc1",
+            "tx": 787.55,
+            "ty": 524.37,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Jeju City (Yeondong) /",
+              "济州市区（莲洞）"
+            ],
+            "query": "济州市 莲洞",
+            "geo": {
+              "lat": 33.489,
+              "lng": 126.4983
+            },
+            "days": [
+              1,
+              2,
+              3,
+              4
+            ]
+          },
+          {
+            "id": "p-seongsan-port",
+            "x": 1095.45,
+            "y": 512.16,
+            "color": "#e77e22",
+            "tx": 1119.45,
+            "ty": 489.16,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Seongsan Port /",
+              "城山港"
+            ],
+            "query": "济州 城山港 客运码头",
+            "geo": {
+              "lat": 33.4747,
+              "lng": 126.928
+            },
+            "days": [
+              2
+            ]
+          },
+          {
+            "id": "p-udo",
+            "x": 1167.77,
+            "y": 443.47,
+            "color": "#e77e22",
+            "tx": 1150.77,
+            "ty": 430.47,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Udo Island /",
+              "牛岛"
+            ],
+            "query": "济州 牛岛",
+            "geo": {
+              "lat": 33.505,
+              "lng": 126.95
+            },
+            "days": [
+              2
+            ]
+          },
+          {
+            "id": "p-seongsan",
+            "x": 1189.19,
+            "y": 540.12,
+            "color": "#e77e22",
+            "tx": 1181.19,
+            "ty": 590.12,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Seongsan Ilchulbong /",
+              "城山日出峰"
+            ],
+            "query": "济州 城山日出峰",
+            "geo": {
+              "lat": 33.4587,
+              "lng": 126.9425
+            },
+            "days": [
+              2
+            ]
+          },
+          {
+            "id": "p-aewol",
+            "x": 594.3,
+            "y": 513.83,
+            "color": "#618344",
+            "tx": 576.3,
+            "ty": 513.83,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Aewol /",
+              "涯月邑"
+            ],
+            "query": "济州 涯月邑 汉潭海岸散步路",
+            "geo": {
+              "lat": 33.463,
+              "lng": 126.309
+            },
+            "days": [
+              3
+            ]
+          },
+          {
+            "id": "p-hyeopjae",
+            "x": 528.62,
+            "y": 591.44,
+            "color": "#618344",
+            "tx": 546.62,
+            "ty": 591.44,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Hyeopjae Beach /",
+              "狭才海水浴场"
+            ],
+            "query": "济州 狭才海水浴场",
+            "geo": {
+              "lat": 33.394,
+              "lng": 126.239
+            },
+            "days": [
+              3
+            ]
+          }
+        ],
+        "overviewPlaceIds": [
+          "p-jeju-airport",
+          "p-jeju-city",
+          "p-seongsan-port",
+          "p-udo",
+          "p-seongsan",
+          "p-aewol",
+          "p-hyeopjae"
+        ],
+        "dailyLayouts": {
+          "1": {
+            "places": [
+              "p-jeju-airport",
+              "p-jeju-city"
+            ],
+            "labels": {
+              "p-jeju-airport": {
+                "x": 726.14,
+                "y": 429.88,
+                "anchor": "end"
+              },
+              "p-jeju-city": {
+                "x": 787.55,
+                "y": 524.37,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d1-04"
+                ],
+                "x": 756.85,
+                "y": 477.13
+              }
+            ]
+          },
+          "2": {
+            "places": [
+              "p-jeju-city",
+              "p-seongsan-port",
+              "p-udo",
+              "p-seongsan"
+            ],
+            "labels": {
+              "p-jeju-city": {
+                "x": 787.55,
+                "y": 524.37,
+                "anchor": "start"
+              },
+              "p-seongsan-port": {
+                "x": 1119.45,
+                "y": 489.16,
+                "anchor": "start"
+              },
+              "p-udo": {
+                "x": 1150.77,
+                "y": 430.47,
+                "anchor": "end"
+              },
+              "p-seongsan": {
+                "x": 1181.19,
+                "y": 590.12,
+                "anchor": "end"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d2-01"
+                ],
+                "x": 932.5,
+                "y": 518.26
+              },
+              {
+                "items": [
+                  "d2-03"
+                ],
+                "x": 1131.61,
+                "y": 477.81
+              },
+              {
+                "items": [
+                  "d2-05"
+                ],
+                "x": 1178.48,
+                "y": 491.8
+              },
+              {
+                "items": [
+                  "d2-08"
+                ],
+                "x": 979.37,
+                "y": 532.25
+              }
+            ]
+          },
+          "3": {
+            "places": [
+              "p-jeju-city",
+              "p-aewol",
+              "p-hyeopjae"
+            ],
+            "labels": {
+              "p-jeju-city": {
+                "x": 787.55,
+                "y": 524.37,
+                "anchor": "start"
+              },
+              "p-aewol": {
+                "x": 576.3,
+                "y": 513.83,
+                "anchor": "end"
+              },
+              "p-hyeopjae": {
+                "x": 546.62,
+                "y": 591.44,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d3-01"
+                ],
+                "x": 681.92,
+                "y": 519.1
+              },
+              {
+                "items": [
+                  "d3-03"
+                ],
+                "x": 561.46,
+                "y": 552.63
+              },
+              {
+                "items": [
+                  "d3-05"
+                ],
+                "x": 649.09,
+                "y": 557.9
+              }
+            ]
+          },
+          "4": {
+            "places": [
+              "p-jeju-city",
+              "p-jeju-airport"
+            ],
+            "labels": {
+              "p-jeju-city": {
+                "x": 787.55,
+                "y": 524.37,
+                "anchor": "start"
+              },
+              "p-jeju-airport": {
+                "x": 726.14,
+                "y": 429.88,
+                "anchor": "end"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d4-02"
+                ],
+                "x": 756.85,
+                "y": 477.13
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "busan",
+        "label": "釜山",
+        "countryCode": "KR",
+        "scope": "template-schematic",
+        "mapMode": "frozen-template",
+        "templateId": "compact-basin",
+        "mapModeReason": "dense-place-cluster",
+        "mapModeMetrics": {
+          "placeCount": 9,
+          "geoPlaceCount": 9,
+          "widthKm": 23.67,
+          "heightKm": 11.49,
+          "spanKm": 23.78,
+          "averageNearestKm": 3.49,
+          "components": 1,
+          "largestLegKm": 12.7,
+          "jumpRatio": 1.31
+        },
+        "days": [
+          4,
+          5,
+          6
+        ],
+        "canvas": {
+          "width": 1448,
+          "height": 1086
+        },
+        "projection": {
+          "type": "relative-schematic",
+          "bounds": null
+        },
+        "baseImage": "assets/maps/templates/template-07-compact-basin.webp",
+        "title": "济州 · 釜山 · 首尔 行程示意图",
+        "ariaLabel": "釜山模板化旅行路线示意图，共3天",
+        "description": "釜山 3 日行程示意图",
+        "disclaimer": "本图为模板化行程示意图，按真实经纬度投影到模板底图上，仅表达地点的相对方位与路线顺序，不代表精确地理边界；国际航段不在图内。",
+        "heading": {
+          "text": "BUSAN / 釜山",
+          "x": 33,
+          "y": 105,
+          "size": 40
+        },
+        "legend": {
+          "x": 35,
+          "y": 168,
+          "gap": 43
+        },
+        "annotations": [],
+        "routes": [
+          {
+            "day": 4,
+            "color": "#209aaa",
+            "placeIds": [
+              "p-gimhae-airport",
+              "p-busan-city"
+            ],
+            "paths": [
+              "M350 345.45 C460.5 400.2 577.5 425.7 693.9 420.39"
+            ],
+            "overviewPaths": [
+              "M350 345.45 C460.5 400.2 577.5 425.7 693.9 420.39"
+            ]
+          },
+          {
+            "day": 5,
+            "color": "#8865a5",
+            "placeIds": [
+              "p-busan-city",
+              "p-songdo",
+              "p-gamcheon",
+              "p-huinyeoul",
+              "p-gwangalli"
+            ],
+            "paths": [
+              "M693.9 420.39 C680.5 533.5 639.3 635.5 572.66 720.12 C575.9 684.5 569.3 650.8 553.13 621.05 C598.8 632.8 637.6 656.0 667.33 689.21 C754.0 622.5 816.6 538.0 851.45 440.6"
+            ],
+            "overviewPaths": [
+              "M693.9 420.39 C680.5 533.5 639.3 635.5 572.66 720.12 C575.9 684.5 569.3 650.8 553.13 621.05 C598.8 632.8 637.6 656.0 667.33 689.21 C754.0 622.5 816.6 538.0 851.45 440.6"
+            ]
+          },
+          {
+            "day": 6,
+            "color": "#df6185",
+            "placeIds": [
+              "p-busan-city",
+              "p-cheongsapo",
+              "p-haeundae",
+              "p-x-the-sky"
+            ],
+            "paths": [
+              "M693.9 420.39 C839.7 440.0 983.3 429.7 1116.31 390.02 C1058.7 410.4 1000.1 413.6 944.08 399.37 C969.7 422.9 999.7 437.6 1032.19 442.56"
+            ],
+            "overviewPaths": [
+              "M693.9 420.39 C839.7 440.0 983.3 429.7 1116.31 390.02 C1058.7 410.4 1000.1 413.6 944.08 399.37 C969.7 422.9 999.7 437.6 1032.19 442.56"
+            ]
+          }
+        ],
+        "places": [
+          {
+            "id": "p-gimhae-airport",
+            "x": 350,
+            "y": 345.45,
+            "color": "#209aaa",
+            "tx": 368,
+            "ty": 345.45,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Gimhae International Airport /",
+              "金海国际机场"
+            ],
+            "query": "釜山 金海国际机场 PUS",
+            "geo": {
+              "lat": 35.1795,
+              "lng": 128.9382
+            },
+            "days": [
+              4
+            ]
+          },
+          {
+            "id": "p-busan-city",
+            "x": 693.9,
+            "y": 420.39,
+            "color": "#209aaa",
+            "tx": 675.9,
+            "ty": 420.39,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Busan (Seomyeon) /",
+              "釜山西面（市区）"
+            ],
+            "query": "釜山 西面",
+            "geo": {
+              "lat": 35.1579,
+              "lng": 129.0594
+            },
+            "days": [
+              4,
+              5,
+              6
+            ]
+          },
+          {
+            "id": "p-songdo",
+            "x": 572.66,
+            "y": 720.12,
+            "color": "#8865a5",
+            "tx": 554.66,
+            "ty": 720.12,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Songdo Marine Cable Car /",
+              "松岛海上缆车"
+            ],
+            "query": "釜山 松岛海上缆车",
+            "geo": {
+              "lat": 35.076,
+              "lng": 129.023
+            },
+            "days": [
+              5
+            ]
+          },
+          {
+            "id": "p-gamcheon",
+            "x": 553.13,
+            "y": 621.05,
+            "color": "#8865a5",
+            "tx": 535.13,
+            "ty": 621.05,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Gamcheon Culture Village /",
+              "甘川文化村"
+            ],
+            "query": "釜山 甘川文化村",
+            "geo": {
+              "lat": 35.0975,
+              "lng": 129.0105
+            },
+            "days": [
+              5
+            ]
+          },
+          {
+            "id": "p-huinyeoul",
+            "x": 667.33,
+            "y": 689.21,
+            "color": "#8865a5",
+            "tx": 685.33,
+            "ty": 689.21,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Huinnyeoul Culture Village /",
+              "白浅滩文化村"
+            ],
+            "query": "釜山 白浅滩文化村",
+            "geo": {
+              "lat": 35.0785,
+              "lng": 129.043
+            },
+            "days": [
+              5
+            ]
+          },
+          {
+            "id": "p-gwangalli",
+            "x": 851.45,
+            "y": 440.6,
+            "color": "#8865a5",
+            "tx": 827.45,
+            "ty": 478.6,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Gwangalli Beach /",
+              "广安里海水浴场"
+            ],
+            "query": "釜山 广安里海水浴场",
+            "geo": {
+              "lat": 35.153,
+              "lng": 129.118
+            },
+            "days": [
+              5
+            ]
+          },
+          {
+            "id": "p-cheongsapo",
+            "x": 1116.31,
+            "y": 390.02,
+            "color": "#df6185",
+            "tx": 1134.31,
+            "ty": 390.02,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Cheongsapo /",
+              "青沙埔"
+            ],
+            "query": "釜山 青沙埔 小镰仓",
+            "geo": {
+              "lat": 35.163,
+              "lng": 129.199
+            },
+            "days": [
+              6
+            ]
+          },
+          {
+            "id": "p-haeundae",
+            "x": 944.08,
+            "y": 399.37,
+            "color": "#df6185",
+            "tx": 921.08,
+            "ty": 386.37,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Haeundae Beach /",
+              "海云台海水浴场"
+            ],
+            "query": "釜山 海云台海水浴场",
+            "geo": {
+              "lat": 35.1587,
+              "lng": 129.1604
+            },
+            "days": [
+              6
+            ]
+          },
+          {
+            "id": "p-x-the-sky",
+            "x": 1032.19,
+            "y": 442.56,
+            "color": "#df6185",
+            "tx": 1055.19,
+            "ty": 455.56,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "BUSAN X the SKY"
+            ],
+            "query": "釜山 X the SKY 观景台",
+            "geo": {
+              "lat": 35.1595,
+              "lng": 129.172
+            },
+            "days": [
+              6
+            ]
+          }
+        ],
+        "overviewPlaceIds": [
+          "p-gimhae-airport",
+          "p-busan-city",
+          "p-songdo",
+          "p-gamcheon",
+          "p-huinyeoul",
+          "p-gwangalli",
+          "p-cheongsapo",
+          "p-haeundae",
+          "p-x-the-sky"
+        ],
+        "dailyLayouts": {
+          "4": {
+            "places": [
+              "p-gimhae-airport",
+              "p-busan-city"
+            ],
+            "labels": {
+              "p-gimhae-airport": {
+                "x": 368,
+                "y": 345.45,
+                "anchor": "start"
+              },
+              "p-busan-city": {
+                "x": 675.9,
+                "y": 420.39,
+                "anchor": "end"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d4-04"
+                ],
+                "x": 521.95,
+                "y": 382.92
+              }
+            ]
+          },
+          "5": {
+            "places": [
+              "p-busan-city",
+              "p-songdo",
+              "p-gamcheon",
+              "p-huinyeoul",
+              "p-gwangalli"
+            ],
+            "labels": {
+              "p-busan-city": {
+                "x": 675.9,
+                "y": 420.39,
+                "anchor": "end"
+              },
+              "p-songdo": {
+                "x": 554.66,
+                "y": 720.12,
+                "anchor": "end"
+              },
+              "p-gamcheon": {
+                "x": 535.13,
+                "y": 621.05,
+                "anchor": "end"
+              },
+              "p-huinyeoul": {
+                "x": 685.33,
+                "y": 689.21,
+                "anchor": "start"
+              },
+              "p-gwangalli": {
+                "x": 827.45,
+                "y": 478.6,
+                "anchor": "end"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d5-01"
+                ],
+                "x": 633.28,
+                "y": 570.25
+              },
+              {
+                "items": [
+                  "d5-03"
+                ],
+                "x": 562.89,
+                "y": 670.59
+              },
+              {
+                "items": [
+                  "d5-05"
+                ],
+                "x": 610.23,
+                "y": 655.13
+              },
+              {
+                "items": [
+                  "d5-07"
+                ],
+                "x": 759.39,
+                "y": 564.9
+              }
+            ]
+          },
+          "6": {
+            "places": [
+              "p-busan-city",
+              "p-cheongsapo",
+              "p-haeundae",
+              "p-x-the-sky"
+            ],
+            "labels": {
+              "p-busan-city": {
+                "x": 675.9,
+                "y": 420.39,
+                "anchor": "end"
+              },
+              "p-cheongsapo": {
+                "x": 1134.31,
+                "y": 390.02,
+                "anchor": "start"
+              },
+              "p-haeundae": {
+                "x": 921.08,
+                "y": 386.37,
+                "anchor": "end"
+              },
+              "p-x-the-sky": {
+                "x": 1055.19,
+                "y": 455.56,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d6-01"
+                ],
+                "x": 905.11,
+                "y": 405.2
+              },
+              {
+                "items": [
+                  "d6-03"
+                ],
+                "x": 1030.19,
+                "y": 394.69
+              },
+              {
+                "items": [
+                  "d6-05"
+                ],
+                "x": 988.13,
+                "y": 420.97
+              }
+            ]
+          }
+        }
+      },
+      {
+        "id": "seoul",
+        "label": "首尔",
+        "countryCode": "KR",
+        "scope": "template-schematic",
+        "mapMode": "frozen-template",
+        "templateId": "urban-radial",
+        "mapModeReason": "dense-place-cluster",
+        "mapModeMetrics": {
+          "placeCount": 17,
+          "geoPlaceCount": 17,
+          "widthKm": 54.15,
+          "heightKm": 13.59,
+          "spanKm": 55.08,
+          "averageNearestKm": 4.12,
+          "components": 1,
+          "largestLegKm": 47.92,
+          "jumpRatio": 22.68
+        },
+        "days": [
+          7,
+          8,
+          9,
+          10
+        ],
+        "canvas": {
+          "width": 1448,
+          "height": 1086
+        },
+        "projection": {
+          "type": "relative-schematic",
+          "bounds": null
+        },
+        "baseImage": "assets/maps/templates/template-04-urban.webp",
+        "title": "济州 · 釜山 · 首尔 行程示意图",
+        "ariaLabel": "首尔模板化旅行路线示意图，共4天",
+        "description": "首尔 4 日行程示意图",
+        "disclaimer": "本图为模板化行程示意图，按真实经纬度投影到模板底图上，仅表达地点的相对方位与路线顺序，不代表精确地理边界；国际航段不在图内。",
+        "heading": {
+          "text": "SEOUL / 首尔",
+          "x": 33,
+          "y": 105,
+          "size": 40
+        },
+        "legend": {
+          "x": 35,
+          "y": 168,
+          "gap": 43
+        },
+        "annotations": [],
+        "routes": [
+          {
+            "day": 7,
+            "color": "#397dc1",
+            "placeIds": [
+              "p-seoul-station",
+              "p-gwanghwamun",
+              "p-gyeongbokgung",
+              "p-bukchon",
+              "p-myeongdong",
+              "p-namsan-tower",
+              "p-itaewon"
+            ],
+            "paths": [
+              "M1069.48 617.47 C1044.1 520.0 1047.2 423.4 1078.47 333.41 C1028.2 388.6 997.0 453.1 986.47 522.92 C1013.1 472.0 1051.4 432.4 1099.04 406.32 C1072.8 449.1 1060.3 495.6 1062.17 543.06 C1089.3 494.0 1127.6 456.3 1174.74 432.01 C1146.0 475.9 1131.5 524.1 1132.02 573.7"
+            ],
+            "overviewPaths": [
+              "M1069.48 617.47 C1058.4 542.7 1068.5 470.9 1099.04 406.32 C1093.5 466.5 1104.7 523.4 1132.02 573.7"
+            ]
+          },
+          {
+            "day": 8,
+            "color": "#e77e22",
+            "placeIds": [
+              "p-seoul-station",
+              "p-ewha",
+              "p-yonsei",
+              "p-hongdae",
+              "p-yeouido"
+            ],
+            "paths": [
+              "M1069.48 617.47 C1123.6 538.4 1152.0 450.9 1153.05 360.23 C1094.8 408.6 1028.1 437.4 956.93 444.82 C983.2 431.1 1003.6 411.3 1016.98 386.68 C1031.2 412.4 1037.3 440.0 1034.99 467.68"
+            ],
+            "overviewPaths": [
+              "M1069.48 617.47 C1048.5 547.5 1010.2 488.8 956.93 444.82 C985.8 444.8 1012.3 452.6 1034.99 467.68"
+            ]
+          },
+          {
+            "day": 9,
+            "color": "#618344",
+            "placeIds": [
+              "p-seoul-station",
+              "p-dongdaemun",
+              "p-seongsu",
+              "p-cheongdam",
+              "p-apgujeong",
+              "p-gangnam"
+            ],
+            "paths": [
+              "M1069.48 617.47 C1070.4 567.6 1084.8 522.0 1111.71 483.29 C1158.5 493.0 1204.1 489.2 1246 472.3 C1254.8 502.3 1254.8 532.4 1246 560.67 C1228.5 537.9 1206.2 521.7 1180.49 512.96 C1197.8 550.3 1203.7 589.4 1197.7 627.87"
+            ],
+            "overviewPaths": [
+              "M1069.48 617.47 C1070.4 567.6 1084.8 522.0 1111.71 483.29 C1149.6 523.0 1195.3 549.3 1246 560.67 C1219.0 551.0 1196.7 534.8 1180.49 512.96 C1174.9 553.8 1180.7 592.8 1197.7 627.87"
+            ]
+          },
+          {
+            "day": 10,
+            "color": "#209aaa",
+            "placeIds": [
+              "p-seoul-station",
+              "p-icn"
+            ],
+            "paths": [
+              "M1069.48 617.47 C871.8 587.3 674.1 587.2 488 617.07"
+            ],
+            "overviewPaths": [
+              "M1069.48 617.47 C871.8 587.3 674.1 587.2 488 617.07"
+            ]
+          }
+        ],
+        "places": [
+          {
+            "id": "p-seoul-station",
+            "x": 1069.48,
+            "y": 617.47,
+            "color": "#397dc1",
+            "tx": 1066.48,
+            "ty": 678.47,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Seoul Station /",
+              "首尔站（市区）"
+            ],
+            "query": "首尔站",
+            "geo": {
+              "lat": 37.5547,
+              "lng": 126.9707
+            },
+            "days": [
+              7,
+              8,
+              9,
+              10
+            ]
+          },
+          {
+            "id": "p-gwanghwamun",
+            "x": 1078.47,
+            "y": 333.41,
+            "color": "#397dc1",
+            "tx": 1110.47,
+            "ty": 301.41,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Gwanghwamun Square /",
+              "光化门广场"
+            ],
+            "query": "首尔 光化门广场",
+            "geo": {
+              "lat": 37.572,
+              "lng": 126.9769
+            },
+            "days": [
+              7
+            ]
+          },
+          {
+            "id": "p-gyeongbokgung",
+            "x": 986.47,
+            "y": 522.92,
+            "color": "#397dc1",
+            "tx": 968.47,
+            "ty": 522.92,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Gyeongbokgung Palace /",
+              "景福宫"
+            ],
+            "query": "首尔 景福宫",
+            "geo": {
+              "lat": 37.5796,
+              "lng": 126.977
+            },
+            "days": [
+              7
+            ]
+          },
+          {
+            "id": "p-bukchon",
+            "x": 1099.04,
+            "y": 406.32,
+            "color": "#397dc1",
+            "tx": 1059.04,
+            "ty": 323.32,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Bukchon Hanok Village /",
+              "北村韩屋村"
+            ],
+            "query": "首尔 北村韩屋村",
+            "geo": {
+              "lat": 37.5826,
+              "lng": 126.983
+            },
+            "days": [
+              7
+            ]
+          },
+          {
+            "id": "p-myeongdong",
+            "x": 1062.17,
+            "y": 543.06,
+            "color": "#397dc1",
+            "tx": 1039.17,
+            "ty": 583.06,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Myeongdong /",
+              "明洞"
+            ],
+            "query": "首尔 明洞",
+            "geo": {
+              "lat": 37.5636,
+              "lng": 126.9834
+            },
+            "days": [
+              7
+            ]
+          },
+          {
+            "id": "p-namsan-tower",
+            "x": 1174.74,
+            "y": 432.01,
+            "color": "#397dc1",
+            "tx": 1174.74,
+            "ty": 362.01,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "N Seoul Tower /",
+              "南山首尔塔"
+            ],
+            "query": "首尔 南山首尔塔",
+            "geo": {
+              "lat": 37.5512,
+              "lng": 126.9882
+            },
+            "days": [
+              7
+            ]
+          },
+          {
+            "id": "p-itaewon",
+            "x": 1132.02,
+            "y": 573.7,
+            "color": "#397dc1",
+            "tx": 1132.02,
+            "ty": 677.7,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Itaewon /",
+              "梨泰院"
+            ],
+            "query": "首尔 梨泰院",
+            "geo": {
+              "lat": 37.5345,
+              "lng": 126.9946
+            },
+            "days": [
+              7
+            ]
+          },
+          {
+            "id": "p-ewha",
+            "x": 1153.05,
+            "y": 360.23,
+            "color": "#e77e22",
+            "tx": 1105.05,
+            "ty": 277.23,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Ewha Womans University /",
+              "梨花女子大学"
+            ],
+            "query": "首尔 梨花女子大学",
+            "geo": {
+              "lat": 37.5623,
+              "lng": 126.9469
+            },
+            "days": [
+              8
+            ]
+          },
+          {
+            "id": "p-yonsei",
+            "x": 956.93,
+            "y": 444.82,
+            "color": "#e77e22",
+            "tx": 938.93,
+            "ty": 444.82,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Yonsei University /",
+              "延世大学"
+            ],
+            "query": "首尔 延世大学",
+            "geo": {
+              "lat": 37.5658,
+              "lng": 126.9385
+            },
+            "days": [
+              8
+            ]
+          },
+          {
+            "id": "p-hongdae",
+            "x": 1016.98,
+            "y": 386.68,
+            "color": "#e77e22",
+            "tx": 1014.98,
+            "ty": 386.68,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Hongik University (Hongdae) /",
+              "弘益大学（弘大）"
+            ],
+            "query": "首尔 弘大",
+            "geo": {
+              "lat": 37.5573,
+              "lng": 126.925
+            },
+            "days": [
+              8
+            ]
+          },
+          {
+            "id": "p-yeouido",
+            "x": 1034.99,
+            "y": 467.68,
+            "color": "#e77e22",
+            "tx": 1011.99,
+            "ty": 507.68,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Yeouido Hangang Park /",
+              "汝矣岛汉江公园"
+            ],
+            "query": "首尔 汝矣岛汉江公园",
+            "geo": {
+              "lat": 37.5285,
+              "lng": 126.934
+            },
+            "days": [
+              8
+            ]
+          },
+          {
+            "id": "p-dongdaemun",
+            "x": 1111.71,
+            "y": 483.29,
+            "color": "#618344",
+            "tx": 1122.71,
+            "ty": 422.29,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Dongdaemun /",
+              "东大门"
+            ],
+            "query": "首尔 东大门",
+            "geo": {
+              "lat": 37.5714,
+              "lng": 127.0095
+            },
+            "days": [
+              9
+            ]
+          },
+          {
+            "id": "p-seongsu",
+            "x": 1246,
+            "y": 472.3,
+            "color": "#618344",
+            "tx": 1246,
+            "ty": 482.3,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Seongsu-dong /",
+              "圣水洞"
+            ],
+            "query": "首尔 圣水洞",
+            "geo": {
+              "lat": 37.5446,
+              "lng": 127.056
+            },
+            "days": [
+              9
+            ]
+          },
+          {
+            "id": "p-cheongdam",
+            "x": 1246,
+            "y": 560.67,
+            "color": "#618344",
+            "tx": 1246,
+            "ty": 562.67,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Cheongdam-dong /",
+              "清潭洞"
+            ],
+            "query": "首尔 清潭洞",
+            "geo": {
+              "lat": 37.524,
+              "lng": 127.052
+            },
+            "days": [
+              9
+            ]
+          },
+          {
+            "id": "p-apgujeong",
+            "x": 1180.49,
+            "y": 512.96,
+            "color": "#618344",
+            "tx": 1049.49,
+            "ty": 589.96,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Apgujeong /",
+              "狎鸥亭"
+            ],
+            "query": "首尔 狎鸥亭 罗德奥街",
+            "geo": {
+              "lat": 37.527,
+              "lng": 127.033
+            },
+            "days": [
+              9
+            ]
+          },
+          {
+            "id": "p-gangnam",
+            "x": 1197.7,
+            "y": 627.87,
+            "color": "#618344",
+            "tx": 1221.7,
+            "ty": 618.87,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Gangnam /",
+              "江南"
+            ],
+            "query": "首尔 江南",
+            "geo": {
+              "lat": 37.4979,
+              "lng": 127.0276
+            },
+            "days": [
+              9
+            ]
+          },
+          {
+            "id": "p-icn",
+            "x": 488,
+            "y": 617.07,
+            "color": "#209aaa",
+            "tx": 506,
+            "ty": 617.07,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Incheon International Airport T1 /",
+              "仁川国际机场 T1"
+            ],
+            "query": "仁川国际机场 T1",
+            "geo": {
+              "lat": 37.4602,
+              "lng": 126.4407
+            },
+            "days": [
+              10
+            ]
+          }
+        ],
+        "overviewPlaceIds": [
+          "p-seoul-station",
+          "p-bukchon",
+          "p-itaewon",
+          "p-yonsei",
+          "p-yeouido",
+          "p-dongdaemun",
+          "p-cheongdam",
+          "p-apgujeong",
+          "p-gangnam",
+          "p-icn"
+        ],
+        "dailyLayouts": {
+          "7": {
+            "places": [
+              "p-seoul-station",
+              "p-gwanghwamun",
+              "p-gyeongbokgung",
+              "p-bukchon",
+              "p-myeongdong",
+              "p-namsan-tower",
+              "p-itaewon"
+            ],
+            "labels": {
+              "p-seoul-station": {
+                "x": 1066.48,
+                "y": 678.47,
+                "anchor": "end"
+              },
+              "p-gwanghwamun": {
+                "x": 1110.47,
+                "y": 301.41,
+                "anchor": "start"
+              },
+              "p-gyeongbokgung": {
+                "x": 968.47,
+                "y": 522.92,
+                "anchor": "end"
+              },
+              "p-bukchon": {
+                "x": 1059.04,
+                "y": 323.32,
+                "anchor": "end"
+              },
+              "p-myeongdong": {
+                "x": 1039.17,
+                "y": 583.06,
+                "anchor": "end"
+              },
+              "p-namsan-tower": {
+                "x": 1174.74,
+                "y": 362.01,
+                "anchor": "start"
+              },
+              "p-itaewon": {
+                "x": 1132.02,
+                "y": 677.7,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d7-02"
+                ],
+                "x": 1073.97,
+                "y": 475.44
+              },
+              {
+                "items": [
+                  "d7-04"
+                ],
+                "x": 1032.47,
+                "y": 428.16
+              },
+              {
+                "items": [
+                  "d7-06"
+                ],
+                "x": 1042.76,
+                "y": 464.62
+              },
+              {
+                "items": [
+                  "d7-07"
+                ],
+                "x": 1080.61,
+                "y": 474.69
+              },
+              {
+                "items": [
+                  "d7-09"
+                ],
+                "x": 1118.45,
+                "y": 487.53
+              },
+              {
+                "items": [
+                  "d7-10"
+                ],
+                "x": 1153.38,
+                "y": 502.86
+              }
+            ]
+          },
+          "8": {
+            "places": [
+              "p-seoul-station",
+              "p-ewha",
+              "p-yonsei",
+              "p-hongdae",
+              "p-yeouido"
+            ],
+            "labels": {
+              "p-seoul-station": {
+                "x": 1066.48,
+                "y": 678.47,
+                "anchor": "end"
+              },
+              "p-ewha": {
+                "x": 1105.05,
+                "y": 277.23,
+                "anchor": "end"
+              },
+              "p-yonsei": {
+                "x": 938.93,
+                "y": 444.82,
+                "anchor": "end"
+              },
+              "p-hongdae": {
+                "x": 1014.98,
+                "y": 386.68,
+                "anchor": "end"
+              },
+              "p-yeouido": {
+                "x": 1011.99,
+                "y": 507.68,
+                "anchor": "end"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d8-01"
+                ],
+                "x": 1111.26,
+                "y": 488.85
+              },
+              {
+                "items": [
+                  "d8-03"
+                ],
+                "x": 1054.99,
+                "y": 402.52
+              },
+              {
+                "items": [
+                  "d8-05"
+                ],
+                "x": 986.95,
+                "y": 415.75
+              },
+              {
+                "items": [
+                  "d8-07"
+                ],
+                "x": 1025.99,
+                "y": 427.18
+              }
+            ]
+          },
+          "9": {
+            "places": [
+              "p-seoul-station",
+              "p-dongdaemun",
+              "p-seongsu",
+              "p-cheongdam",
+              "p-apgujeong",
+              "p-gangnam"
+            ],
+            "labels": {
+              "p-seoul-station": {
+                "x": 1066.48,
+                "y": 678.47,
+                "anchor": "end"
+              },
+              "p-dongdaemun": {
+                "x": 1122.71,
+                "y": 422.29,
+                "anchor": "start"
+              },
+              "p-seongsu": {
+                "x": 1246,
+                "y": 482.3,
+                "anchor": "start"
+              },
+              "p-cheongdam": {
+                "x": 1246,
+                "y": 562.67,
+                "anchor": "start"
+              },
+              "p-apgujeong": {
+                "x": 1049.49,
+                "y": 589.96,
+                "anchor": "end"
+              },
+              "p-gangnam": {
+                "x": 1221.7,
+                "y": 618.87,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d9-01"
+                ],
+                "x": 1090.6,
+                "y": 550.38
+              },
+              {
+                "items": [
+                  "d9-03"
+                ],
+                "x": 1178.86,
+                "y": 477.8
+              },
+              {
+                "items": [
+                  "d9-05"
+                ],
+                "x": 1246,
+                "y": 516.49
+              },
+              {
+                "items": [
+                  "d9-07"
+                ],
+                "x": 1213.24,
+                "y": 536.82
+              },
+              {
+                "items": [
+                  "d9-09"
+                ],
+                "x": 1189.1,
+                "y": 570.41
+              }
+            ]
+          },
+          "10": {
+            "places": [
+              "p-seoul-station",
+              "p-icn"
+            ],
+            "labels": {
+              "p-seoul-station": {
+                "x": 1066.48,
+                "y": 678.47,
+                "anchor": "end"
+              },
+              "p-icn": {
+                "x": 506,
+                "y": 617.07,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d10-01"
+                ],
+                "x": 778.74,
+                "y": 617.27
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
