@@ -2,10 +2,10 @@
   "schemaVersion": 1,
   "trips": [
     {
-      "slug": "chengdu-test",
-      "title": "成都五日",
-      "subtitle": "",
-      "region": "成都",
+      "slug": "chengdu-emei-leshan",
+      "title": "成都 · 峨眉山 · 乐山 5 日",
+      "subtitle": "川西人文与山岳 · 完整功能示例",
+      "region": "成都 · 峨眉 · 乐山",
       "order": 1
     }
   ]

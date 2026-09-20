@@ -1,0 +1,1878 @@
+{
+  "$schema": "../../template/schemas/trip-data.schema.json",
+  "schemaVersion": "2.0-lite",
+  "metadata": {
+    "tripId": "chengdu-emei-leshan",
+    "title": "成都 · 峨眉山 · 乐山 5 日",
+    "subtitle": "川西人文与山岳 · 完整功能示例",
+    "language": "zh-CN",
+    "timeZone": "Asia/Shanghai",
+    "assets": {
+      "routeMaps": [
+        "assets/maps/templates/template-07-compact-basin.webp"
+      ]
+    }
+  },
+  "config": {
+    "schemaVersion": "1.0.0",
+    "modules": {
+      "flights": true,
+      "overview": true,
+      "itinerary": true,
+      "driving": true,
+      "todo": true,
+      "ledger": false
+    },
+    "language": "zh-CN",
+    "persistence": {
+      "mode": "local",
+      "note": "本站只部署到 GitHub Pages（纯静态）。Todo 勾选与门票状态仅保存在访问者本机浏览器，换设备不同步。"
+    }
+  },
+  "trip": {
+    "status": "planned",
+    "startDate": "2026-10-01",
+    "endDate": "2026-10-05",
+    "dayCount": 5,
+    "nightCountAway": 4,
+    "countries": [
+      {
+        "code": "CN",
+        "nameZh": "中国",
+        "nameEn": "China"
+      }
+    ],
+    "primaryDestinationCountries": [
+      "CN"
+    ],
+    "primaryDestinationName": "成都",
+    "primaryDestinationNameEn": "CHENGDU & MT. EMEI",
+    "citiesAndAreas": [
+      "成都",
+      "都江堰",
+      "青城山",
+      "乐山",
+      "峨眉山"
+    ],
+    "routeSummary": "北京 ✈ 成都 → 都江堰·青城山 → 乐山大佛 → 峨眉山金顶 → 成都 ✈ 北京",
+    "groupSize": {
+      "adults": 2,
+      "children": 0,
+      "note": "示例数据，非真实行程"
+    }
+  },
+  "flightJourneys": [
+    {
+      "id": "j-out",
+      "title": "去程 · 北京 → 成都",
+      "sequence": 1
+    },
+    {
+      "id": "j-back",
+      "title": "回程 · 成都 → 北京（西安中转）",
+      "sequence": 2
+    }
+  ],
+  "flights": [
+    {
+      "id": "f-out-1",
+      "journeyId": "j-out",
+      "sequence": 1,
+      "airline": {
+        "name": "Air China",
+        "nameZh": "中国国际航空"
+      },
+      "flightNumber": "CA4102",
+      "departure": {
+        "airportCode": "PEK",
+        "airportName": "北京首都国际机场",
+        "terminal": "T3",
+        "city": "北京",
+        "date": "2026-10-01",
+        "time": "08:05",
+        "utcOffset": "+08:00"
+      },
+      "arrival": {
+        "airportCode": "TFU",
+        "airportName": "成都天府国际机场",
+        "terminal": "T1",
+        "city": "成都",
+        "date": "2026-10-01",
+        "time": "11:15",
+        "utcOffset": "+08:00"
+      },
+      "cabin": "经济舱",
+      "notes": [
+        "示例数据：航班号与时刻均为虚构，请以实际订单为准。"
+      ]
+    },
+    {
+      "id": "f-back-1",
+      "journeyId": "j-back",
+      "sequence": 1,
+      "airline": {
+        "name": "Air China",
+        "nameZh": "中国国际航空"
+      },
+      "flightNumber": "CA4322",
+      "departure": {
+        "airportCode": "TFU",
+        "airportName": "成都天府国际机场",
+        "terminal": "T1",
+        "city": "成都",
+        "date": "2026-10-05",
+        "time": "13:20",
+        "utcOffset": "+08:00"
+      },
+      "arrival": {
+        "airportCode": "XIY",
+        "airportName": "西安咸阳国际机场",
+        "terminal": "T3",
+        "city": "西安",
+        "date": "2026-10-05",
+        "time": "15:05",
+        "utcOffset": "+08:00"
+      },
+      "cabin": "经济舱",
+      "connectionFromPrevious": null,
+      "notes": [
+        "示例数据：仅用于展示「中转」样式。"
+      ]
+    },
+    {
+      "id": "f-back-2",
+      "journeyId": "j-back",
+      "sequence": 2,
+      "airline": {
+        "name": "Air China",
+        "nameZh": "中国国际航空"
+      },
+      "flightNumber": "CA1204",
+      "departure": {
+        "airportCode": "XIY",
+        "airportName": "西安咸阳国际机场",
+        "terminal": "T3",
+        "city": "西安",
+        "date": "2026-10-05",
+        "time": "17:35",
+        "utcOffset": "+08:00"
+      },
+      "arrival": {
+        "airportCode": "PEK",
+        "airportName": "北京首都国际机场",
+        "terminal": "T3",
+        "city": "北京",
+        "date": "2026-10-05",
+        "time": "19:50",
+        "utcOffset": "+08:00"
+      },
+      "cabin": "经济舱",
+      "connectionFromPrevious": {
+        "calculatedFromSchedule": "2小时30分",
+        "durationUsingTicketTimes": "2小时30分",
+        "plannedDurationText": "2小时30分",
+        "note": "西安咸阳 T3 同航站楼中转，无需提取行李。"
+      }
+    }
+  ],
+  "accommodations": [
+    {
+      "id": "stay-chengdu",
+      "name": "成都春熙路亚朵酒店",
+      "city": "成都",
+      "checkIn": "2026-10-01",
+      "checkOut": "2026-10-03",
+      "nights": 2,
+      "roomType": "高级大床房",
+      "notes": [
+        "示例数据：用于演示住宿信息结构。"
+      ]
+    },
+    {
+      "id": "stay-emei",
+      "name": "峨眉山报国寺温泉酒店",
+      "city": "峨眉山",
+      "checkIn": "2026-10-03",
+      "checkOut": "2026-10-05",
+      "nights": 2,
+      "roomType": "山景双床房",
+      "notes": [
+        "示例数据：用于演示住宿信息结构。"
+      ]
+    }
+  ],
+  "groundTransport": {
+    "rentalCar": {
+      "id": "rental-1",
+      "company": "一嗨租车",
+      "rentalPeriodDays": 1,
+      "unlimitedKilometers": true,
+      "pickup": {
+        "date": "2026-10-02",
+        "time": "07:30",
+        "utcOffset": "+08:00",
+        "location": "成都春熙路取车点",
+        "address": "锦江区红星路三段 1 号 IFS 国际金融中心 B2 停车场"
+      },
+      "dropoff": {
+        "date": "2026-10-02",
+        "time": "20:00",
+        "utcOffset": "+08:00",
+        "vehicleReturnPoint": "成都春熙路还车点（IFS 国际金融中心 B2 停车场）",
+        "recommendedArrivalTime": "19:30",
+        "deadlineWarning": "门店 20:30 停止收车，超时需支付 100 元/小时的延时费。"
+      },
+      "vehicle": {
+        "example": "大众 途观 L",
+        "class": "中型 SUV（或同级）",
+        "transmission": "自动挡",
+        "fuel": "汽油",
+        "seats": 5
+      },
+      "price": {
+        "currency": "CNY",
+        "payAtCounter": 568,
+        "note": "含基础保险，不含油费与过路费。"
+      },
+      "insurance": [
+        "车辆损失险（免赔额 1500 元）",
+        "第三者责任险 100 万",
+        "车上人员责任险（司机 + 乘客）",
+        "不计免赔补充险：柜台可加购，约 88 元/天"
+      ],
+      "booking": {
+        "status": "示例数据",
+        "note": "订单号为虚构，请勿用作真实凭据。"
+      },
+      "requirements": [
+        "取车需携带驾驶证原件 + 身份证 + 名下信用卡（用于预授权）",
+        "驾龄需满 1 年",
+        "异地还车会产生额外费用，本单为同门店还车"
+      ]
+    },
+    "rentalChecklist": [
+      "取车先绕车拍全景视频：车顶、四角、前后保险杠、轮毂各拍一段",
+      "核对油量刻度与仪表盘里程，拍照留证",
+      "确认备胎、三角警示牌、反光背心齐全",
+      "还车前把油加回到取车时的刻度，并保留加油小票",
+      "确认 ETC 是否随车，避免走人工通道排队"
+    ],
+    "drivingNotes": [
+      "成灌高速（成都 → 都江堰）节假日早高峰 7:30–9:30 易拥堵，建议 7:00 前上高速",
+      "都江堰景区停车场节假日 9:00 后基本满位，可停「离堆公园」地下停车场",
+      "青城山前山山路多弯道，雨天路滑注意减速，景区内禁鸣",
+      "成都市内工作日 07:30–20:00 绕城高速以内限行，按尾号轮换，租车请提前确认当日限行尾号"
+    ],
+    "drivingReferenceLinks": [
+      {
+        "label": "在 Google Maps 中查看成都 → 都江堰路线",
+        "url": "https://www.google.com/maps/dir/Chengdu/Dujiangyan"
+      },
+      {
+        "label": "在 Google Maps 中查看都江堰 → 青城山路线",
+        "url": "https://www.google.com/maps/dir/Dujiangyan/Qingcheng+Mountains"
+      }
+    ],
+    "plannedRoadLegs": [
+      {
+        "id": "leg-1",
+        "from": "成都春熙路",
+        "to": "都江堰景区",
+        "distanceKm": 62,
+        "durationMinutes": 70,
+        "toll": "成灌高速 25 元"
+      },
+      {
+        "id": "leg-2",
+        "from": "都江堰景区",
+        "to": "青城山前山",
+        "distanceKm": 18,
+        "durationMinutes": 30,
+        "toll": "无"
+      },
+      {
+        "id": "leg-3",
+        "from": "青城山前山",
+        "to": "成都春熙路",
+        "distanceKm": 72,
+        "durationMinutes": 85,
+        "toll": "成灌高速 25 元"
+      }
+    ],
+    "publicTransitAndRail": [
+      {
+        "id": "rail-1",
+        "service": "C6251 城际列车",
+        "from": "成都东",
+        "to": "乐山",
+        "departure": "2026-10-03 08:05",
+        "durationMinutes": 65,
+        "note": "二等座，需提前 30 分钟进站取票"
+      },
+      {
+        "id": "rail-2",
+        "service": "C6312 城际列车",
+        "from": "乐山",
+        "to": "峨眉山",
+        "departure": "2026-10-03 14:20",
+        "durationMinutes": 15,
+        "note": "乐山站与峨眉山站均为高铁站"
+      },
+      {
+        "id": "rail-3",
+        "service": "C6302 城际列车",
+        "from": "峨眉山",
+        "to": "成都东",
+        "departure": "2026-10-05 09:00",
+        "durationMinutes": 80,
+        "note": "回程，接地铁 18 号线去天府机场"
+      }
+    ]
+  },
+  "days": [
+    {
+      "id": "day-1",
+      "day": 1,
+      "sequence": 1,
+      "date": "2026-10-01",
+      "title": "北京 ✈ 成都 · 市区慢行",
+      "locations": [
+        "天府机场",
+        "宽窄巷子",
+        "人民公园",
+        "太古里"
+      ],
+      "schedule": [
+        {
+          "id": "d1-01",
+          "type": "transfer",
+          "time": "06:20",
+          "text": "首都机场 T3 出发层集合，办理值机与托运",
+          "placeIds": []
+        },
+        {
+          "id": "d1-02",
+          "type": "flight",
+          "time": "08:05",
+          "text": "CA4102 北京首都 T3 → 成都天府 T1（飞行 3 小时 10 分）",
+          "placeIds": []
+        },
+        {
+          "id": "d1-03",
+          "type": "transfer",
+          "time": "11:40",
+          "text": "天府机场 → 宽窄巷子，网约车约 65 分钟",
+          "placeIds": [
+            "p-ct-airport",
+            "p-kuanzhai"
+          ]
+        },
+        {
+          "id": "d1-04",
+          "type": "walk",
+          "time": "13:00",
+          "text": "宽窄巷子：井巷子小吃、恺庐、窄巷子院落茶座",
+          "placeIds": [
+            "p-kuanzhai"
+          ]
+        },
+        {
+          "id": "d1-05",
+          "type": "walk",
+          "time": "15:30",
+          "text": "人民公园鹤鸣茶社，盖碗茶 + 掏耳朵体验",
+          "placeIds": [
+            "p-renmin"
+          ]
+        },
+        {
+          "id": "d1-06",
+          "type": "walk",
+          "time": "18:30",
+          "text": "太古里 & 大慈寺：晚餐后看夜景，回酒店休息",
+          "placeIds": [
+            "p-taikoo"
+          ]
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "机票 CA4102（每人）",
+          "currency": "CNY",
+          "amount": 980
+        },
+        {
+          "item": "机场网约车",
+          "currency": "CNY",
+          "amount": 165
+        },
+        {
+          "item": "鹤鸣茶社盖碗茶",
+          "currency": "CNY",
+          "standard": 38,
+          "note": "每位"
+        }
+      ],
+      "notes": [
+        "天府机场距市区约 55 公里，比双流机场远，打车费用约 150–180 元。",
+        "抵达当天行程偏轻，留出航班延误的缓冲。"
+      ]
+    },
+    {
+      "id": "day-2",
+      "day": 2,
+      "sequence": 2,
+      "date": "2026-10-02",
+      "title": "自驾 · 都江堰 & 青城山",
+      "locations": [
+        "太古里",
+        "都江堰景区",
+        "青城山前山"
+      ],
+      "schedule": [
+        {
+          "id": "d2-01",
+          "type": "drive",
+          "time": "07:30",
+          "text": "春熙路取车，走成灌高速前往都江堰（62 公里）",
+          "placeIds": [
+            "p-taikoo",
+            "p-dujiangyan"
+          ],
+          "rentalId": "rental-1"
+        },
+        {
+          "id": "d2-02",
+          "type": "walk",
+          "time": "09:00",
+          "text": "都江堰景区：鱼嘴分水堤 → 飞沙堰 → 宝瓶口 → 安澜索桥",
+          "placeIds": [
+            "p-dujiangyan"
+          ]
+        },
+        {
+          "id": "d2-03",
+          "type": "drive",
+          "time": "13:00",
+          "text": "都江堰 → 青城山前山（18 公里，山路）",
+          "placeIds": [
+            "p-dujiangyan",
+            "p-qingcheng"
+          ],
+          "rentalId": "rental-1"
+        },
+        {
+          "id": "d2-04",
+          "type": "hike",
+          "time": "14:00",
+          "text": "青城山前山：建福宫 → 天师洞 → 上清宫 → 老君阁",
+          "placeIds": [
+            "p-qingcheng"
+          ]
+        },
+        {
+          "id": "d2-05",
+          "type": "drive",
+          "time": "19:30",
+          "text": "返回成都春熙路还车，晚餐吃串串",
+          "placeIds": [
+            "p-qingcheng"
+          ],
+          "rentalId": "rental-1"
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "租车（1 天）",
+          "currency": "CNY",
+          "amount": 568
+        },
+        {
+          "item": "都江堰门票",
+          "currency": "CNY",
+          "amount": 80,
+          "note": "每位"
+        },
+        {
+          "item": "青城山前山门票",
+          "currency": "CNY",
+          "amount": 80,
+          "note": "每位"
+        },
+        {
+          "item": "成灌高速过路费",
+          "currency": "CNY",
+          "amount": 50,
+          "note": "往返"
+        }
+      ],
+      "notes": [
+        "青城山前山索道与渡船需另购票，单程索道 35 元。",
+        "节假日都江堰景区 10:00 后入园排队可能超过 40 分钟，建议 8:30 前到。"
+      ]
+    },
+    {
+      "id": "day-3",
+      "day": 3,
+      "sequence": 3,
+      "date": "2026-10-03",
+      "title": "高铁 · 乐山大佛 → 峨眉山",
+      "locations": [
+        "成都东",
+        "乐山大佛",
+        "峨眉山报国寺"
+      ],
+      "schedule": [
+        {
+          "id": "d3-01",
+          "type": "transfer",
+          "time": "07:00",
+          "text": "成都东站取票、安检、进站",
+          "placeIds": []
+        },
+        {
+          "id": "d3-02",
+          "type": "train",
+          "time": "08:05",
+          "text": "C6251 成都东 → 乐山（1 小时 05 分）",
+          "placeIds": [
+            "p-taikoo",
+            "p-leshan"
+          ]
+        },
+        {
+          "id": "d3-03",
+          "type": "walk",
+          "time": "10:30",
+          "text": "乐山大佛：九曲栈道下行至佛脚，全程约 2.5 小时",
+          "placeIds": [
+            "p-leshan"
+          ],
+          "ticketIds": [
+            "t-leshan"
+          ]
+        },
+        {
+          "id": "d3-04",
+          "type": "train",
+          "time": "14:20",
+          "text": "C6312 乐山 → 峨眉山（15 分钟）",
+          "placeIds": [
+            "p-leshan",
+            "p-emei-base"
+          ]
+        },
+        {
+          "id": "d3-05",
+          "type": "walk",
+          "time": "16:00",
+          "text": "报国寺 + 伏虎寺，入住山脚酒店，早睡准备次日登顶",
+          "placeIds": [
+            "p-emei-base"
+          ],
+          "ticketIds": [
+            "t-emei"
+          ]
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "成都东 → 乐山 高铁二等座",
+          "currency": "CNY",
+          "amount": 65,
+          "note": "每位"
+        },
+        {
+          "item": "乐山 → 峨眉山 高铁二等座",
+          "currency": "CNY",
+          "amount": 12,
+          "note": "每位"
+        },
+        {
+          "item": "乐山大佛门票",
+          "currency": "CNY",
+          "discounted": 80,
+          "note": "旺季价"
+        }
+      ],
+      "notes": [
+        "乐山大佛旺季限流，需提前 1–3 天在官方渠道实名预约。",
+        "九曲栈道单向通行，排队高峰在 11:00–14:00。"
+      ]
+    },
+    {
+      "id": "day-4",
+      "day": 4,
+      "sequence": 4,
+      "date": "2026-10-04",
+      "title": "峨眉山金顶一日",
+      "locations": [
+        "报国寺",
+        "雷洞坪",
+        "峨眉山金顶"
+      ],
+      "schedule": [
+        {
+          "id": "d4-01",
+          "type": "transfer",
+          "time": "05:30",
+          "text": "报国寺客运中心乘景区观光车至雷洞坪（约 2 小时）",
+          "placeIds": [
+            "p-emei-base"
+          ],
+          "ticketIds": [
+            "t-emei-bus"
+          ]
+        },
+        {
+          "id": "d4-02",
+          "type": "cable-car",
+          "time": "08:00",
+          "text": "雷洞坪 → 接引殿步行 20 分钟，转金顶索道上行",
+          "placeIds": [
+            "p-emei-base",
+            "p-emei-golden"
+          ],
+          "ticketIds": [
+            "t-emei-cable"
+          ]
+        },
+        {
+          "id": "d4-03",
+          "type": "hike",
+          "time": "09:00",
+          "text": "金顶：十方普贤像、舍身崖、云海与日出观景台",
+          "placeIds": [
+            "p-emei-golden"
+          ]
+        },
+        {
+          "id": "d4-04",
+          "type": "cable-car",
+          "time": "14:00",
+          "text": "索道下山，观光车返回报国寺",
+          "placeIds": [
+            "p-emei-golden",
+            "p-emei-base"
+          ]
+        },
+        {
+          "id": "d4-05",
+          "type": "walk",
+          "time": "18:30",
+          "text": "峨眉山市区：跷脚牛肉 + 峨眉雪芽茶，逛夜市",
+          "placeIds": []
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "峨眉山进山门票",
+          "currency": "CNY",
+          "amount": 160,
+          "note": "每位，旺季"
+        },
+        {
+          "item": "金顶索道往返",
+          "currency": "CNY",
+          "amount": 120,
+          "note": "每位，上行 65 / 下行 55"
+        },
+        {
+          "item": "景区观光车往返",
+          "currency": "CNY",
+          "amount": 90,
+          "note": "每位"
+        }
+      ],
+      "notes": [
+        "金顶海拔 3079 米，10 月山顶气温常在 5 ℃ 以下且风大，务必带厚外套。",
+        "若想看日出需住山上（雷洞坪或金顶），本次行程为一日往返看云海。"
+      ]
+    },
+    {
+      "id": "day-5",
+      "day": 5,
+      "sequence": 5,
+      "date": "2026-10-05",
+      "title": "峨眉山 → 成都 ✈ 北京",
+      "locations": [
+        "峨眉山站",
+        "天府机场",
+        "北京首都"
+      ],
+      "schedule": [
+        {
+          "id": "d5-01",
+          "type": "train",
+          "time": "09:00",
+          "text": "C6302 峨眉山 → 成都东（1 小时 20 分）",
+          "placeIds": [
+            "p-emei-base",
+            "p-ct-airport"
+          ]
+        },
+        {
+          "id": "d5-02",
+          "type": "transfer",
+          "time": "10:40",
+          "text": "成都东站换乘地铁 18 号线直达天府机场（约 45 分钟）",
+          "placeIds": [
+            "p-ct-airport"
+          ]
+        },
+        {
+          "id": "d5-03",
+          "type": "flight",
+          "time": "13:20",
+          "text": "CA4322 成都天府 T1 → 西安咸阳 T3（中转，同航站楼）",
+          "placeIds": []
+        },
+        {
+          "id": "d5-04",
+          "type": "flight",
+          "time": "17:35",
+          "text": "CA1204 西安咸阳 T3 → 北京首都 T3，19:50 抵达",
+          "placeIds": []
+        },
+        {
+          "id": "d5-05",
+          "type": "transfer",
+          "time": "20:30",
+          "text": "首都机场 → 家，行程结束",
+          "placeIds": []
+        }
+      ],
+      "costReferences": [
+        {
+          "item": "峨眉山 → 成都东 高铁二等座",
+          "currency": "CNY",
+          "amount": 78,
+          "note": "每位"
+        },
+        {
+          "item": "地铁 18 号线",
+          "currency": "CNY",
+          "amount": 12,
+          "note": "每位"
+        },
+        {
+          "item": "机票 CA4322 + CA1204（每人）",
+          "currency": "CNY",
+          "amountOptions": [
+            1180,
+            1420
+          ],
+          "note": "示例区间价"
+        }
+      ],
+      "notes": [
+        "西安中转 2 小时 30 分，同航站楼无需提行李，但仍建议留足 2 小时以上。",
+        "天府机场国内航班建议提前 90 分钟到达。"
+      ]
+    }
+  ],
+  "places": [
+    {
+      "id": "p-ct-airport",
+      "nameZh": "成都天府国际机场",
+      "name": "Chengdu Tianfu International Airport",
+      "cityOrArea": "成都",
+      "googleMapsQuery": "成都天府国际机场"
+    },
+    {
+      "id": "p-kuanzhai",
+      "nameZh": "宽窄巷子",
+      "name": "Kuanzhai Alley",
+      "cityOrArea": "成都青羊区",
+      "googleMapsQuery": "成都 宽窄巷子"
+    },
+    {
+      "id": "p-renmin",
+      "nameZh": "人民公园",
+      "name": "People's Park",
+      "cityOrArea": "成都青羊区",
+      "googleMapsQuery": "成都 人民公园 鹤鸣茶社"
+    },
+    {
+      "id": "p-taikoo",
+      "nameZh": "成都远洋太古里",
+      "name": "Taikoo Li Chengdu",
+      "cityOrArea": "成都锦江区",
+      "googleMapsQuery": "成都 远洋太古里"
+    },
+    {
+      "id": "p-dujiangyan",
+      "nameZh": "都江堰景区",
+      "name": "Dujiangyan Irrigation System",
+      "cityOrArea": "都江堰市",
+      "googleMapsQuery": "都江堰景区 离堆公园"
+    },
+    {
+      "id": "p-qingcheng",
+      "nameZh": "青城山前山",
+      "name": "Mount Qingcheng",
+      "cityOrArea": "都江堰市",
+      "googleMapsQuery": "青城山前山 景区入口"
+    },
+    {
+      "id": "p-leshan",
+      "nameZh": "乐山大佛",
+      "name": "Leshan Giant Buddha",
+      "cityOrArea": "乐山市",
+      "googleMapsQuery": "乐山大佛 景区北门"
+    },
+    {
+      "id": "p-emei-base",
+      "nameZh": "峨眉山报国寺",
+      "name": "Baoguo Temple",
+      "cityOrArea": "峨眉山市",
+      "googleMapsQuery": "峨眉山 报国寺"
+    },
+    {
+      "id": "p-emei-golden",
+      "nameZh": "峨眉山金顶",
+      "name": "Mount Emei Golden Summit",
+      "cityOrArea": "峨眉山市",
+      "googleMapsQuery": "峨眉山 金顶"
+    }
+  ],
+  "restaurants": [
+    {
+      "placeId": "r-kuanzhai-snack",
+      "name": "宽窄巷子小吃街",
+      "city": "成都",
+      "mealKinds": [
+        "午餐",
+        "小吃"
+      ],
+      "specialties": [
+        "三大炮",
+        "伤心凉粉",
+        "钟水饺"
+      ],
+      "googleMapsQuery": "成都 宽窄巷子 小吃"
+    },
+    {
+      "placeId": "r-heming",
+      "name": "鹤鸣茶社",
+      "city": "成都",
+      "mealKinds": [
+        "下午茶"
+      ],
+      "specialties": [
+        "盖碗茶",
+        "掏耳朵"
+      ],
+      "googleMapsQuery": "成都 人民公园 鹤鸣茶社"
+    },
+    {
+      "placeId": "r-taikoo-dinner",
+      "name": "太古里川菜馆",
+      "city": "成都",
+      "mealKinds": [
+        "晚餐"
+      ],
+      "specialties": [
+        "麻婆豆腐",
+        "回锅肉"
+      ],
+      "googleMapsQuery": "成都 太古里 川菜"
+    },
+    {
+      "placeId": "r-emei-qiujiao",
+      "name": "峨眉山跷脚牛肉",
+      "city": "峨眉山市",
+      "mealKinds": [
+        "晚餐"
+      ],
+      "specialties": [
+        "跷脚牛肉",
+        "峨眉雪芽"
+      ],
+      "googleMapsQuery": "峨眉山市 跷脚牛肉"
+    }
+  ],
+  "bookingsAndTickets": [
+    {
+      "id": "b-1",
+      "type": "flight",
+      "name": "CA4102 北京 → 成都",
+      "status": "示例数据"
+    },
+    {
+      "id": "b-2",
+      "type": "flight",
+      "name": "CA4322 + CA1204 成都 → 北京",
+      "status": "示例数据"
+    },
+    {
+      "id": "b-3",
+      "type": "rail",
+      "name": "C6251 / C6312 / C6302 城际列车",
+      "status": "示例数据"
+    },
+    {
+      "id": "b-4",
+      "type": "hotel",
+      "name": "成都春熙路亚朵酒店 2 晚",
+      "status": "示例数据"
+    },
+    {
+      "id": "b-5",
+      "type": "hotel",
+      "name": "峨眉山报国寺温泉酒店 2 晚",
+      "status": "示例数据"
+    },
+    {
+      "id": "b-6",
+      "type": "rental",
+      "name": "一嗨租车 成都春熙路店",
+      "status": "示例数据"
+    }
+  ],
+  "ticketPlanning": {
+    "statusStorage": "local",
+    "statusStorageNote": "购票勾选状态保存在访问者本机浏览器 localStorage，不上传、不跨设备同步。",
+    "items": [
+      {
+        "id": "t-leshan",
+        "name": "乐山大佛景区门票（含九曲栈道）",
+        "attraction": {
+          "nameZh": "乐山大佛",
+          "name": "Leshan Giant Buddha"
+        },
+        "requirement": "advance-required",
+        "purchaseStatus": "needed",
+        "day": 3,
+        "dayId": "day-3",
+        "placeIds": [
+          "p-leshan"
+        ],
+        "guidance": [
+          "旺季限流，需提前 1–3 天在官方渠道实名预约",
+          "入园需刷身份证，一人一证",
+          "九曲栈道单向通行，下行排队高峰 11:00–14:00"
+        ],
+        "price": {
+          "currency": "CNY",
+          "amount": 80
+        },
+        "officialUrl": "https://www.leshan.gov.cn/",
+        "booking": {
+          "officialUrl": "https://www.leshan.gov.cn/",
+          "status": "示例数据"
+        }
+      },
+      {
+        "id": "t-emei",
+        "name": "峨眉山进山门票",
+        "attraction": {
+          "nameZh": "峨眉山",
+          "name": "Mount Emei"
+        },
+        "requirement": "advance-recommended",
+        "purchaseStatus": "needed",
+        "day": 3,
+        "dayId": "day-3",
+        "placeIds": [
+          "p-emei-base"
+        ],
+        "guidance": [
+          "门票 2 日有效，进山后可在山内住宿",
+          "旺季 160 元/人，淡季 110 元/人",
+          "购票后凭身份证刷证进山"
+        ],
+        "price": {
+          "currency": "CNY",
+          "amount": 160
+        },
+        "document": {
+          "url": "assets/ticket-emei-golden.svg",
+          "type": "image/svg+xml",
+          "label": "查看示例电子票"
+        },
+        "documentLabel": "查看示例电子票",
+        "officialUrl": "https://www.ems517.com/",
+        "booking": {
+          "officialUrl": "https://www.ems517.com/",
+          "status": "示例数据"
+        }
+      },
+      {
+        "id": "t-emei-cable",
+        "name": "金顶索道往返票",
+        "attraction": {
+          "nameZh": "峨眉山金顶索道",
+          "name": "Golden Summit Cable Car"
+        },
+        "requirement": "needs-confirmation",
+        "purchaseStatus": "needed",
+        "day": 4,
+        "dayId": "day-4",
+        "placeIds": [
+          "p-emei-golden"
+        ],
+        "guidance": [
+          "上行 65 元 / 下行 55 元，往返 120 元",
+          "索道排队高峰 9:00–11:00，建议 8:00 前到达接引殿",
+          "大风或结冰天气可能临时停运，届时改走步行道（约 1.5 小时）"
+        ],
+        "price": {
+          "currency": "CNY",
+          "amount": 120
+        },
+        "booking": {
+          "status": "现场购买，无需预约"
+        }
+      },
+      {
+        "id": "t-emei-bus",
+        "name": "峨眉山景区观光车（往返）",
+        "attraction": {
+          "nameZh": "峨眉山观光车",
+          "name": "Mount Emei Shuttle Bus"
+        },
+        "requirement": "needs-confirmation",
+        "purchaseStatus": "needed",
+        "day": 4,
+        "dayId": "day-4",
+        "placeIds": [
+          "p-emei-base"
+        ],
+        "guidance": [
+          "报国寺客运中心发车，至雷洞坪约 2 小时",
+          "往返 90 元/人，可在山内各站点上下车",
+          "首班车 06:00，建议赶早班避开排队"
+        ],
+        "price": {
+          "currency": "CNY",
+          "amount": 90
+        },
+        "booking": {
+          "status": "现场购买"
+        }
+      }
+    ]
+  },
+  "preTrip": {
+    "todoItems": [
+      {
+        "id": "todo-1",
+        "text": "订 10/01 北京 → 成都 机票（CA4102）",
+        "completed": true
+      },
+      {
+        "id": "todo-2",
+        "text": "订 10/05 成都 → 北京 回程机票（西安中转）",
+        "completed": true
+      },
+      {
+        "id": "todo-3",
+        "text": "订成都 2 晚 + 峨眉山 2 晚酒店",
+        "completed": true
+      },
+      {
+        "id": "todo-4",
+        "text": "预约 10/02 一嗨租车（春熙路店，中型 SUV）",
+        "completed": false
+      },
+      {
+        "id": "todo-5",
+        "text": "提前 3 天预约乐山大佛门票与进园时段",
+        "completed": false
+      },
+      {
+        "id": "todo-6",
+        "text": "订 C6251 / C6312 / C6302 三段城际列车票",
+        "completed": false
+      },
+      {
+        "id": "todo-7",
+        "text": "准备金顶保暖层：厚外套、手套、围巾、暖宝宝",
+        "completed": false
+      },
+      {
+        "id": "todo-8",
+        "text": "带齐驾驶证原件、身份证、信用卡（租车用）",
+        "completed": false
+      },
+      {
+        "id": "todo-9",
+        "text": "下载离线地图与峨眉山景区语音导览",
+        "completed": false
+      },
+      {
+        "id": "todo-10",
+        "text": "预约返程后一天的体检（示例待办，可自行删除）",
+        "completed": false
+      }
+    ],
+    "preparationsExplicitlyMentioned": [
+      "乐山大佛需提前实名预约",
+      "金顶海拔 3079 米，需备保暖衣物"
+    ],
+    "missingNote": "本页为功能演示用的示例数据，航班号、酒店、价格、订单均为虚构，请勿作为真实出行依据。"
+  },
+  "mapLinks": {
+    "providedGoogleMapsLinks": [],
+    "note": "国内行程使用高德/百度地图更准确；本站导航按钮默认打开 Google Maps 查询串。",
+    "cityLevelNavigationDisabled": false,
+    "navigationPolicy": {
+      "noNavigationTypes": [
+        "flight",
+        "transfer"
+      ],
+      "selfNavigationTypes": [
+        "walk",
+        "hike"
+      ]
+    },
+    "navigationPlaces": [
+      {
+        "id": "nav-kuanzhai",
+        "label": "宽窄巷子",
+        "query": "成都 宽窄巷子",
+        "matchTerms": [
+          "宽窄巷子"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-renmin",
+        "label": "人民公园",
+        "query": "成都 人民公园 鹤鸣茶社",
+        "matchTerms": [
+          "人民公园",
+          "鹤鸣茶社"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-taikoo",
+        "label": "太古里",
+        "query": "成都 远洋太古里",
+        "matchTerms": [
+          "太古里"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-dujiangyan",
+        "label": "都江堰景区",
+        "query": "都江堰景区 离堆公园",
+        "matchTerms": [
+          "都江堰"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-qingcheng",
+        "label": "青城山前山",
+        "query": "青城山前山 景区入口",
+        "matchTerms": [
+          "青城山"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-leshan",
+        "label": "乐山大佛",
+        "query": "乐山大佛 景区北门",
+        "matchTerms": [
+          "乐山大佛"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-emei-base",
+        "label": "报国寺",
+        "query": "峨眉山 报国寺",
+        "matchTerms": [
+          "报国寺"
+        ],
+        "priority": 2
+      },
+      {
+        "id": "nav-emei-golden",
+        "label": "峨眉山金顶",
+        "query": "峨眉山 金顶",
+        "matchTerms": [
+          "金顶"
+        ],
+        "priority": 2
+      }
+    ]
+  },
+  "issuesAndUncertainties": [
+    "本页所有航班号、时刻、酒店、价格与订单号均为演示用虚构数据。",
+    "成都市区工作日限行规则会按尾号轮换，租车当天需现场确认。"
+  ],
+  "map": {
+    "schemaVersion": "1.0-lite",
+    "mapMode": "template-auto",
+    "title": "成都 · 峨眉 · 乐山 行程示意图",
+    "disclaimer": "本图为模板化行程示意图，仅表达地点相对方位与路线顺序，不代表真实比例或精确地理边界。",
+    "region": {
+      "id": "chengdu-emei-leshan",
+      "label": "成都 · 峨眉 · 乐山",
+      "countryCode": "CN",
+      "heading": "CHENGDU / 成都 · 峨眉 · 乐山",
+      "description": "川西人文与山岳 5 日行程示意图"
+    },
+    "places": [
+      {
+        "id": "p-ct-airport",
+        "nameZh": "天府机场",
+        "name": "TFU Airport",
+        "countryCode": "CN",
+        "cityOrArea": "成都",
+        "query": "成都天府国际机场"
+      },
+      {
+        "id": "p-kuanzhai",
+        "nameZh": "宽窄巷子",
+        "name": "Kuanzhai Alley",
+        "countryCode": "CN",
+        "cityOrArea": "成都",
+        "query": "成都 宽窄巷子"
+      },
+      {
+        "id": "p-renmin",
+        "nameZh": "人民公园",
+        "name": "People's Park",
+        "countryCode": "CN",
+        "cityOrArea": "成都",
+        "query": "成都 人民公园 鹤鸣茶社"
+      },
+      {
+        "id": "p-taikoo",
+        "nameZh": "太古里",
+        "name": "Taikoo Li",
+        "countryCode": "CN",
+        "cityOrArea": "成都",
+        "query": "成都 远洋太古里"
+      },
+      {
+        "id": "p-dujiangyan",
+        "nameZh": "都江堰",
+        "name": "Dujiangyan",
+        "countryCode": "CN",
+        "cityOrArea": "都江堰市",
+        "query": "都江堰景区 离堆公园"
+      },
+      {
+        "id": "p-qingcheng",
+        "nameZh": "青城山",
+        "name": "Mount Qingcheng",
+        "countryCode": "CN",
+        "cityOrArea": "都江堰市",
+        "query": "青城山前山 景区入口"
+      },
+      {
+        "id": "p-leshan",
+        "nameZh": "乐山大佛",
+        "name": "Leshan Buddha",
+        "countryCode": "CN",
+        "cityOrArea": "乐山市",
+        "query": "乐山大佛 景区北门"
+      },
+      {
+        "id": "p-emei-base",
+        "nameZh": "报国寺",
+        "name": "Baoguo Temple",
+        "countryCode": "CN",
+        "cityOrArea": "峨眉山市",
+        "query": "峨眉山 报国寺"
+      },
+      {
+        "id": "p-emei-golden",
+        "nameZh": "峨眉山金顶",
+        "name": "Golden Summit",
+        "countryCode": "CN",
+        "cityOrArea": "峨眉山市",
+        "query": "峨眉山 金顶"
+      }
+    ],
+    "routes": [
+      {
+        "day": 1,
+        "placeIds": [
+          "p-ct-airport",
+          "p-kuanzhai",
+          "p-renmin",
+          "p-taikoo"
+        ],
+        "scheduleItems": [
+          [
+            "d1-03"
+          ],
+          [
+            "d1-05"
+          ],
+          [
+            "d1-06"
+          ]
+        ]
+      },
+      {
+        "day": 2,
+        "placeIds": [
+          "p-taikoo",
+          "p-dujiangyan",
+          "p-qingcheng"
+        ],
+        "scheduleItems": [
+          [
+            "d2-01"
+          ],
+          [
+            "d2-03"
+          ]
+        ]
+      },
+      {
+        "day": 3,
+        "placeIds": [
+          "p-taikoo",
+          "p-leshan",
+          "p-emei-base"
+        ],
+        "scheduleItems": [
+          [
+            "d3-02"
+          ],
+          [
+            "d3-04"
+          ]
+        ]
+      },
+      {
+        "day": 4,
+        "placeIds": [
+          "p-emei-base",
+          "p-emei-golden"
+        ],
+        "scheduleItems": [
+          [
+            "d4-02"
+          ]
+        ]
+      },
+      {
+        "day": 5,
+        "placeIds": [
+          "p-emei-base",
+          "p-ct-airport"
+        ],
+        "scheduleItems": [
+          [
+            "d5-01"
+          ]
+        ]
+      }
+    ],
+    "dailyRoutes": []
+  },
+  "routeMap": {
+    "defaultRegionId": "chengdu-emei-leshan",
+    "regions": [
+      {
+        "id": "chengdu-emei-leshan",
+        "label": "成都 · 峨眉 · 乐山",
+        "countryCode": "CN",
+        "scope": "template-schematic",
+        "mapMode": "frozen-template",
+        "templateId": "compact-basin",
+        "mapModeReason": "compact-city-route",
+        "mapModeMetrics": {
+          "placeCount": 9,
+          "geoPlaceCount": 0,
+          "widthKm": 0,
+          "heightKm": 0,
+          "spanKm": 0,
+          "averageNearestKm": 0,
+          "components": 1,
+          "largestLegKm": 0,
+          "jumpRatio": 0
+        },
+        "days": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "canvas": {
+          "width": 1448,
+          "height": 1086
+        },
+        "projection": {
+          "type": "relative-schematic",
+          "bounds": null
+        },
+        "baseImage": "assets/maps/templates/template-07-compact-basin.webp",
+        "title": "成都 · 峨眉 · 乐山 行程示意图",
+        "ariaLabel": "成都 · 峨眉 · 乐山模板化旅行路线示意图，共5天",
+        "description": "川西人文与山岳 5 日行程示意图",
+        "disclaimer": "本图为模板化行程示意图，仅表达地点相对方位与路线顺序，不代表真实比例或精确地理边界。",
+        "heading": {
+          "text": "CHENGDU / 成都 · 峨眉 · 乐山",
+          "x": 33,
+          "y": 105,
+          "size": 40
+        },
+        "legend": {
+          "x": 35,
+          "y": 168,
+          "gap": 43
+        },
+        "annotations": [],
+        "routes": [
+          {
+            "day": 1,
+            "color": "#397dc1",
+            "placeIds": [
+              "p-ct-airport",
+              "p-kuanzhai",
+              "p-renmin",
+              "p-taikoo"
+            ],
+            "paths": [
+              "M244 189 C349.2 159.0 454.3 159.0 553.33 189 C666.7 219.0 780.0 219.0 886.67 189 C991.8 159.0 1097.0 159.0 1196 189"
+            ],
+            "overviewPaths": [
+              "M244 189 C349.2 159.0 454.3 159.0 553.33 189 C666.7 219.0 780.0 219.0 886.67 189 C991.8 159.0 1097.0 159.0 1196 189"
+            ]
+          },
+          {
+            "day": 2,
+            "color": "#e77e22",
+            "placeIds": [
+              "p-taikoo",
+              "p-dujiangyan",
+              "p-qingcheng"
+            ],
+            "paths": [
+              "M1196 189 C1166.0 303.2 1166.0 417.5 1196 525 C1090.8 555.0 985.7 555.0 886.67 525"
+            ],
+            "overviewPaths": [
+              "M1196 189 C1166.0 303.2 1166.0 417.5 1196 525 C1090.8 555.0 985.7 555.0 886.67 525"
+            ]
+          },
+          {
+            "day": 3,
+            "color": "#618344",
+            "placeIds": [
+              "p-taikoo",
+              "p-leshan",
+              "p-emei-base"
+            ],
+            "paths": [
+              "M1196 189 C991.4 329.8 772.9 444.1 553.33 525 C448.2 495.0 343.0 495.0 244 525"
+            ],
+            "overviewPaths": [
+              "M1196 189 C991.4 329.8 772.9 444.1 553.33 525 C448.2 495.0 343.0 495.0 244 525"
+            ]
+          },
+          {
+            "day": 4,
+            "color": "#209aaa",
+            "placeIds": [
+              "p-emei-base",
+              "p-emei-golden"
+            ],
+            "paths": [
+              "M244 525 C388.5 663.7 550.4 778.0 720 861"
+            ],
+            "overviewPaths": [
+              "M244 525 C388.5 663.7 550.4 778.0 720 861"
+            ]
+          },
+          {
+            "day": 5,
+            "color": "#8865a5",
+            "placeIds": [
+              "p-emei-base",
+              "p-ct-airport"
+            ],
+            "paths": [
+              "M244 525 C214.0 410.8 214.0 296.5 244 189"
+            ],
+            "overviewPaths": [
+              "M244 525 C214.0 410.8 214.0 296.5 244 189"
+            ]
+          }
+        ],
+        "places": [
+          {
+            "id": "p-ct-airport",
+            "x": 244,
+            "y": 189,
+            "color": "#397dc1",
+            "tx": 382,
+            "ty": 101,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "TFU Airport /",
+              "天府机场"
+            ],
+            "query": "成都天府国际机场",
+            "days": [
+              1,
+              5
+            ]
+          },
+          {
+            "id": "p-kuanzhai",
+            "x": 553.33,
+            "y": 189,
+            "color": "#397dc1",
+            "tx": 631.33,
+            "ty": 127,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Kuanzhai Alley /",
+              "宽窄巷子"
+            ],
+            "query": "成都 宽窄巷子",
+            "days": [
+              1
+            ]
+          },
+          {
+            "id": "p-renmin",
+            "x": 886.67,
+            "y": 189,
+            "color": "#397dc1",
+            "tx": 964.67,
+            "ty": 127,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "People's Park /",
+              "人民公园"
+            ],
+            "query": "成都 人民公园 鹤鸣茶社",
+            "days": [
+              1
+            ]
+          },
+          {
+            "id": "p-taikoo",
+            "x": 1196,
+            "y": 189,
+            "color": "#397dc1",
+            "tx": 1118,
+            "ty": 265,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Taikoo Li /",
+              "太古里"
+            ],
+            "query": "成都 远洋太古里",
+            "days": [
+              1,
+              2,
+              3
+            ]
+          },
+          {
+            "id": "p-dujiangyan",
+            "x": 1196,
+            "y": 525,
+            "color": "#e77e22",
+            "tx": 1058,
+            "ty": 437,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Dujiangyan /",
+              "都江堰"
+            ],
+            "query": "都江堰景区 离堆公园",
+            "days": [
+              2
+            ]
+          },
+          {
+            "id": "p-qingcheng",
+            "x": 886.67,
+            "y": 525,
+            "color": "#e77e22",
+            "tx": 1024.67,
+            "ty": 627,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Mount Qingcheng /",
+              "青城山"
+            ],
+            "query": "青城山前山 景区入口",
+            "days": [
+              2
+            ]
+          },
+          {
+            "id": "p-leshan",
+            "x": 553.33,
+            "y": 525,
+            "color": "#618344",
+            "tx": 585.33,
+            "ty": 493,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Leshan Buddha /",
+              "乐山大佛"
+            ],
+            "query": "乐山大佛 景区北门",
+            "days": [
+              3
+            ]
+          },
+          {
+            "id": "p-emei-base",
+            "x": 244,
+            "y": 525,
+            "color": "#618344",
+            "tx": 212,
+            "ty": 493,
+            "size": 24,
+            "anchor": "end",
+            "lines": [
+              "Baoguo Temple /",
+              "报国寺"
+            ],
+            "query": "峨眉山 报国寺",
+            "days": [
+              3,
+              4,
+              5
+            ]
+          },
+          {
+            "id": "p-emei-golden",
+            "x": 720,
+            "y": 861,
+            "color": "#209aaa",
+            "tx": 798,
+            "ty": 799,
+            "size": 24,
+            "anchor": "start",
+            "lines": [
+              "Golden Summit /",
+              "峨眉山金顶"
+            ],
+            "query": "峨眉山 金顶",
+            "days": [
+              4
+            ]
+          }
+        ],
+        "overviewPlaceIds": [
+          "p-ct-airport",
+          "p-kuanzhai",
+          "p-renmin",
+          "p-taikoo",
+          "p-dujiangyan",
+          "p-qingcheng",
+          "p-leshan",
+          "p-emei-base",
+          "p-emei-golden"
+        ],
+        "dailyLayouts": {
+          "1": {
+            "places": [
+              "p-ct-airport",
+              "p-kuanzhai",
+              "p-renmin",
+              "p-taikoo"
+            ],
+            "labels": {
+              "p-ct-airport": {
+                "x": 382,
+                "y": 101,
+                "anchor": "start"
+              },
+              "p-kuanzhai": {
+                "x": 631.33,
+                "y": 127,
+                "anchor": "start"
+              },
+              "p-renmin": {
+                "x": 964.67,
+                "y": 127,
+                "anchor": "start"
+              },
+              "p-taikoo": {
+                "x": 1118,
+                "y": 265,
+                "anchor": "end"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d1-03"
+                ],
+                "x": 398.67,
+                "y": 189
+              },
+              {
+                "items": [
+                  "d1-05"
+                ],
+                "x": 720,
+                "y": 189
+              },
+              {
+                "items": [
+                  "d1-06"
+                ],
+                "x": 1041.34,
+                "y": 189
+              }
+            ]
+          },
+          "2": {
+            "places": [
+              "p-taikoo",
+              "p-dujiangyan",
+              "p-qingcheng"
+            ],
+            "labels": {
+              "p-taikoo": {
+                "x": 1118,
+                "y": 265,
+                "anchor": "end"
+              },
+              "p-dujiangyan": {
+                "x": 1058,
+                "y": 437,
+                "anchor": "end"
+              },
+              "p-qingcheng": {
+                "x": 1024.67,
+                "y": 627,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d2-01"
+                ],
+                "x": 1196,
+                "y": 357
+              },
+              {
+                "items": [
+                  "d2-03"
+                ],
+                "x": 1041.34,
+                "y": 525
+              }
+            ]
+          },
+          "3": {
+            "places": [
+              "p-taikoo",
+              "p-leshan",
+              "p-emei-base"
+            ],
+            "labels": {
+              "p-taikoo": {
+                "x": 1118,
+                "y": 265,
+                "anchor": "end"
+              },
+              "p-leshan": {
+                "x": 585.33,
+                "y": 493,
+                "anchor": "start"
+              },
+              "p-emei-base": {
+                "x": 212,
+                "y": 493,
+                "anchor": "end"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d3-02"
+                ],
+                "x": 874.66,
+                "y": 357
+              },
+              {
+                "items": [
+                  "d3-04"
+                ],
+                "x": 398.67,
+                "y": 525
+              }
+            ]
+          },
+          "4": {
+            "places": [
+              "p-emei-base",
+              "p-emei-golden"
+            ],
+            "labels": {
+              "p-emei-base": {
+                "x": 212,
+                "y": 493,
+                "anchor": "end"
+              },
+              "p-emei-golden": {
+                "x": 798,
+                "y": 799,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d4-02"
+                ],
+                "x": 482,
+                "y": 693
+              }
+            ]
+          },
+          "5": {
+            "places": [
+              "p-emei-base",
+              "p-ct-airport"
+            ],
+            "labels": {
+              "p-emei-base": {
+                "x": 212,
+                "y": 493,
+                "anchor": "end"
+              },
+              "p-ct-airport": {
+                "x": 382,
+                "y": 101,
+                "anchor": "start"
+              }
+            },
+            "transport": [
+              {
+                "items": [
+                  "d5-01"
+                ],
+                "x": 244,
+                "y": 357
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 600" width="960" height="600" role="img" aria-label="峨眉山金顶索道示例电子票">
+  <title>峨眉山 · 金顶索道示例电子票（虚构数据）</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#0f2b3d"/>
+      <stop offset="100%" stop-color="#1d5b6e"/>
+    </linearGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#f6d365"/>
+      <stop offset="100%" stop-color="#e0a03c"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="960" height="600" fill="url(#bg)"/>
+  <circle cx="820" cy="90" r="150" fill="#ffffff" opacity="0.04"/>
+  <circle cx="120" cy="540" r="190" fill="#ffffff" opacity="0.03"/>
+
+  <rect x="40" y="40" width="880" height="520" rx="24" fill="#ffffff" opacity="0.06" stroke="#f6d365" stroke-opacity="0.35" stroke-width="2"/>
+
+  <text x="80" y="110" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="30" font-weight="700" fill="url(#gold)">峨眉山 · 金顶索道</text>
+  <text x="80" y="146" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="17" fill="#9fc2cf">MOUNT EMEI · GOLDEN SUMMIT CABLE CAR</text>
+  <text x="880" y="110" text-anchor="end" font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="16" fill="#f6d365">示例 / SAMPLE</text>
+
+  <line x1="80" y1="176" x2="880" y2="176" stroke="#ffffff" stroke-opacity="0.18" stroke-width="1"/>
+
+  <g font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" fill="#eaf4f8">
+    <text x="80" y="222" font-size="15" fill="#9fc2cf">票种 / TICKET TYPE</text>
+    <text x="80" y="256" font-size="24" font-weight="600">往返索道票（成人）</text>
+
+    <text x="520" y="222" font-size="15" fill="#9fc2cf">票价 / FARE</text>
+    <text x="520" y="256" font-size="24" font-weight="600">CNY 120.00</text>
+
+    <text x="80" y="322" font-size="15" fill="#9fc2cf">使用日期 / VALID DATE</text>
+    <text x="80" y="356" font-size="24" font-weight="600">2026-10-04</text>
+
+    <text x="520" y="322" font-size="15" fill="#9fc2cf">人数 / PAX</text>
+    <text x="520" y="356" font-size="24" font-weight="600">2 人</text>
+
+    <text x="80" y="422" font-size="15" fill="#9fc2cf">乘车站 / STATION</text>
+    <text x="80" y="456" font-size="24" font-weight="600">接引殿 ⇄ 金顶</text>
+
+    <text x="520" y="422" font-size="15" fill="#9fc2cf">订单号 / ORDER</text>
+    <text x="520" y="456" font-size="24" font-weight="600" letter-spacing="2">SAMPLE-0000-0000</text>
+  </g>
+
+  <line x1="80" y1="496" x2="880" y2="496" stroke="#ffffff" stroke-opacity="0.18" stroke-width="1" stroke-dasharray="6 8"/>
+
+  <g font-family="'PingFang SC','Hiragino Sans GB','Microsoft YaHei',sans-serif" font-size="14" fill="#9fc2cf">
+    <text x="80" y="528">· 本票为演示用虚构票据，不具备任何效力</text>
+    <text x="520" y="528">· 大风结冰天气索道可能临时停运，届时改走步行道</text>
+  </g>
+
+  <!-- 伪条码，仅作视觉示意 -->
+  <g transform="translate(700,505)" fill="#eaf4f8" opacity="0.75">
+    <rect x="0" y="0" width="3" height="34"/><rect x="6" y="0" width="1.5" height="34"/>
+    <rect x="11" y="0" width="3" height="34"/><rect x="18" y="0" width="1.5" height="34"/>
+    <rect x="23" y="0" width="4" height="34"/><rect x="31" y="0" width="1.5" height="34"/>
+    <rect x="36" y="0" width="3" height="34"/><rect x="43" y="0" width="1.5" height="34"/>
+    <rect x="48" y="0" width="3" height="34"/><rect x="55" y="0" width="4" height="34"/>
+    <rect x="63" y="0" width="1.5" height="34"/><rect x="68" y="0" width="3" height="34"/>
+    <rect x="75" y="0" width="1.5" height="34"/><rect x="80" y="0" width="3" height="34"/>
+    <rect x="87" y="0" width="4" height="34"/><rect x="95" y="0" width="1.5" height="34"/>
+    <rect x="100" y="0" width="3" height="34"/><rect x="107" y="0" width="1.5" height="34"/>
+    <rect x="112" y="0" width="3" height="34"/><rect x="119" y="0" width="4" height="34"/>
+    <rect x="127" y="0" width="1.5" height="34"/><rect x="132" y="0" width="3" height="34"/>
+    <rect x="139" y="0" width="1.5" height="34"/><rect x="144" y="0" width="3" height="34"/>
+  </g>
+</svg>
