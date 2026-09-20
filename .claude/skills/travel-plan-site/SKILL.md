@@ -48,6 +48,32 @@ description: 往本站新增/更新一个目的地旅行攻略页。当用户说
   - 不要删除 `ledger.js` / `ledger.css` / `index.html` 里的 ledger 节点，也不要动 `app.js` 里的 `MODULE_NAMES`。关掉开关即可（`config.modules.ledger = false` 时 `<a id="ledger-navigation-link">` 和 `#ledger-view` 会自动 `hidden`）。
 - **`config.persistence.mode` 恒为 `"local"`。** 本站只部署到 GitHub Pages（纯静态、无服务端），不要写 `d1`、不要引用 `/api/trip`、不要引入任何后端。
 
+## 用户定过的硬规矩
+
+下面这些不是「踩过的坑」，是用户明确提的要求。**它们此前只散落在对话里，没进过任何文档** ——
+所以单列一节，避免下一个人（或下一次会话）凭「看起来合理」自行发挥。
+
+1. **只部署 GitHub Pages，不要 Cloudflare，也不要别的托管。**
+   ⚠️ **上游 `template/SKILL.md` 的「生成结束提示」里恰好推荐了
+   `GitHub → Cloudflare Pages → Cloudflare D1` 那条路线** —— 与本条**正好相反**。
+   照上游文案办事会去配一个用户明确不要的东西。本站只走 `.github/workflows/pages.yml`（main → Actions → Pages）。
+   这条也是「纯静态、无服务端」总约束的由来，记账只能 `local` 同理。
+2. **首页是攻略列表**（每个目的地一张卡片），点进去才是那个地方的完整攻略。
+   首页不是 README，也不是把某一份攻略摊开在根路径。
+3. **Skill 必须装在仓库里。** 攻略是「用仓库内的 skill 产出的」，不是一次性的手写页面 ——
+   所以规则要回写到本文件，而不是留在会话里。
+4. **手机和电脑都要能用。** 每个目的地页至少按 1440 与 390 两个视口各看一遍（见验收第 3 条）。
+5. **每天都要有一张地图**（日期页签），不是整个行程共用一张总图。见坑 4。
+6. **改完就 push。** ⚠️ 与全局 `CLAUDE.md` 的「除非我说了要推，否则只 commit 不 push」**冲突** ——
+   用户 2026-09-20 为本站明确开了例外（起因是「首页没显示这次攻略」实为改动没上线）。
+   **本仓库不适用「只 commit 不 push」。**
+7. **三个已被用户拍板的取舍，别再自行改回去：**
+   - **允许 `pngjs` 作为唯一的第三方依赖** —— 拼真实底图要解码/编码瓦片。
+     仓库不再是零依赖，`npm ci` 是必需的（CI 里已加）。
+   - **允许残留小于 40px 的标签间距**，优先保**方位正确**（首尔 day7 曾有 7 对点间距 <40px，最近 15px）。
+     这是**知情后的接受**，不是待修的缺陷。
+   - **地图画布按真实宽高比**，不许拉伸（机制见 README 第 127-130 行；`preserveAspectRatio="none"` 要求严格一致）。
+
 ## 新增一个目的地
 
 ### 1. 搭骨架
@@ -309,18 +335,30 @@ npm run new -- --slug <slug> --title "<标题>" --dest "<主要目的地>" --sta
 20. **CSS 层叠顺序：`index.html` 先加载 `styles.css`、后加载 `ledger.css`，
     同特异性下 `ledger.css` 胜。** 要覆盖模板既有样式，写进 `ledger.css`（或提高特异性）；
     写进 `styles.css` 会被原规则**静默盖掉** —— 不报错、只是不生效。
-    （模块 tab 条的样式就是因此写在 `ledger.css` 里的，见坑 21。）
+    （顶部导航的样式就是因此写在 `ledger.css` 里的，见坑 21。）
 
-21. **顶部模块 tab 条是补丁产物，动它之前先读 `scripts/patch-template.mjs` 里的注释。**
+21. **顶部模块导航是补丁产物，动它之前先读 `scripts/patch-template.mjs` 里的注释。**
+    **形态由用户定型：导航在顶栏里、靠右，与 wordmark（页面上显示的「KR · 2026」）同一行，
+    全站只有这一行导航 —— 不要另起一条独立的吸顶 tab 条。**（用户 2026-09-20 明确要求，
+    此前一版做的顶栏下方独立吸顶条被否掉。）
+
+    放在 `<header class="topbar">` 里是**有意的**，不是随手：顶栏本身就是
+    `position: sticky; top: 0`，放进去的东西天然常驻，不必再写第二条 sticky，
+    也就省掉了「第二条的高度」这笔账（`--module-tabs-h`、`.ledger-view` 高度补偿都不需要）。
     三条硬约束：
-    - **`<main>` 上有一条 `overflow: hidden`**（`styles.css`）。`overflow:hidden` 的祖先会成为
-      sticky 的滚动容器，导致**其后代的 `position: sticky` 完全失效** ——
-      tab 条因此必须放在 `</header>` 之后、`<main>` 之前。
-    - **每个 tab 必须带 `data-module`，外层容器必须保留 `class="travel-navigation-menu"`、
+    - **不要把它挪进 `<main>`。** `<main>` 上有 `overflow: hidden`（`styles.css`），
+      `overflow:hidden` 的祖先会成为 sticky 的滚动容器，**其后代的 `position: sticky` 全部失效**。
+    - **每个链接必须带 `data-module`，外层容器必须保留 `class="travel-navigation-menu"`、
       外层节点必须保留 `id="travel-navigation"`。** `app.js` 靠前者按 `config.modules` 逐项显示，
-      靠后者判断「一个模块都不剩就整条隐藏」。改属性名会让「按 config 自动出 tab」失效。
-    - **`.section` 的 `scroll-margin-top` 必须 ≥ 顶栏 + tab 条高度**，否则点 tab 后标题被吸顶条盖住。
-      本站已改成 `calc(48px + safe-top + tab条高 + 8px)`（顺带修掉上游漏算 `--safe-top` 的问题）。
+      靠后者判断「一个模块都不剩就整块隐藏」。改属性名会让「按 config 自动出导航」失效。
+      ⇒ **`config.modules` 里 `false` 的模块自动不出现在导航里**（韩国 `driving:false` 就没有「自驾」）。
+    - **`.section` 的 `scroll-margin-top` 必须 ≥ 顶栏高度**，否则点导航后标题被吸顶顶栏盖住。
+      本站写成 `calc(48px + var(--safe-top) + 8px)` —— 上游只写了 `48px`，**漏算了安全区**。
+    - 作者样式里的 `display:flex` 会盖掉 `hidden` 属性自带的 `display:none`，所以
+      `#travel-navigation[hidden]` 必须显式补一条（用 id 选择器，不必 `!important`）。
+    - 顶栏是 `justify-content: space-between` 的两列布局：新增第三个子元素会挤压 wordmark，
+      所以 wordmark 要加 `flex: 0 0 auto`，导航要能收缩 + `overflow-x: auto`。
+      实测六个链接全开的**最坏**情况在 320~1440px 都不溢出（320px 仍有 7px 间距）。
 
 22. **事实纪律（用户明确要求）：核不到官方来源的，写「待核实」并留待办，
     绝不填看起来合理的推测数字。**
@@ -375,8 +413,11 @@ npm run preview    # 起静态服务器，终端会打印实际地址（含首�
    但**只有肉眼能确认结果**。切到每个区域的总览看一眼标题右侧有没有文字压上来。
    （真实案例：成都「CHENGDU / 成都市区」实测 396px，模板默认只给它 300px，
    于是 人民公园 / 太古里 两个标签被标题压了 22px、24px 而所有自动化检查都是绿的。）
-7. **顶部 tab 条**：tab 数应等于 `config.modules` 里为 `true` 的项数（记账关了就不出「记账」）；
-   逐个点一遍，跳到的 section 顶部**不能被吸顶条盖住**；滚到某模块时该 tab 才高亮。
+7. **顶部模块导航**：链接数应等于 `config.modules` 里为 `true` 的项数（记账关了就不出「记账」）；
+   逐个点一遍，跳到的 section 顶部**不能被吸顶顶栏盖住**；滚到某模块时该链接才高亮。
+   还要确认它**确实在顶栏那一行里**（`#travel-navigation` 的父节点是 `header.topbar`）、
+   **全页只有一行导航**（`document.querySelectorAll(".module-tabs").length === 0`），
+   以及与 wordmark 同行不重叠 —— 这三条是用户点名要的形态，坏掉了页面照样能跑。
 
 需要自动化时，可以用无头浏览器把上面几条断言跑一遍 —— 但**断言要盯着真实 DOM**：
 `elementFromPoint` 用视口坐标，元素不在视口里会一直返回 `null`（看起来像「热区没生效」，
