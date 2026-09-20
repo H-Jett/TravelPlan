@@ -158,6 +158,18 @@ npm run new -- --slug <slug> --title "<标题>" --dest "<主要目的地>" --sta
    第 i 项填该路段对应的 `day.schedule[].id`（写成数组形式）。本仓库的
    `trips/chengdu-emei-leshan/` 是一份把 5 天全部铺满的参考样本。
 
+   > **排查时别去看 `routeMap.regions[].routes[].scheduleItems`** —— 那个字段是空的，
+   > 构建时被有意丢掉了（`build-map.mjs` 的 `mapDataForRegion()` 只挑 `day`/`color`/
+   > `placeIds`/`paths`/`overviewPaths` 输出）。它是**生成物**，不是输入。
+   > 你写的 `map.routes[].scheduleItems` 会被搬进
+   > `routeMap.regions[].dailyLayouts[day].transport[].items`（图标实际读这里），
+   > 所以核对图标有没有挂上，看这一层。
+   >
+   > 另一个坑：`dailyLayouts[].places` 会**去重**（同一天回到起点只算一个点），
+   > 而 `build-real-map.mjs` 用去重后的 `places.slice(0, -1)` 去截 `transport` ——
+   > 若某天 `placeIds` 里有重复地点，**最后一个路段的图标会被丢掉**。
+   > 韩国行程 Day 2（济州→城山→牛岛→城山→济州）就丢了一段。
+
    多国行程另有讲究：`trip.primaryDestinationCountries` 有多个国家时，
    `build-map.mjs` 会**按国家自动拆成多个 region**（每个国家一张独立底图与页签）。
    国与国之间不能连线——跨国的 route 会自动断成两段。
