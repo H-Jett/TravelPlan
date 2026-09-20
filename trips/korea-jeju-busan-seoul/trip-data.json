@@ -66,7 +66,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T16:00:49.769Z"
+        "generatedAt": "2026-09-20T16:07:13.868Z"
       },
       "busan": {
         "fingerprint": "312406b87e66cc8f",
@@ -103,7 +103,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T16:00:49.776Z"
+        "generatedAt": "2026-09-20T16:07:13.874Z"
       },
       "seoul": {
         "fingerprint": "2c273a83409a3c92",
@@ -140,7 +140,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T16:00:49.789Z"
+        "generatedAt": "2026-09-20T16:07:13.888Z"
       }
     }
   },
@@ -370,7 +370,9 @@
           "type": "transfer",
           "time": "17:45",
           "text": "南京禄口国际机场办理值机与托运（国际航班建议提前 2 小时）",
-          "placeIds": []
+          "placeIds": [
+            "p-nanjing-airport"
+          ]
         },
         {
           "id": "d1-02",
@@ -605,7 +607,9 @@
           "type": "attraction",
           "time": "10:30",
           "text": "涯月 한담해안산책로：애월 到 곽지 的海岸步道，全长 1.2 km，2001 年由济州道府修建，2009 年入选济州「隐藏美景 31 选」。官方旅游记录里没有门票、也没有开放时间，即免费常时开放。（原攻略写的「GD 咖啡 몽상드애월」：GD 已于 2018 年 1 月退出，该地块现由 본태인터네셔널 开发成复合商业设施，旧址官网已成域名停放页——想在海边喝咖啡，这条海岸路上咖啡馆很多。）",
-          "placeIds": []
+          "placeIds": [
+            "p-handam"
+          ]
         },
         {
           "id": "d3-03",
@@ -632,7 +636,7 @@
           "time": "15:30",
           "text": "翰林公园（한림공원，就在狭才海滩对面，步行即到）：成人 15,000 KRW，09:00 开始售票、全年无休，9–10 月末次售票 17:00（官网「이용안내」页）。「挟才窟」不是一个独立景点——협재굴 与 쌍용굴 都在翰林公园园内（天然纪念物第 236 号），由公园的单一门票覆盖，官方未单列洞窟票。",
           "placeIds": [
-            "p-hyeopjae"
+            "p-hallim-park"
           ]
         },
         {
@@ -713,7 +717,9 @@
           "type": "shopping",
           "time": "09:30",
           "text": "济州市区购物：Olive Young 莲洞店（10:00–23:30）、新罗免税店济州店（제주시 노연로 69，10:00–19:00）。免税品不能在济州或釜山取货，只能留到 10/5 在仁川机场取。",
-          "placeIds": []
+          "placeIds": [
+            "p-jeju-city"
+          ]
         },
         {
           "id": "d4-02",
@@ -750,7 +756,9 @@
           "type": "check-in",
           "time": "19:30",
           "text": "西面酒店入住",
-          "placeIds": []
+          "placeIds": [
+            "p-busan-city"
+          ]
         }
       ],
       "notes": [
@@ -820,7 +828,9 @@
           "type": "attraction",
           "time": "12:15",
           "text": "甘川文化村：免费入场，无门票口。小王子拍照点在 13:00–15:00 是团客高峰。（11:30 从松岛出发、按 40–55 分车程，约 12:10–12:25 到；这里取 12:15。）",
-          "placeIds": []
+          "placeIds": [
+            "p-gamcheon"
+          ]
         },
         {
           "id": "d5-05",
@@ -837,7 +847,9 @@
           "type": "attraction",
           "time": "15:30",
           "text": "白浅滩文化村：免费，村落全天开放（居民区，深夜不去）；绝影海岸散步路免费。（14:30 从甘川出发、按 50–70 分车程，约 15:20–15:40 到；这里取 15:30。）",
-          "placeIds": []
+          "placeIds": [
+            "p-huinyeoul"
+          ]
         },
         {
           "id": "d5-07",
@@ -854,7 +866,9 @@
           "type": "attraction",
           "time": "17:50",
           "text": "广安里海水浴场（免费）+ 广安大桥夜景。桥上灯光秀每晚 20:00 / 21:00 / 22:00 各约 10 分钟（该时刻表来自翻新前的设施公团文件，行前/到现场请再确认）。（17:00 从白浅滩出发，影岛没有直达广安里的车，两段车加换乘按 50 分钟算，17:50 前后到。）",
-          "placeIds": []
+          "placeIds": [
+            "p-gwangalli"
+          ]
         },
         {
           "id": "d5-09",
@@ -1004,14 +1018,19 @@
           "time": "19:12",
           "type": "train",
           "text": "KTX 066 釜山 → 首尔：19:12 发车、21:35 到首尔站（2 小时 23 分）。成人 2 名、一般车厢，已出票。",
-          "placeIds": []
+          "placeIds": [
+            "p-busan-station",
+            "p-seoul-station"
+          ]
         },
         {
           "id": "d6-09",
           "time": "21:45",
           "type": "transfer",
           "text": "首尔站 → 首尔酒店入住。首尔站 1 号线 / 4 号线 / 机场铁路交汇，视酒店位置选线。",
-          "placeIds": []
+          "placeIds": [
+            "p-seoul-station"
+          ]
         }
       ],
       "notes": [
@@ -1584,6 +1603,13 @@
   ],
   "places": [
     {
+      "id": "p-nanjing-airport",
+      "nameZh": "南京禄口国际机场",
+      "name": "Nanjing Lukou International Airport",
+      "cityOrArea": "南京",
+      "googleMapsQuery": "南京禄口国际机场 T2"
+    },
+    {
       "id": "p-jeju-airport",
       "nameZh": "济州国际机场",
       "name": "Jeju International Airport",
@@ -1626,11 +1652,25 @@
       "googleMapsQuery": "济州 涯月邑 汉潭海岸散步路"
     },
     {
+      "id": "p-handam",
+      "nameZh": "汉潭海岸散步路",
+      "name": "Handam Coastal Walk",
+      "cityOrArea": "济州",
+      "googleMapsQuery": "제주 한담해안산책로"
+    },
+    {
       "id": "p-hyeopjae",
       "nameZh": "狭才海水浴场",
       "name": "Hyeopjae Beach",
       "cityOrArea": "济州",
       "googleMapsQuery": "济州 狭才海水浴场"
+    },
+    {
+      "id": "p-hallim-park",
+      "nameZh": "翰林公园",
+      "name": "Hallim Park",
+      "cityOrArea": "济州",
+      "googleMapsQuery": "제주 한림공원"
     },
     {
       "id": "p-gimhae-airport",
@@ -1645,6 +1685,13 @@
       "name": "Busan (Seomyeon)",
       "cityOrArea": "釜山",
       "googleMapsQuery": "釜山 西面"
+    },
+    {
+      "id": "p-busan-station",
+      "nameZh": "釜山站",
+      "name": "Busan Station",
+      "cityOrArea": "釜山",
+      "googleMapsQuery": "부산역 KTX"
     },
     {
       "id": "p-songdo",
@@ -1842,22 +1889,8 @@
       "googleMapsQuery": "济州 BHC 炸鸡"
     },
     {
-      "placeId": "r-dongmun",
-      "name": "东门市场",
-      "city": "济州",
-      "mealKinds": [
-        "午餐",
-        "晚餐"
-      ],
-      "specialties": [
-        "小吃",
-        "海鲜"
-      ],
-      "googleMapsQuery": "济州 东门市场"
-    },
-    {
       "placeId": "r-1988-hanwoo",
-      "name": "1988 韩牛店",
+      "name": "1988 韩牛",
       "city": "釜山",
       "mealKinds": [
         "晚餐"
