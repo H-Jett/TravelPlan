@@ -8,13 +8,33 @@ description: 往本站新增/更新一个目的地旅行攻略页。当用户说
 这个仓库是一个**多目的地旅行攻略站**：首页汇总 + 每个目的地一个独立攻略页。
 具体页面怎么装配，由 vendored 的上游 Skill 决定 —— 本文件只负责把上游 Skill 接到本站的目录结构上。
 
+> ### ⚠️ 上游文档分两层，别照单全收
+>
+> 「已写进文档的规范」实际有**两层**，混着读会得出错误结论：
+>
+> | 层 | 文件 | 性质 |
+> |---|---|---|
+> | **上游层** | `template/SKILL.md` + `template/references/*`（14 个文件约 3100 行） | vendored。`references/` 里 **8/14 个文件自标「advanced / legacy / 仅作兼容保留」**，并与 `template/SKILL.md` 直接冲突 |
+> | **本站层** | 本文件 | 真正装着「本站踩过的坑」的就是这一份 |
+>
+> 冲突是实打实的，例如模块数：
+> `references/standard-generation-workflow.md` 列了**七个**模块（把 `tickets` 当独立模块），
+> 而 `template/SKILL.md` 明写「**不得出现第七个模块**」「门票不是独立模块」。
+> 照前者办事，会去写一个本站运行时根本不存在的 `modules.tickets`。
+>
+> **普通生成以 `template/SKILL.md` + 本文件为准。** `template/references/` 只在两者都没写、
+> 且你确认该文件没自标 legacy 时才参考。
+> 快速自查：`grep -inE "advanced|legacy|已废弃|deprecated" template/references/<文件>`，
+> 头几行有「状态：Advanced/legacy…」就直接跳过。
+
 ## 角色分工（重要）
 
 | 文件 | 角色 |
 |---|---|
 | `.claude/skills/generate-lightweight-travel-page/SKILL.md` | **上游 Skill（软链→`template/SKILL.md`）**，页面装配规则的唯一权威。开始写作前先完整读它。 |
 | 本文件 | 本站的**编排层**：目录约定、构建命令、模块策略。 |
-| `template/` | vendored 上游模板，**只读**。运行时 `index.html/app.js/*.js`、`ledger.js`、schema、`scripts/build-map.mjs` 都不要改。 |
+| `template/` | vendored 上游模板，**只读**。运行时 `index.html/app.js/*.js`、`ledger.js`、schema、`scripts/build-map.mjs` 都不要改。要改就走 `scripts/patch-template.mjs`（见坑 18）。 |
+| `scripts/patch-template.mjs` | **改动 vendored `template/` 的唯一合法通道**：幂等、靠锚点、改动集中可审查，`npm run patch` 执行。加前端行为/样式一律走它，不要直接编辑 `template/`。 |
 | `configs/modules.json` | 本站模块策略（哪些模块启用、记账为保留位）。 |
 | `trips/<slug>/` | 一个目的地。**你唯一该写的地方。** |
 
@@ -165,10 +185,15 @@ npm run new -- --slug <slug> --title "<标题>" --dest "<主要目的地>" --sta
    > `routeMap.regions[].dailyLayouts[day].transport[].items`（图标实际读这里），
    > 所以核对图标有没有挂上，看这一层。
    >
-   > 另一个坑：`dailyLayouts[].places` 会**去重**（同一天回到起点只算一个点），
-   > 而 `build-real-map.mjs` 用去重后的 `places.slice(0, -1)` 去截 `transport` ——
-   > 若某天 `placeIds` 里有重复地点，**最后一个路段的图标会被丢掉**。
-   > 韩国行程 Day 2（济州→城山→牛岛→城山→济州）就丢了一段。
+   > 另一个坑（**已修，2026-09**）：`dailyLayouts[].places` 会**去重**（同一天回到起点只算一个点），
+   > 但 `transport` 是按**未去重**的点序列算的 —— 往返日两者差一格。
+   > `scripts/lib/build-real-map.mjs` 原来照去重后的 `places.slice(0, -1)` 重算 `transport`，
+   > 于是往返日**最后一个路段的图标被悄悄丢掉**（韩国 Day 2、Day 3 都丢过，
+   > 而且是「改完 `scheduleItems` 却看不见效果」的那种坑）。
+   > 现在该脚本改用 `region.routes` 里未去重的序列重建，并以
+   > 「段数 == 模板不变量」且「去重后 == `daily.places`」为采用条件，不满足就退回原行为。
+   > 所以：**跨区裁剪后的点序列在 `routeMap.regions[].routes[].placeIds` 里，是未去重的**，
+   > 排查图标丢失时对比这两处即可。
 
    多国行程另有讲究：`trip.primaryDestinationCountries` 有多个国家时，
    `build-map.mjs` 会**按国家自动拆成多个 region**（每个国家一张独立底图与页签）。
@@ -208,13 +233,112 @@ npm run new -- --slug <slug> --title "<标题>" --dest "<主要目的地>" --sta
    写进 `notes`/`guidance` 时**带上查证日期**（如「2026-09 查证」），
    否则半年后没人分得清哪些还成立。
 
+8. **`schedule[].type` 有固定词表，不认识的一律静默画成汽车图标。**
+   `route-ui.js` 的 `transportIcon()` 末尾是 `icons[key] || icons.drive`。
+   图标只有 7 种：`drive / cable-car / train / hike / boat / rental-car / flight`；
+   别名只有 `rail→train`、`ferry→boat`、`walk→hike`、`return|transfer→drive`。
+   **`attraction` / `restaurant` / `shopping` / `check-in` 都不在表里** ——
+   把这类日程项的 id 填进 `map.routes[].scheduleItems`，地图上会长出一个**汽车图标**，
+   弹窗文案还退化成「交通 · 20:00」。
+   → **`scheduleItems` 里只该放真正的交通项**（把「到了之后干什么」填进「怎么过去」的槽位是典型误用）。
+   排查时把每个图钉的 `type` 对着上面这张表核一遍；全仓库核对过一次是 33+7 个图钉零违规。
+
+9. **`dayCard()` 按 `schedule` 数组顺序渲染，不按 `time` 排序。**
+   `app.js` 里是 `day.schedule.map(...)`，**没有排序**。数组顺序错了页面就错了，
+   哪怕每一项的 `time` 都写对了。改顺序 = 挪数组元素。
+   典型症状：出现「人还在 A 地就先吃 B 地的晚饭」这种自相矛盾的行程。
+
+10. **`schedule[].time` 必须单调递增**（真实跨零点除外，如 23:20 → 01:10）。
+    这条可以自动化 —— 值得作为 `check.mjs` 的一条断言。
+
+11. **「文本声称的用时」要与「相邻两项的时钟差」交叉核对。**
+    这是**唯一**能发现排程不可行的办法：写行程时同时写用时和时刻，写完回头比一遍。
+    韩国行程靠这条查出 4 处「正文写了 40–55 分钟的路，时刻表只给 30 分钟」。
+    改法是**推后到站时刻**（出发时刻通常是锚点，不要动）。
+
+12. **`escapeHtml` 作用于所有正文 → 富文本一律无效。**
+    字面 `**加粗**` 会原样显示成星号，行内代码、Markdown 列表同理。
+    上游文档只说了「escaped text」，**没有任何一处写「不支持 Markdown」** —— 是个无预警的坑。
+    写数据时别用 Markdown；提交前可全量扫一遍 `**`。
+
+13. **`costText()` 有两种静默退化，且 `cost.note` 根本不进 DOM。**
+    - cost 既无 `amount` 也无 `standard` 时 → **只渲染条目名，连币种都不显示**。
+      所以「需购票但官方未公布票价」**不能**写成一条 cost。
+    - **`cost.note` 从不渲染** —— 所有口径冲突、出处、备注写进 `note` 等于丢掉，
+      必须写进 `days[].notes[]`。
+    - 同类的还有 `ticketPlanning.items[].price` 也不渲染（见坑 6）。
+
+14. **`ticketRequirement()` 的合法枚举，全仓库没有任何文档给出。**
+    实现是 4 档：`advance-required`（需提前购票）/ `advance-recommended`（建议预约）/
+    `needs-confirmation`（购票方式待确认）/ `onsite-purchase`（现场购票，无需预约 —— **本站新加**）。
+    **其余任何值都静默回退成「门票信息」。** 上游合同只把 `requirement` 写成自由的 `enum/string`，
+    写中文或别的值不报错、只是降级。
+
+15. **反向误导：`costReferences` 在上游合同里被标成 `[DERIVED]`，实际是作者手写输入。**
+    `references/travel-data-contract.md` 把它和 weekday/locations 并列成派生字段，
+    但 `app.js` 是**直接读 `day.costReferences`**。照合同办事的 Agent **根本不会写这个字段** ——
+    于是页面上一整块费用标签凭空消失。以本文件坑 6 的「会显示」表为准。
+
+16. **lite schema 几乎什么都不校验。**
+    `template/schemas/trip-data.schema.json` 里 `config` / `map` / `routeMap` 是**空对象**（不约束），
+    `ticketPlanning` / `costReferences` / `countries` **完全没声明**，`days[].schedule` 只声明是数组。
+    → 字段名写错、`type` 写了表外的值、`requirement` 写了不存在的档，**校验都抓不到**。
+    上面这一串「静默坑」的根因就在这里。别指望 schema 兜底，按本文件的表逐项核。
+
+17. **本站没有 `build:map` / `validate` 这两个命令。**
+    它们只存在于 `template/package.json`。仓库根用 `build` / `check` / `verify:projection` / `patch`。
+    同理预览 banner 文案也不同：本站是 `Travel plans preview:`，不是上游的
+    `Travel plan local preview:` —— 照上游文案去 grep 会找不到。
+
+18. **`scripts/patch-template.mjs` 是改 vendored `template/` 的唯一通道。**
+    幂等靠注释标记 / 锚点定位，`npm run patch` 执行，改完必须 `npm run build` 才到得了各 trip。
+    新增前端行为/样式都走它（门票档位、模块 tab 条都是这个模式），不要直接编辑 `template/`。
+    - **新写的运行时文件必须同时在两处登记**：`patch-template.mjs` 里写出它，
+      **并且**加进 `scripts/lib/paths.mjs` 的 `RUNTIME_FILES` —— 白名单漏了就**不会拷进站点**，
+      页面静默没有这个功能，构建不报任何错。
+    - **用 `build:xxx` 标记包裹的块要按「内容」比对替换，不能只判「标记在不在」。**
+      只判标记的话，标记写进去之后你再改常量里的内容就**永远不生效**（跑多少次都是「无变化」）。
+      `upsertBlock()` 就是为此写的。
+
+19. **`npm run build` 会原地重写每个 trip 的 `trip-data.json`** —— 至少动
+    `metadata.realMaps.<region>.generatedAt` 三个时间戳（每条真实底图一个），并重算 `routeMap`。
+    于是**只要 build 过，没动过的那些目的地也会出现在 `git status` 里**。
+    **提交前先 `git checkout` 掉与本次改动无关的目的地**，否则每个 commit 都带上别的 trip 的
+    无意义 diff，review 时看不出真正改了什么。
+
+20. **CSS 层叠顺序：`index.html` 先加载 `styles.css`、后加载 `ledger.css`，
+    同特异性下 `ledger.css` 胜。** 要覆盖模板既有样式，写进 `ledger.css`（或提高特异性）；
+    写进 `styles.css` 会被原规则**静默盖掉** —— 不报错、只是不生效。
+    （模块 tab 条的样式就是因此写在 `ledger.css` 里的，见坑 21。）
+
+21. **顶部模块 tab 条是补丁产物，动它之前先读 `scripts/patch-template.mjs` 里的注释。**
+    三条硬约束：
+    - **`<main>` 上有一条 `overflow: hidden`**（`styles.css`）。`overflow:hidden` 的祖先会成为
+      sticky 的滚动容器，导致**其后代的 `position: sticky` 完全失效** ——
+      tab 条因此必须放在 `</header>` 之后、`<main>` 之前。
+    - **每个 tab 必须带 `data-module`，外层容器必须保留 `class="travel-navigation-menu"`、
+      外层节点必须保留 `id="travel-navigation"`。** `app.js` 靠前者按 `config.modules` 逐项显示，
+      靠后者判断「一个模块都不剩就整条隐藏」。改属性名会让「按 config 自动出 tab」失效。
+    - **`.section` 的 `scroll-margin-top` 必须 ≥ 顶栏 + tab 条高度**，否则点 tab 后标题被吸顶条盖住。
+      本站已改成 `calc(48px + safe-top + tab条高 + 8px)`（顺带修掉上游漏算 `--safe-top` 的问题）。
+
+22. **事实纪律（用户明确要求）：核不到官方来源的，写「待核实」并留待办，
+    绝不填看起来合理的推测数字。**
+    特别注意**不要反向编造**：「没查到票价」≠「免费」。查不到就写「未核到官方数字，
+    行前请自行确认」，**不要**写成「免门票」。同理「没查到封闭公告」只能写「没查到」，
+    不能断言「无封闭」。核到之后再把占位替换成实数，并写明来源与查证日期（见坑 7）。
+
 ### 3. 构建
 
 ```bash
+npm run patch             # 幂等地给 vendored template/ 打补丁（只在改过 patch 脚本时才需要）
 npm run build             # 重建 routeMap + 生成 home/site/
 npm run check             # 结构自检，看 WARN/ERROR
 npm run verify:projection # 校验地图位置对不对（有 geo 的目的地应全部 ✅）
 ```
+
+`npm run patch` 幂等（连跑两次第二次应全部「无变化」），**改完 template/ 的补丁必须重新 build**
+才到得了各 trip。平时加目的地不需要跑它。
 
 `npm run build` 分两段重建 `routeMap`：先用 `template/scripts/build-map.mjs` 做**示意投影**
 （定区域划分与路线分段），再由 `scripts/lib/build-real-map.mjs` 用真实经纬度**重算几何**
@@ -251,6 +375,8 @@ npm run preview    # 起静态服务器，终端会打印实际地址（含首�
    但**只有肉眼能确认结果**。切到每个区域的总览看一眼标题右侧有没有文字压上来。
    （真实案例：成都「CHENGDU / 成都市区」实测 396px，模板默认只给它 300px，
    于是 人民公园 / 太古里 两个标签被标题压了 22px、24px 而所有自动化检查都是绿的。）
+7. **顶部 tab 条**：tab 数应等于 `config.modules` 里为 `true` 的项数（记账关了就不出「记账」）；
+   逐个点一遍，跳到的 section 顶部**不能被吸顶条盖住**；滚到某模块时该 tab 才高亮。
 
 需要自动化时，可以用无头浏览器把上面几条断言跑一遍 —— 但**断言要盯着真实 DOM**：
 `elementFromPoint` 用视口坐标，元素不在视口里会一直返回 `null`（看起来像「热区没生效」，
@@ -258,6 +384,15 @@ npm run preview    # 起静态服务器，终端会打印实际地址（含首�
 更稳的做法是单开一个高视口（如 390×3000）页面，宽度仍按真机，整页一屏放得下。
 另外**元素盒尺寸不等于可点范围**：模板用 `::before` 透明热区扩大命中区，
 量 `.getBoundingClientRect()` 会得到偏小的结论。
+
+> **测滚动行为不要用 `chrome --dump-dom`。** 那个模式没有合成器，`window.scrollTo` /
+> `scrollIntoView` 全是**空操作**（`scrollY` 恒为 0，页面看起来「没滚动」），
+> 而 `--virtual-time-budget` 也推不动 CSS 的 `scroll-behavior: smooth`。
+> 结果是**测量值全是假的**，很容易据此「修」一个并不存在的问题。
+> 正确做法是走 CDP（`--remote-debugging-port` + `Page.navigate` + `Runtime.evaluate`），
+> 并在页面里先把 `document.documentElement.style.scrollBehavior = "auto"` 关掉平滑滚动。
+> 顺带：`--window-size` 在无头下有 ~500px 的最小宽度，要测 360/390 这种真机宽度，
+> 得用 `Emulation.setDeviceMetricsOverride`。
 
 ## 首次生成只做轻量校验
 
@@ -277,9 +412,12 @@ npm run preview    # 起静态服务器，终端会打印实际地址（含首�
 
 ## 绝对不要做
 
-- 不要把 `template/` 下的运行时文件（`index.html`、`app.js`、`*.js`、`*.css`、`schemas/`、`scripts/`）改成站点专属的样子 —— 那是共享的，会影响所有目的地。
+- 不要直接编辑 `template/` 下的运行时文件（`index.html`、`app.js`、`*.js`、`*.css`、`schemas/`、
+  `scripts/`）—— 那是共享的，会影响所有目的地；而且下次 `npm run build` 前没人知道它被手改过。
+  **要改就走 `scripts/patch-template.mjs`**（见坑 18）；纯目的地专属的东西一律写进 `trips/<slug>/`。
 - 不要开启 `ledger`，不要为记账准备数据。
 - 不要引入后端、数据库、`/api/` 任何东西。
 - 不要把私有原始资料（`SOURCE.md`、`trips/*/assets/` 里未授权的文件）拷进 `home/site/`。
 - 不要提交 `.env`、token、private key。
 - 不要提交 `template/optional/` 里的任何东西（本站已移除 D1 可选件，只留 GitHub Pages）。
+- 不要在 `costReferences[].note` 或 `issuesAndUncertainties` 里写「待确认」—— 这两处都不进 DOM（坑 6、13）。
