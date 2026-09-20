@@ -1,0 +1,24 @@
+# 构建产物：每次 npm run build 整个重建，不要手改
+home/site/
+
+# 运行日志 / 报告
+logs/*.log
+reports/*
+
+# 依赖
+node_modules/
+
+# 环境与密钥
+.env
+.env.*
+.dev.vars
+.wrangler/
+
+# 私有原始资料（如需保留在本地但不提交，取消注释）
+# trips/*/SOURCE.md
+# trips/*/assets/private/
+
+# 系统
+.DS_Store
+._*
+__MACOSX/

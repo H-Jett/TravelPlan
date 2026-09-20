@@ -1,0 +1,22 @@
+{
+  "schemaVersion": 1,
+  "description": "本站模块策略。对应 trip-data.json > config.modules，六项与模板保持一致。",
+  "modules": [
+    { "key": "flights", "label": "航班", "default": false, "status": "active" },
+    { "key": "overview", "label": "地图", "default": false, "status": "active", "note": "依赖 template/scripts/build-map.mjs 生成 routeMap" },
+    { "key": "itinerary", "label": "每日行程", "default": false, "status": "active", "note": "门票资料也挂在这个模块里" },
+    { "key": "driving", "label": "租车", "default": false, "status": "active" },
+    { "key": "todo", "label": "To Do", "default": false, "status": "active" },
+    {
+      "key": "ledger",
+      "label": "记账",
+      "default": false,
+      "status": "reserved",
+      "note": "保留位。实现（ledger.js / ledger.css）、schema 槽位与 runtime collection 均已随模板保留，但一律保持 false。用户最后会一次性补入；届时应同时评估是否需要多设备共享（GitHub Pages 无服务端，只能 local）。"
+    }
+  ],
+  "persistence": {
+    "mode": "local",
+    "note": "GitHub Pages 是纯静态托管，没有服务端，config.persistence.mode 恒为 local。运行时数据只存在浏览器 localStorage。"
+  }
+}

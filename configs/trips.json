@@ -1,0 +1,12 @@
+{
+  "schemaVersion": 1,
+  "trips": [
+    {
+      "slug": "chengdu-test",
+      "title": "成都五日",
+      "subtitle": "",
+      "region": "成都",
+      "order": 1
+    }
+  ]
+}
