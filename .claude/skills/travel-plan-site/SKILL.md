@@ -512,6 +512,14 @@ npm run preview    # 起静态服务器，终端会打印实际地址（含首�
 `textContent` 拿到的是 `⚠注意`（**没有空格**），视觉上的间距来自 `display:flex; gap:7px`。
 按 `textContent` 断言成 `⚠ 注意` 会得到一整片假失败。
 
+> **验证线上 Pages 时，URL 一定要带上仓库前缀 `/TravelPlan`。**
+> 站点是 project pages，`https://h-jett.github.io/trips/...` 是 404 ——
+> 而 404 页面**没有 `app.js`、没有 `.schedule-item`**，于是每一个断言都失败，
+> 看起来像「刚上线的新功能整个没生效」。实测踩过一次（178 项假失败）。
+> 另外**别用固定 `sleep` 等远程页面加载**：同一条 URL 本地 2.6s 够、线上不够，
+> 会得到 flakes。改成轮询 `document.querySelectorAll(".schedule-item").length > 0`。
+> 也别拿「没有控制台报错」当加载成功的证据 —— 404 页面同样没有报错。
+
 > **测滚动行为不要用 `chrome --dump-dom`。** 那个模式没有合成器，`window.scrollTo` /
 > `scrollIntoView` 全是**空操作**（`scrollY` 恒为 0，页面看起来「没滚动」），
 > 而 `--virtual-time-budget` 也推不动 CSS 的 `scroll-behavior: smooth`。
