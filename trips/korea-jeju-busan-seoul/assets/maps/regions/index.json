@@ -1,0 +1,110 @@
+{
+  "jeju": {
+    "file": "assets/maps/regions/jeju.png",
+    "zoom": 12,
+    "tileRange": {
+      "x0": 3483,
+      "y0": 1642,
+      "x1": 3493,
+      "y1": 1645
+    },
+    "tilesX": 11,
+    "tilesY": 4,
+    "tileCount": 44,
+    "canvas": {
+      "width": 1448,
+      "height": 426
+    },
+    "sourcePixels": {
+      "width": 2816,
+      "height": 1024
+    },
+    "croppedPixels": {
+      "width": 2403,
+      "height": 707
+    },
+    "contentAspect": 5.0964,
+    "canvasAspect": 3.4,
+    "scale": 0.602759,
+    "geoBounds": {
+      "north": 33.553357,
+      "west": 126.18212,
+      "south": 33.350964,
+      "east": 127.00688
+    },
+    "attribution": "© OpenStreetMap contributors",
+    "source_url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+  },
+  "busan": {
+    "file": "assets/maps/regions/busan.png",
+    "zoom": 13,
+    "tileRange": {
+      "x0": 7029,
+      "y0": 3239,
+      "x1": 7036,
+      "y1": 3242
+    },
+    "tilesX": 8,
+    "tilesY": 4,
+    "tileCount": 32,
+    "canvas": {
+      "width": 1448,
+      "height": 703
+    },
+    "sourcePixels": {
+      "width": 2048,
+      "height": 1024
+    },
+    "croppedPixels": {
+      "width": 1764,
+      "height": 856
+    },
+    "contentAspect": 2.0609,
+    "canvasAspect": 2.0609,
+    "scale": 0.821629,
+    "geoBounds": {
+      "north": 35.187774,
+      "west": 128.917336,
+      "south": 35.067714,
+      "east": 129.219864
+    },
+    "attribution": "© OpenStreetMap contributors",
+    "source_url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+  },
+  "seoul": {
+    "file": "assets/maps/regions/seoul.png",
+    "zoom": 12,
+    "tileRange": {
+      "x0": 3486,
+      "y0": 1585,
+      "x1": 3494,
+      "y1": 1588
+    },
+    "tilesX": 9,
+    "tilesY": 4,
+    "tileCount": 36,
+    "canvas": {
+      "width": 1448,
+      "height": 426
+    },
+    "sourcePixels": {
+      "width": 2304,
+      "height": 1024
+    },
+    "croppedPixels": {
+      "width": 2080,
+      "height": 612
+    },
+    "contentAspect": 3.987,
+    "canvasAspect": 3.4,
+    "scale": 0.696508,
+    "geoBounds": {
+      "north": 37.604627,
+      "west": 126.391476,
+      "south": 37.43813,
+      "east": 127.105224
+    },
+    "attribution": "© OpenStreetMap contributors",
+    "source_url": "https://tile.openstreetmap.org/{z}/{x}/{y}.png"
+  }
+}

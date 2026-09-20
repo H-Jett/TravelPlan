@@ -106,9 +106,15 @@ for (const entry of entries) {
     warnings.push(`trips/${slug}: 地图模块已开启但还没有 routeMap（跑 npm run build 生成）`);
   }
   for (const region of routeMaps) {
-    if (region.baseImage && !fs.existsSync(path.resolve(TEMPLATE_DIR, region.baseImage))) {
-      errors.push(`trips/${slug}: routeMap 引用的底图缺失 ${region.baseImage}`);
-    }
+    if (!region.baseImage) continue;
+    // 底图有两个合法来源：template/ 下的共用示意图，或本 trip assets/ 下的真实地图
+    // （构建时抓 OSM 瓦片拼出来的，入库在本 trip 目录）。
+    const inTemplate = path.resolve(TEMPLATE_DIR, region.baseImage);
+    const inTrip = path.resolve(dir, region.baseImage);
+    const inside = (base, value) => value.startsWith(base + path.sep);
+    if (inside(TEMPLATE_DIR, inTemplate) && fs.existsSync(inTemplate)) continue;
+    if (inside(dir, inTrip) && fs.existsSync(inTrip)) continue;
+    errors.push(`trips/${slug}: routeMap 引用的底图缺失 ${region.baseImage}`);
   }
 
   // 产物

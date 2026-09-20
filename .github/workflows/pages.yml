@@ -25,13 +25,23 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: "20"
+          cache: npm
 
-      # 本站工具链零依赖（只用 node 标准库），不需要 npm ci
+      # 工具链不再是零依赖：拼真实地图底图要用 pngjs 解码/编码瓦片。
+      - name: 安装依赖
+        run: npm ci
+
       - name: 结构自检
         run: npm run check
 
+      # 构建全程不联网：底图 PNG 已入库，且 trip-data.json 里的 realMaps 指纹
+      # 一致时 build-real-map.mjs 会跳过抓瓦片，直接用仓库里已有的图。
       - name: 构建站点
         run: npm run build
+
+      # 位置对不对 —— 没有这一步，投影再次被改坏也不会有人发现。
+      - name: 校验地图投影
+        run: npm run verify:projection
 
       - uses: actions/configure-pages@v5
 

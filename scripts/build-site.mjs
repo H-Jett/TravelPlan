@@ -21,6 +21,7 @@ import { spawnSync } from "node:child_process";
 import { RUNTIME_DOTFILES, RUNTIME_FILES, ROOT, TEMPLATE_DIR, HOME_SITE_DIR, siteTripDir, tripDir } from "./lib/paths.mjs";
 import { readRegistry, reconcile } from "./lib/registry.mjs";
 import { createLogger } from "./lib/log.mjs";
+import { buildRealMaps } from "./lib/build-real-map.mjs";
 
 const log = createLogger("build-site");
 
@@ -121,18 +122,28 @@ function materializeTrip(trip) {
     copiedAssets.push(...walk(tripAssets));
   }
 
-  // 4. 底图：trip-data.json 里 baseImage 指向 template/assets/...，
-  //    先在站点根共享一份，再给本 trip 兜底一份，两种相对写法都能命中。
+  // 4. 底图。两种来源：
+  //    a) template/assets/...  —— 共用的示意图底图，站点根共享一份，再给本 trip 兜底一份；
+  //    b) trips/<slug>/assets/... —— 本 trip 专属的真实地图底图（构建时抓 OSM 瓦片拼出来的）。
+  //       第 3 步已经把 trips/<slug>/assets/ 整个拷进 target 了，这里**只校验存在**，
+  //       不再往站点根拷一份 —— 否则多个 trip 的同名底图会在站点根互相覆盖。
   const routeMaps = [...new Set(
     (trip.data.routeMap?.regions || []).map((region) => region.baseImage).filter(Boolean)
   )];
+  /** 把 rel 解析到 base 下；越界或不存在返回 null。 */
+  const resolveInside = (base, rel) => {
+    const source = path.resolve(base, rel);
+    return source.startsWith(base + path.sep) && fs.existsSync(source) ? source : null;
+  };
   for (const rel of routeMaps) {
-    const source = path.resolve(TEMPLATE_DIR, rel);
-    if (!source.startsWith(TEMPLATE_DIR) || !fs.existsSync(source)) {
-      throw new Error(`trip-data.json 引用的底图不存在: ${rel}（slug=${trip.slug}）`);
+    const fromTemplate = resolveInside(TEMPLATE_DIR, rel);
+    if (fromTemplate) {
+      copyFile(fromTemplate, path.join(HOME_SITE_DIR, rel));
+      copyFile(fromTemplate, path.join(target, rel));
+      continue;
     }
-    copyFile(source, path.join(HOME_SITE_DIR, rel));
-    copyFile(source, path.join(target, rel));
+    if (resolveInside(tripDir(trip.slug), rel)) continue;
+    throw new Error(`trip-data.json 引用的底图不存在: ${rel}（slug=${trip.slug}）`);
   }
 
   return { routeMaps, copiedAssets, target };
@@ -319,6 +330,47 @@ const mapResult = rebuildMaps(buildable.map((entry) => entry.slug));
 // 底图没建出来的目的地不能进站点：routeMap 缺失会渲染出一个没有地图的空壳页面。
 // 直接把它当失败跳过，而不是发布半成品。
 const mapFailed = new Set(mapResult.failed);
+
+// 1b. 把上一步写出的**示意投影** routeMap 换成真实地图投影。
+//     必须紧跟在 rebuildMaps 之后：它每次都会用模板的示意投影原地重写 trip-data.json，
+//     换成「构建后再跑一次」的独立脚本就会被下次构建静默还原。
+{
+  const doneRealMap = log.phase("重建真实地图底图");
+  let ok = 0;
+  for (const entry of buildable) {
+    if (mapFailed.has(entry.slug)) continue;
+    const file = path.join(tripDir(entry.slug), "trip-data.json");
+    try {
+      const data = JSON.parse(fs.readFileSync(file, "utf8"));
+      if (data.map?.mapMode !== "template-auto") {
+        log.debug(`  ${entry.slug}: mapMode=${data.map?.mapMode}，跳过真实底图`);
+        continue;
+      }
+      const { tripData, reports } = await buildRealMaps(data, {
+        tripDir: tripDir(entry.slug),
+        tileCache: path.join(ROOT, ".cache", "tiles"),
+        logger: log,
+      });
+      fs.writeFileSync(file, `${JSON.stringify(tripData, null, 2)}\n`, "utf8");
+      ok += 1;
+      for (const report of reports) {
+        const shape = `${report.canvas} 瓦片${report.tiles} z${report.zoom}`;
+        if (report.collisions.length) {
+          log.warn(`  ${entry.slug}/${report.id}: ${shape}，标签压字 ${report.collisions.length} 处：` +
+            report.collisions.slice(0, 6).join(", "));
+        } else {
+          log.debug(`  ${entry.slug}/${report.id}: ${shape} 内容比 ${report.contentAspect}→画布比 ${report.canvasAspect}` +
+            `${report.clamped ? "(夹)" : ""} PNG ${report.pngKB}KB 0 处压字`);
+        }
+      }
+    } catch (error) {
+      // 真实底图建不出来**不**把目的地踢出站点：示意底图仍然可用，
+      // 只是该目的地暂时是「另一种地图风格」。降级而不是失败。
+      log.warn(`  ${entry.slug} 真实底图重建失败，保留示意底图: ${error.message}`);
+    }
+  }
+  doneRealMap(`${ok}/${buildable.length} 个目的地`);
+}
 
 // 2. 搭站点骨架
 {

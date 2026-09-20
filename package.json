@@ -10,9 +10,13 @@
     "preview": "node scripts/preview.mjs",
     "patch": "node scripts/patch-template.mjs",
     "check": "node scripts/check.mjs",
+    "verify:projection": "node scripts/verify-projection.mjs",
     "deploy": "node scripts/deploy.mjs"
   },
   "engines": {
     "node": ">=18"
+  },
+  "devDependencies": {
+    "pngjs": "^7.0.0"
   }
 }
