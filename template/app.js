@@ -198,15 +198,36 @@ function journeyFlights(journeyId) {
     .sort((first, second) => first.sequence - second.sequence);
 }
 
+// ── build:transport ──
+// 卡片顶部的方式标注与倒计时措辞都按 mode 走；缺省 flight，与上游行为一致
+const TRANSPORT_MODES = {
+  flight: { tag: "FLIGHT", departs: "距离起飞还剩", nextDeparts: "距离下一程起飞还剩", moving: "飞行中 · 距抵达", arrived: "已抵达" },
+  train: { tag: "TRAIN", departs: "距离发车还剩", nextDeparts: "距离下一程发车还剩", moving: "行驶中 · 距抵达", arrived: "已到达" },
+  ferry: { tag: "FERRY", departs: "距离开船还剩", nextDeparts: "距离下一程开船还剩", moving: "航行中 · 距抵达", arrived: "已到达" },
+  bus: { tag: "COACH", departs: "距离发车还剩", nextDeparts: "距离下一程发车还剩", moving: "行驶中 · 距抵达", arrived: "已到达" },
+};
+
+const transportMode = (flight) => (flight && flight.mode) || "flight";
+
+const transportWords = (flight) => TRANSPORT_MODES[transportMode(flight)] || TRANSPORT_MODES.flight;
+
+// 承运方：飞机读 airline，其它方式读 operator
+const transportCarrier = (flight) => {
+  const airline = flight.airline || {};
+  return airline.nameZh || airline.name || flight.operator || "";
+};
+
+// ── /build:transport ──
 function journeyStatusAndTarget(flights) {
   const now = new Date();
   for (const flight of flights) {
+    const words = transportWords(flight);
     const departure = localDateTime(flight.departure.date, flight.departure.time, flight.departure.airportCode, flight.departure.utcOffset);
     const arrival = localDateTime(flight.arrival.date, flight.arrival.time, flight.arrival.airportCode, flight.arrival.utcOffset);
-    if (now < departure) return { target: departure, label: flight === flights[0] ? "距离起飞还剩" : "距离下一程起飞还剩", complete: false };
-    if (now < arrival) return { target: arrival, label: "飞行中 · 距抵达", complete: false };
+    if (now < departure) return { target: departure, label: flight === flights[0] ? words.departs : words.nextDeparts, complete: false };
+    if (now < arrival) return { target: arrival, label: words.moving, complete: false };
   }
-  return { target: null, label: "已抵达", complete: true };
+  return { target: null, label: TRANSPORT_MODES.flight.arrived, complete: true };
 }
 
 function relativeFlightDate(date, journeyStartDate) {
@@ -310,11 +331,11 @@ function flightCard(journey, index) {
     }
   });
   return `
-    <article class="flight-card" data-journey="${escapeHtml(journey.id)}">
+    <article class="flight-card is-${escapeHtml(transportMode(first))}" data-journey="${escapeHtml(journey.id)}">
       <div class="flight-card__top">
-        <span>FLIGHT ${String(index + 1).padStart(2, "0")} / ${String(state.data.flightJourneys.length).padStart(2, "0")}</span>
+        <span>${escapeHtml(transportWords(first).tag)} ${String(index + 1).padStart(2, "0")} / ${String(state.data.flightJourneys.length).padStart(2, "0")}</span>
       </div>
-      <div class="flight-card__airlines">${escapeHtml([...new Set(flights.map((flight) => flight.airline.nameZh || flight.airline.name))].join(" · "))}</div>
+      <div class="flight-card__airlines">${escapeHtml([...new Set(flights.map(transportCarrier).filter(Boolean))].join(" · "))}</div>
       <div class="flight-flow" style="--route-columns: ${stops.map((_, stopIndex) => stopIndex < stops.length - 1 ? "minmax(0,1fr) minmax(34px,.5fr)" : "minmax(0,1fr)").join(" ")}">
         ${routeItems.join("")}
       </div>

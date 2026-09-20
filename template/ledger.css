@@ -546,3 +546,12 @@ body[data-active-view="ledger"] .topbar { background: rgba(250, 251, 249, .93); 
   .ticket-dialog__list li { font-size: 12.5px; }
 }
 /* /build:ticket-dialog */
+
+/* build:transport */
+.flight-card.is-train .flight-stop__code,
+.flight-card.is-ferry .flight-stop__code,
+.flight-card.is-bus .flight-stop__code {
+  font-size: clamp(18px, 5.5vw, 24px);
+  letter-spacing: 0;
+}
+/* /build:transport */

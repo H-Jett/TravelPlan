@@ -18,6 +18,9 @@
  *   template/app.js       门票「现场购买」档（onsite-purchase）
  *   template/app.js       门票弹窗正文结构化（guidance[] 分组成列表，见下）
  *   template/ledger.css   门票弹窗分组的样式（build:ticket-dialog）
+ *   template/index.html   交通模块标题：航班行程 → 在路上（build:transport）
+ *   template/app.js       交通模块支持非航班方式（高铁/轮船），卡片按方式标注
+ *   template/ledger.css   铁路站名的字号（build:ticket-dialog 同块内）
  *   template/index.html   顶部模块导航，替换上游的「旅行信息 ▾」下拉（build:module-nav）
  *   template/ledger.css   导航样式 + 重算 .section 的 scroll-margin-top（build:module-nav）
  *   template/nav-highlight.js  新建：滚动高亮（由本脚本写出，不是 vendored 文件）
@@ -207,6 +210,97 @@ const TICKET_CARD_ANCHOR = "          <small>${escapeHtml(ticketGuidance(ticket)
 const TICKET_CARD_PATCHED = '          <small>${escapeHtml(ticketGuidanceItems(ticket)[0] || "")}</small>';
 
 /*
+ * ── 交通模块：从「航班行程」扩成「在路上」 ──
+ *
+ * 上游这个模块只认飞机：卡片顶部硬编码 FLIGHT、倒计时说「起飞」、承运人读 airline，
+ * 而高铁/轮船这些**跨区域**段落同样该出现在这里（市内地铁、游览性质的轮渡不算）。
+ *
+ * 做法是给每条 leg 加一个 `mode`，卡片按方式标注与措辞。
+ * 为兼容没写 mode 的旧数据，缺省按 flight 处理 —— 不加 mode 的行程行为与上游一致。
+ */
+const TRANSPORT_HEADING_PATCHES = [
+  // [原串, 新串, 已完成标记]
+  ['<p class="section-kicker">BOARDING</p>',
+   '<p class="section-kicker">ON THE MOVE</p>',
+   '<p class="section-kicker">ON THE MOVE</p>'],
+  ['<h2 id="flights-title">航班行程</h2>',
+   '<h2 id="flights-title">在路上</h2>',
+   '<h2 id="flights-title">在路上</h2>'],
+  ['aria-label="航班卡片，可左右滑动"',
+   'aria-label="交通卡片，可左右滑动"',
+   'aria-label="交通卡片，可左右滑动"'],
+];
+
+// 顶部导航里的模块名也跟着改（MODULE_NAV_HTML 里那一行）
+const NAV_FLIGHTS_LINK_OLD = '<a href="#flights" data-module="flights" hidden>航班</a>';
+const NAV_FLIGHTS_LINK_NEW = '<a href="#flights" data-module="flights" hidden>交通</a>';
+
+const TRANSPORT_MODE_HELPERS = `// ── build:transport ──
+// 卡片顶部的方式标注与倒计时措辞都按 mode 走；缺省 flight，与上游行为一致
+const TRANSPORT_MODES = {
+  flight: { tag: "FLIGHT", departs: "距离起飞还剩", nextDeparts: "距离下一程起飞还剩", moving: "飞行中 · 距抵达", arrived: "已抵达" },
+  train: { tag: "TRAIN", departs: "距离发车还剩", nextDeparts: "距离下一程发车还剩", moving: "行驶中 · 距抵达", arrived: "已到达" },
+  ferry: { tag: "FERRY", departs: "距离开船还剩", nextDeparts: "距离下一程开船还剩", moving: "航行中 · 距抵达", arrived: "已到达" },
+  bus: { tag: "COACH", departs: "距离发车还剩", nextDeparts: "距离下一程发车还剩", moving: "行驶中 · 距抵达", arrived: "已到达" },
+};
+
+const transportMode = (flight) => (flight && flight.mode) || "flight";
+
+const transportWords = (flight) => TRANSPORT_MODES[transportMode(flight)] || TRANSPORT_MODES.flight;
+
+// 承运方：飞机读 airline，其它方式读 operator
+const transportCarrier = (flight) => {
+  const airline = flight.airline || {};
+  return airline.nameZh || airline.name || flight.operator || "";
+};
+
+// ── /build:transport ──
+`;
+
+const JOURNEY_STATUS_ANCHOR = [
+  "function journeyStatusAndTarget(flights) {",
+  "  const now = new Date();",
+  "  for (const flight of flights) {",
+  "    const departure = localDateTime(flight.departure.date, flight.departure.time, flight.departure.airportCode, flight.departure.utcOffset);",
+  "    const arrival = localDateTime(flight.arrival.date, flight.arrival.time, flight.arrival.airportCode, flight.arrival.utcOffset);",
+  '    if (now < departure) return { target: departure, label: flight === flights[0] ? "距离起飞还剩" : "距离下一程起飞还剩", complete: false };',
+  '    if (now < arrival) return { target: arrival, label: "飞行中 · 距抵达", complete: false };',
+  "  }",
+  '  return { target: null, label: "已抵达", complete: true };',
+  "}",
+].join("\n");
+
+const JOURNEY_STATUS_PATCHED = TRANSPORT_MODE_HELPERS + [
+  "function journeyStatusAndTarget(flights) {",
+  "  const now = new Date();",
+  "  for (const flight of flights) {",
+  "    const words = transportWords(flight);",
+  "    const departure = localDateTime(flight.departure.date, flight.departure.time, flight.departure.airportCode, flight.departure.utcOffset);",
+  "    const arrival = localDateTime(flight.arrival.date, flight.arrival.time, flight.arrival.airportCode, flight.arrival.utcOffset);",
+  "    if (now < departure) return { target: departure, label: flight === flights[0] ? words.departs : words.nextDeparts, complete: false };",
+  "    if (now < arrival) return { target: arrival, label: words.moving, complete: false };",
+  "  }",
+  "  return { target: null, label: TRANSPORT_MODES.flight.arrived, complete: true };",
+  "}",
+].join("\n");
+
+const FLIGHT_CARD_HEAD_ANCHOR = [
+  '    <article class="flight-card" data-journey="${escapeHtml(journey.id)}">',
+  '      <div class="flight-card__top">',
+  '        <span>FLIGHT ${String(index + 1).padStart(2, "0")} / ${String(state.data.flightJourneys.length).padStart(2, "0")}</span>',
+  "      </div>",
+  '      <div class="flight-card__airlines">${escapeHtml([...new Set(flights.map((flight) => flight.airline.nameZh || flight.airline.name))].join(" · "))}</div>',
+].join("\n");
+
+const FLIGHT_CARD_HEAD_PATCHED = [
+  '    <article class="flight-card is-${escapeHtml(transportMode(first))}" data-journey="${escapeHtml(journey.id)}">',
+  '      <div class="flight-card__top">',
+  '        <span>${escapeHtml(transportWords(first).tag)} ${String(index + 1).padStart(2, "0")} / ${String(state.data.flightJourneys.length).padStart(2, "0")}</span>',
+  "      </div>",
+  '      <div class="flight-card__airlines">${escapeHtml([...new Set(flights.map(transportCarrier).filter(Boolean))].join(" · "))}</div>',
+].join("\n");
+
+/*
  * 弹窗分组的样式，写在 ledger.css（层叠顺序见文件顶部的说明）。
  * 上游 styles.css 里的 .ticket-dialog__guidance 就不再被用到了 ——
  * 留着无害（没有元素带这个 class 了），删它要给 styles.css 做减法补丁，不值得。
@@ -274,6 +368,22 @@ const TICKET_DIALOG_CSS = `/* build:ticket-dialog */
 `;
 
 /*
+ * 铁路/轮船的站点名（「부산역」）比 3 字 IATA 码（NKG）长得多。
+ * 上游 `.flight-stop__code` 是 clamp(25px, 8vw, 36px) 的等宽字，三个全角字
+ * 在窄屏上约 108px，而那一列只有 ~125px —— 贴边且极易被挤破。
+ * 只给非航班方式降一档字号，航班卡片维持上游观感。
+ */
+const TRANSPORT_CSS = `/* build:transport */
+.flight-card.is-train .flight-stop__code,
+.flight-card.is-ferry .flight-stop__code,
+.flight-card.is-bus .flight-stop__code {
+  font-size: clamp(18px, 5.5vw, 24px);
+  letter-spacing: 0;
+}
+/* /build:transport */
+`;
+
+/*
  * 顶部模块导航：把上游的「旅行信息 ▾」下拉（<details>，要点两下才展开）
  * 换成**顶栏右侧一行常驻的模块链接**，点一下直接跳到对应模块，并随滚动高亮当前模块。
  *
@@ -307,7 +417,7 @@ const NAV_SCRIPT = '<script src="nav-highlight.js" defer></script>';
 const MODULE_NAV_HTML = `    ${NAV_MARKER_START}
     <nav class="primary-navigation" id="travel-navigation" aria-label="模块导航" hidden>
       <div class="travel-navigation-menu">
-        <a href="#flights" data-module="flights" hidden>航班</a>
+        <a href="#flights" data-module="flights" hidden>交通</a>
         <a href="#route" data-module="overview" hidden>路线</a>
         <a href="#itinerary" data-module="itinerary" hidden>行程</a>
         <a href="#drive" data-module="driving" hidden>自驾</a>
@@ -502,6 +612,16 @@ function patchHtml(file) {
     html = `${html.slice(0, at)}${HOME_LINK_HTML}\n  ${html.slice(at)}`;
   }
 
+  // ── 交通模块标题：航班行程 → 在路上 ──
+  //    标题与 aria-label 都是上游硬编码的「航班」字样，模块现在也装高铁/轮船，措辞得过改。
+  for (const [anchor, patched, doneMark] of TRANSPORT_HEADING_PATCHES) {
+    if (html.includes(doneMark)) continue;
+    if (!html.includes(anchor)) {
+      throw new Error(`index.html 中找不到交通模块标题锚点「${anchor}」，模板结构可能已变，请人工确认`);
+    }
+    html = html.replace(anchor, patched);
+  }
+
   // ── 顶部模块导航：把三种历史状态收敛到当前版本 ──
   // ① 上一版的残迹：顶栏下方那条独立的吸顶 tab 条 + 它的脚本标签。
   //    换设计时它们已经躺在 template/index.html 里了，不主动摘掉就成了一条谁也不认识的横条。
@@ -599,6 +719,7 @@ function patchLedgerCss(file) {
   css = stripBlock(css, "/* build:module-tabs */", "/* /build:module-tabs */").text;
   css = upsertBlock(css, "/* build:module-nav */", "/* /build:module-nav */", NAV_CSS).text;
   css = upsertBlock(css, "/* build:ticket-dialog */", "/* /build:ticket-dialog */", TICKET_DIALOG_CSS).text;
+  css = upsertBlock(css, "/* build:transport */", "/* /build:transport */", TRANSPORT_CSS).text;
   if (css === before) {
     log.debug("ledger.css 的补丁块已是最新，跳过");
     return false;
@@ -656,6 +777,8 @@ function patchAppJs(file) {
     [TICKET_GUIDANCE_ANCHOR, TICKET_GUIDANCE_PATCHED, TICKET_DIALOG_MARK, "弹窗分组函数"],
     [TICKET_DIALOG_BODY_ANCHOR, TICKET_DIALOG_BODY_PATCHED, TICKET_DIALOG_BODY_PATCHED, "弹窗正文"],
     [TICKET_CARD_ANCHOR, TICKET_CARD_PATCHED, TICKET_CARD_PATCHED, "卡片摘要"],
+    [JOURNEY_STATUS_ANCHOR, JOURNEY_STATUS_PATCHED, "transportWords(flight)", "交通方式措辞"],
+    [FLIGHT_CARD_HEAD_ANCHOR, FLIGHT_CARD_HEAD_PATCHED, FLIGHT_CARD_HEAD_PATCHED, "交通卡片抬头"],
   ];
   for (const [anchor, patched, doneMark, label] of targets) {
     if (js.includes(doneMark)) {
