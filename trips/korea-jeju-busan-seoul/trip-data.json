@@ -66,7 +66,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T15:53:11.695Z"
+        "generatedAt": "2026-09-20T16:00:49.769Z"
       },
       "busan": {
         "fingerprint": "312406b87e66cc8f",
@@ -103,7 +103,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T15:53:11.702Z"
+        "generatedAt": "2026-09-20T16:00:49.776Z"
       },
       "seoul": {
         "fingerprint": "2c273a83409a3c92",
@@ -140,7 +140,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T15:53:11.715Z"
+        "generatedAt": "2026-09-20T16:00:49.789Z"
       }
     }
   },
@@ -182,9 +182,14 @@
       "sequence": 2
     },
     {
+      "id": "j-ktx",
+      "title": "中转 · 釜山 → 首尔",
+      "sequence": 3
+    },
+    {
       "id": "j-back",
       "title": "回程 · 首尔 → 威海 → 南京",
-      "sequence": 3
+      "sequence": 4
     }
   ],
   "flights": [
@@ -245,6 +250,34 @@
       "notes": [
         "来源：用户提供的订单。舱位 Economy；到达国内线航站楼（订票页航站楼代码 D）。",
         "每日执飞，B737-800，与大韩航空 KE5192 代码共享。"
+      ]
+    },
+    {
+      "id": "leg-ktx-1",
+      "journeyId": "j-ktx",
+      "sequence": 1,
+      "mode": "train",
+      "operator": "Korail 韩国铁道公社",
+      "flightNumber": "KTX 066",
+      "departure": {
+        "airportCode": "부산역",
+        "airportName": "釜山站",
+        "city": "釜山",
+        "date": "2026-10-01",
+        "time": "19:12",
+        "utcOffset": "+09:00"
+      },
+      "arrival": {
+        "airportCode": "서울역",
+        "airportName": "首尔站",
+        "city": "首尔",
+        "date": "2026-10-01",
+        "time": "21:35",
+        "utcOffset": "+09:00"
+      },
+      "notes": [
+        "来源：用户提供的订单。成人 2 名、一般车厢（일반실）。",
+        "车程 2 小时 23 分；订到的是首尔站。"
       ]
     },
     {
@@ -1938,7 +1971,8 @@
           "KTX 无安检，发车前 20 分钟到站取票进站即可",
           "釜山站到站方式见 10/1 行程：엘시티→중동역→서면换 1 号线→부산역，门到门 60–70 分钟"
         ],
-        "officialUrl": "https://www.letskorail.com"
+        "officialUrl": "https://www.letskorail.com",
+        "flightId": "leg-ktx-1"
       },
       {
         "id": "t-blueline-park",
