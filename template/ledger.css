@@ -555,3 +555,87 @@ body[data-active-view="ledger"] .topbar { background: rgba(250, 251, 249, .93); 
   letter-spacing: 0;
 }
 /* /build:transport */
+
+/* build:schedule-note */
+/*
+ * 日程行上的入口。有注意事项的项才渲染，没写的项一个像素都不多。
+ */
+.schedule-note-open {
+  margin: 7px 0 0;
+  padding: 5px 12px 5px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e4d5c2;
+  border-radius: 999px;
+  background: #fdf7ef;
+  color: #96603c;
+  cursor: pointer;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.schedule-note-open:hover { background: #f8ecdd; }
+.schedule-note-open__counts { letter-spacing: .02em; }
+
+/*
+ * 弹窗外壳复用 .ticket-dialog（宽度 / backdrop / header 布局 / body 滚动都在那份里），
+ * 这里只写「注意事项」特有的分组与条目。两个弹窗同一种观感，上游那份壳改了会一起变。
+ */
+.schedule-note__group { margin-bottom: 20px; }
+.schedule-note__group:last-child { margin-bottom: 0; }
+
+.schedule-note__heading {
+  margin: 0 0 9px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted, #5b6b62);
+  font-size: 11px;
+  font-weight: 780;
+  letter-spacing: .08em;
+}
+.schedule-note__heading::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--line, #e3eae8);
+}
+
+.schedule-note__list { margin: 0; }
+
+/*
+ * 「短标题 + 正文」两栏。窄屏收成一栏，标题在上、正文在下。
+ */
+.schedule-note__row {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(19, 38, 47, .07);
+}
+.schedule-note__row:first-child { border-top: 0; padding-top: 0; }
+.schedule-note__row:last-child { padding-bottom: 0; }
+
+.schedule-note__label {
+  margin: 0;
+  color: #205e6b;
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.6;
+}
+.schedule-note__text {
+  margin: 0;
+  color: #47575b;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* 注意：真正会误事的那几条，整组换成警示色 */
+.schedule-note__group.is-alert .schedule-note__label { color: #a2563a; }
+.schedule-note__group.is-alert .schedule-note__text { color: #8a5540; }
+
+@media (max-width: 420px) {
+  .schedule-note__row { grid-template-columns: 1fr; gap: 3px; padding: 9px 0; }
+  .schedule-note__text { font-size: 12.5px; }
+}
+/* /build:schedule-note */

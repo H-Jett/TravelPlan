@@ -513,6 +513,7 @@ function dayCard(day) {
         <span class="schedule-time">${escapeHtml(item.time)}</span>
         <div class="schedule-content">
           <div class="schedule-text">${escapeHtml(item.text)}</div>
+          ${scheduleNoteMarkup(item)}
           ${scheduleTickets}
           ${mapLinks ? `<div class="schedule-map-links">${mapLinks}</div>` : ""}
         </div>
@@ -619,12 +620,92 @@ function currentTripDay() {
   return state.data.days.find((day) => day.date === today)?.day || null;
 }
 
+// ── build:schedule-note ──
+// 三段固定，顺序即弹窗里的段落顺序。表外的 kind 归到「说明」，不静默丢弃。
+const SCHEDULE_NOTE_GROUPS = [
+  { kind: "alert", icon: "⚠", label: "注意", class: "is-alert" },
+  { kind: "price", icon: "💰", label: "票价", class: "is-price" },
+  { kind: "info", icon: "ℹ", label: "说明", class: "is-info" }
+];
+
+const scheduleNoteKind = (note) => (SCHEDULE_NOTE_GROUPS.some((group) => group.kind === note.kind) ? note.kind : "info");
+
+const scheduleNotesOf = (item) => (Array.isArray(item.notes) ? item.notes.filter((note) => note && note.text) : []);
+
+// 行上的入口：把「有 3 条注意事项」压成 ⚠2 · 💰3 · ℹ2 三个计数
+function scheduleNoteMarkup(item) {
+  const notes = scheduleNotesOf(item);
+  if (!notes.length) return "";
+  const groups = SCHEDULE_NOTE_GROUPS
+    .map((group) => ({ ...group, count: notes.filter((note) => scheduleNoteKind(note) === group.kind).length }))
+    .filter((group) => group.count);
+  const counts = groups.map((group) => group.icon + " " + group.count).join(" · ");
+  const spoken = groups.map((group) => group.label + " " + group.count + " 条").join("，");
+  return `
+    <button type="button" class="schedule-note-open" data-note-open="${escapeHtml(item.id)}" aria-haspopup="dialog" aria-controls="schedule-note-dialog" aria-label="查看注意事项：${escapeHtml(spoken)}">
+      <span class="schedule-note-open__counts">${escapeHtml(counts)}</span>
+      <span>注意事项</span>
+    </button>`;
+}
+
+let scheduleNoteOpener = null;
+
+function openScheduleNoteDialog(itemId, opener) {
+  const dialog = $("#schedule-note-dialog");
+  if (!dialog) return;
+  const item = state.data.days.flatMap((day) => day.schedule).find((entry) => entry.id === itemId);
+  if (!item) return;
+  const notes = scheduleNotesOf(item);
+  if (!notes.length) return;
+  scheduleNoteOpener = opener || null;
+  $("#schedule-note-eyebrow").textContent = "注意事项 · " + item.time;
+  $("#schedule-note-heading").textContent = item.text;
+  $("#schedule-note-body").innerHTML = SCHEDULE_NOTE_GROUPS.map((group) => {
+    const rows = notes.filter((note) => scheduleNoteKind(note) === group.kind);
+    if (!rows.length) return "";
+    return `
+      <section class="schedule-note__group ${group.class}">
+        <h3 class="schedule-note__heading"><span aria-hidden="true">${group.icon}</span>${group.label}</h3>
+        <dl class="schedule-note__list">${rows.map((note) => `
+          <div class="schedule-note__row">
+            <dt class="schedule-note__label">${escapeHtml(note.label || group.label)}</dt>
+            <dd class="schedule-note__text">${escapeHtml(note.text)}</dd>
+          </div>`).join("")}
+        </dl>
+      </section>`;
+  }).join("");
+  if (typeof dialog.showModal === "function") dialog.showModal();
+  else dialog.setAttribute("open", "");
+  $("#schedule-note-close").focus();
+}
+
+function setupScheduleNoteDialog() {
+  const dialog = $("#schedule-note-dialog");
+  if (!dialog) return;
+  const close = () => {
+    if (typeof dialog.close === "function" && dialog.open) dialog.close();
+    else dialog.removeAttribute("open");
+  };
+  $("#schedule-note-close").onclick = close;
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) close(); });
+  dialog.addEventListener("close", () => {
+    $("#schedule-note-body").replaceChildren();
+    scheduleNoteOpener?.focus({ preventScroll: true });
+    scheduleNoteOpener = null;
+  });
+}
+// ── /build:schedule-note ──
 function renderTimeline() {
   const today = currentTripDay();
   state.expandedDay = today;
   $("#day-count").textContent = `${state.data.days.length} DAYS`;
   $("#timeline").innerHTML = state.data.days.map(dayCard).join("");
   $("#timeline").onclick = (event) => {
+    const noteButton = event.target.closest("[data-note-open]");
+    if (noteButton) {
+      openScheduleNoteDialog(noteButton.dataset.noteOpen, noteButton);
+      return;
+    }
     const ticketButton = event.target.closest("[data-ticket-open]");
     if (ticketButton) {
       openTicketDialog(ticketButton.dataset.ticketOpen, ticketButton);
@@ -1026,6 +1107,7 @@ async function init() {
     if (moduleEnabled("itinerary")) {
       setupPlaceMap();
       setupTicketDialog();
+      setupScheduleNoteDialog();
     }
     if (moduleEnabled("todo") || moduleEnabled("itinerary")) {
       createRuntimeAdapters();

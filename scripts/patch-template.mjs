@@ -368,6 +368,234 @@ const TICKET_DIALOG_CSS = `/* build:ticket-dialog */
 `;
 
 /*
+ * ══ build:schedule-note ══
+ * 日程项的「注意事项」弹窗（用户 2026-09-21 要求）。
+ *
+ * 背景：用户把每天末尾的提醒并进各个时间点后，时间点的正文变成了一大段
+ * ——最长的 842 字，中位数 117 字，74 项合计 1.3 万字。用户的原话是
+ * 「每个时间点先写行程，然后再写注意事项，弄成弹窗的形式，然后需要精简内容并且结构化」。
+ *
+ * 于是数据侧拆成两个字段：
+ *   schedule[].text       行程主干（去哪 / 怎么去 / 待多久），渲染在行上；
+ *   schedule[].notes[]    注意事项，渲染进弹窗，每条 { kind, label, text }。
+ *
+ * kind 只有三种，对应弹窗里的三段：
+ *   alert ⚠ 注意   —— 会误事的（排队、停航、休馆、必须提前买票）
+ *   price 💰 票价   —— 钱
+ *   info  ℹ 说明   —— 背景、出处、核验方式
+ * 表外的 kind 归到「说明」，**不静默丢弃**（上游 schema 不校验，写错了得看得见）。
+ *
+ * 已有 `notes` 的项按新结构走；没有 `notes` 的项行为完全不变（不渲染按钮）。
+ * 这样旧的 trip 不会因为这个补丁而崩。
+ */
+const SCHEDULE_NOTE_CSS = `/* build:schedule-note */
+/*
+ * 日程行上的入口。有注意事项的项才渲染，没写的项一个像素都不多。
+ */
+.schedule-note-open {
+  margin: 7px 0 0;
+  padding: 5px 12px 5px 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid #e4d5c2;
+  border-radius: 999px;
+  background: #fdf7ef;
+  color: #96603c;
+  cursor: pointer;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+.schedule-note-open:hover { background: #f8ecdd; }
+.schedule-note-open__counts { letter-spacing: .02em; }
+
+/*
+ * 弹窗外壳复用 .ticket-dialog（宽度 / backdrop / header 布局 / body 滚动都在那份里），
+ * 这里只写「注意事项」特有的分组与条目。两个弹窗同一种观感，上游那份壳改了会一起变。
+ */
+.schedule-note__group { margin-bottom: 20px; }
+.schedule-note__group:last-child { margin-bottom: 0; }
+
+.schedule-note__heading {
+  margin: 0 0 9px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--muted, #5b6b62);
+  font-size: 11px;
+  font-weight: 780;
+  letter-spacing: .08em;
+}
+.schedule-note__heading::after {
+  content: "";
+  flex: 1 1 auto;
+  height: 1px;
+  background: var(--line, #e3eae8);
+}
+
+.schedule-note__list { margin: 0; }
+
+/*
+ * 「短标题 + 正文」两栏。窄屏收成一栏，标题在上、正文在下。
+ */
+.schedule-note__row {
+  display: grid;
+  grid-template-columns: 86px minmax(0, 1fr);
+  gap: 12px;
+  padding: 8px 0;
+  border-top: 1px solid rgba(19, 38, 47, .07);
+}
+.schedule-note__row:first-child { border-top: 0; padding-top: 0; }
+.schedule-note__row:last-child { padding-bottom: 0; }
+
+.schedule-note__label {
+  margin: 0;
+  color: #205e6b;
+  font-size: 12px;
+  font-weight: 720;
+  line-height: 1.6;
+}
+.schedule-note__text {
+  margin: 0;
+  color: #47575b;
+  font-size: 13px;
+  line-height: 1.7;
+}
+
+/* 注意：真正会误事的那几条，整组换成警示色 */
+.schedule-note__group.is-alert .schedule-note__label { color: #a2563a; }
+.schedule-note__group.is-alert .schedule-note__text { color: #8a5540; }
+
+@media (max-width: 420px) {
+  .schedule-note__row { grid-template-columns: 1fr; gap: 3px; padding: 9px 0; }
+  .schedule-note__text { font-size: 12.5px; }
+}
+/* /build:schedule-note */
+`;
+
+const SCHEDULE_NOTE_DIALOG_HTML = `  <!-- build:schedule-note -->
+  <dialog class="ticket-dialog schedule-note-dialog" id="schedule-note-dialog" aria-labelledby="schedule-note-heading">
+    <header>
+      <div>
+        <span id="schedule-note-eyebrow">注意事项</span>
+        <h2 id="schedule-note-heading">注意事项</h2>
+      </div>
+      <button type="button" id="schedule-note-close" aria-label="关闭注意事项">关闭</button>
+    </header>
+    <div class="ticket-dialog__body" id="schedule-note-body"></div>
+  </dialog>
+  <!-- /build:schedule-note -->`;
+
+const SCHEDULE_NOTE_JS = `// ── build:schedule-note ──
+// 三段固定，顺序即弹窗里的段落顺序。表外的 kind 归到「说明」，不静默丢弃。
+const SCHEDULE_NOTE_GROUPS = [
+  { kind: "alert", icon: "⚠", label: "注意", class: "is-alert" },
+  { kind: "price", icon: "💰", label: "票价", class: "is-price" },
+  { kind: "info", icon: "ℹ", label: "说明", class: "is-info" }
+];
+
+const scheduleNoteKind = (note) => (SCHEDULE_NOTE_GROUPS.some((group) => group.kind === note.kind) ? note.kind : "info");
+
+const scheduleNotesOf = (item) => (Array.isArray(item.notes) ? item.notes.filter((note) => note && note.text) : []);
+
+// 行上的入口：把「有 3 条注意事项」压成 ⚠2 · 💰3 · ℹ2 三个计数
+function scheduleNoteMarkup(item) {
+  const notes = scheduleNotesOf(item);
+  if (!notes.length) return "";
+  const groups = SCHEDULE_NOTE_GROUPS
+    .map((group) => ({ ...group, count: notes.filter((note) => scheduleNoteKind(note) === group.kind).length }))
+    .filter((group) => group.count);
+  const counts = groups.map((group) => group.icon + " " + group.count).join(" · ");
+  const spoken = groups.map((group) => group.label + " " + group.count + " 条").join("，");
+  return \`
+    <button type="button" class="schedule-note-open" data-note-open="\${escapeHtml(item.id)}" aria-haspopup="dialog" aria-controls="schedule-note-dialog" aria-label="查看注意事项：\${escapeHtml(spoken)}">
+      <span class="schedule-note-open__counts">\${escapeHtml(counts)}</span>
+      <span>注意事项</span>
+    </button>\`;
+}
+
+let scheduleNoteOpener = null;
+
+function openScheduleNoteDialog(itemId, opener) {
+  const dialog = $("#schedule-note-dialog");
+  if (!dialog) return;
+  const item = state.data.days.flatMap((day) => day.schedule).find((entry) => entry.id === itemId);
+  if (!item) return;
+  const notes = scheduleNotesOf(item);
+  if (!notes.length) return;
+  scheduleNoteOpener = opener || null;
+  $("#schedule-note-eyebrow").textContent = "注意事项 · " + item.time;
+  $("#schedule-note-heading").textContent = item.text;
+  $("#schedule-note-body").innerHTML = SCHEDULE_NOTE_GROUPS.map((group) => {
+    const rows = notes.filter((note) => scheduleNoteKind(note) === group.kind);
+    if (!rows.length) return "";
+    return \`
+      <section class="schedule-note__group \${group.class}">
+        <h3 class="schedule-note__heading"><span aria-hidden="true">\${group.icon}</span>\${group.label}</h3>
+        <dl class="schedule-note__list">\${rows.map((note) => \`
+          <div class="schedule-note__row">
+            <dt class="schedule-note__label">\${escapeHtml(note.label || group.label)}</dt>
+            <dd class="schedule-note__text">\${escapeHtml(note.text)}</dd>
+          </div>\`).join("")}
+        </dl>
+      </section>\`;
+  }).join("");
+  if (typeof dialog.showModal === "function") dialog.showModal();
+  else dialog.setAttribute("open", "");
+  $("#schedule-note-close").focus();
+}
+
+function setupScheduleNoteDialog() {
+  const dialog = $("#schedule-note-dialog");
+  if (!dialog) return;
+  const close = () => {
+    if (typeof dialog.close === "function" && dialog.open) dialog.close();
+    else dialog.removeAttribute("open");
+  };
+  $("#schedule-note-close").onclick = close;
+  dialog.addEventListener("click", (event) => { if (event.target === dialog) close(); });
+  dialog.addEventListener("close", () => {
+    $("#schedule-note-body").replaceChildren();
+    scheduleNoteOpener?.focus({ preventScroll: true });
+    scheduleNoteOpener = null;
+  });
+}
+// ── /build:schedule-note ──
+`;
+
+// 行上渲染顺序：行程正文 → 注意事项入口 → 门票卡 → 地图按钮
+const SCHEDULE_ITEM_ANCHOR = [
+  '          <div class="schedule-text">${escapeHtml(item.text)}</div>',
+  "          ${scheduleTickets}",
+].join("\n");
+
+const SCHEDULE_ITEM_PATCHED = [
+  '          <div class="schedule-text">${escapeHtml(item.text)}</div>',
+  "          ${scheduleNoteMarkup(item)}",
+  "          ${scheduleTickets}",
+].join("\n");
+
+const TIMELINE_CLICK_ANCHOR = [
+  '  $("#timeline").onclick = (event) => {',
+  '    const ticketButton = event.target.closest("[data-ticket-open]");',
+].join("\n");
+
+const TIMELINE_CLICK_PATCHED = [
+  '  $("#timeline").onclick = (event) => {',
+  '    const noteButton = event.target.closest("[data-note-open]");',
+  "    if (noteButton) {",
+  "      openScheduleNoteDialog(noteButton.dataset.noteOpen, noteButton);",
+  "      return;",
+  "    }",
+  '    const ticketButton = event.target.closest("[data-ticket-open]");',
+].join("\n");
+
+const SETUP_DIALOGS_ANCHOR = ["      setupPlaceMap();", "      setupTicketDialog();"].join("\n");
+const SETUP_DIALOGS_PATCHED = [SETUP_DIALOGS_ANCHOR, "      setupScheduleNoteDialog();"].join("\n");
+
+const SCHEDULE_NOTE_FN_ANCHOR = "function renderTimeline() {";
+
+/*
  * 铁路/轮船的站点名（「부산역」）比 3 字 IATA 码（NKG）长得多。
  * 上游 `.flight-stop__code` 是 clamp(25px, 8vw, 36px) 的等宽字，三个全角字
  * 在窄屏上约 108px，而那一列只有 ~125px —— 贴边且极易被挤破。
@@ -656,6 +884,21 @@ function patchHtml(file) {
     html = `${html.slice(0, lineEnd + 1)}  ${NAV_SCRIPT}\n${html.slice(lineEnd + 1)}`;
   }
 
+  // ── 日程注意事项弹窗：紧跟在门票弹窗之后，两个弹窗同一族观感 ──
+  const ticketBodyAt = html.indexOf('<div class="ticket-dialog__body" id="ticket-dialog-body"></div>');
+  if (ticketBodyAt < 0) {
+    throw new Error("index.html 中找不到门票弹窗正文锚点，模板结构可能已变，请人工确认");
+  }
+  const ticketDialogCloseAt = html.indexOf("</dialog>", ticketBodyAt);
+  if (ticketDialogCloseAt < 0) throw new Error("index.html 中门票弹窗没有 </dialog>，请人工确认");
+  html = upsertBlock(
+    html,
+    "<!-- build:schedule-note -->",
+    "<!-- /build:schedule-note -->",
+    SCHEDULE_NOTE_DIALOG_HTML,
+    html.indexOf("\n", ticketDialogCloseAt) + 1
+  ).text;
+
   // 换设计时 </header> 与 <main> 之间会攒下空行，收敛成恰好一个空行
   html = html.replace(/(<\/header>)[ \t]*\n\s*\n\s*(<main)/, "$1\n\n  $2");
 
@@ -719,6 +962,7 @@ function patchLedgerCss(file) {
   css = stripBlock(css, "/* build:module-tabs */", "/* /build:module-tabs */").text;
   css = upsertBlock(css, "/* build:module-nav */", "/* /build:module-nav */", NAV_CSS).text;
   css = upsertBlock(css, "/* build:ticket-dialog */", "/* /build:ticket-dialog */", TICKET_DIALOG_CSS).text;
+  css = upsertBlock(css, "/* build:schedule-note */", "/* /build:schedule-note */", SCHEDULE_NOTE_CSS).text;
   css = upsertBlock(css, "/* build:transport */", "/* /build:transport */", TRANSPORT_CSS).text;
   if (css === before) {
     log.debug("ledger.css 的补丁块已是最新，跳过");
@@ -779,6 +1023,10 @@ function patchAppJs(file) {
     [TICKET_CARD_ANCHOR, TICKET_CARD_PATCHED, TICKET_CARD_PATCHED, "卡片摘要"],
     [JOURNEY_STATUS_ANCHOR, JOURNEY_STATUS_PATCHED, "transportWords(flight)", "交通方式措辞"],
     [FLIGHT_CARD_HEAD_ANCHOR, FLIGHT_CARD_HEAD_PATCHED, FLIGHT_CARD_HEAD_PATCHED, "交通卡片抬头"],
+    [SCHEDULE_NOTE_FN_ANCHOR, SCHEDULE_NOTE_JS + SCHEDULE_NOTE_FN_ANCHOR, "const SCHEDULE_NOTE_GROUPS", "注意事项函数"],
+    [SCHEDULE_ITEM_ANCHOR, SCHEDULE_ITEM_PATCHED, "${scheduleNoteMarkup(item)}", "日程项注意事项入口"],
+    [TIMELINE_CLICK_ANCHOR, TIMELINE_CLICK_PATCHED, "openScheduleNoteDialog(noteButton.dataset.noteOpen", "注意事项点击"],
+    [SETUP_DIALOGS_ANCHOR, SETUP_DIALOGS_PATCHED, "      setupScheduleNoteDialog();", "注意事项弹窗初始化"],
   ];
   for (const [anchor, patched, doneMark, label] of targets) {
     if (js.includes(doneMark)) {
