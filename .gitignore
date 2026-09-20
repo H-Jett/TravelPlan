@@ -11,8 +11,6 @@ node_modules/
 # 环境与密钥
 .env
 .env.*
-.dev.vars
-.wrangler/
 
 # 私有原始资料（如需保留在本地但不提交，取消注释）
 # trips/*/SOURCE.md
