@@ -423,75 +423,65 @@ body[data-active-view="ledger"] .topbar { background: rgba(250, 251, 249, .93); 
   .ledger-member-edit-actions .ledger-text-button, .ledger-member-edit-actions .ledger-icon-button { padding-inline: 4px; }
 }
 
-/* build:module-tabs */
-:root { --module-tabs-h: 47px; }
-
-.module-tabs {
-  position: sticky;
-  /* 正好贴在顶栏下沿：顶栏高 48px + 安全区 */
-  top: calc(48px + var(--safe-top));
-  z-index: 19; /* 低于顶栏(20)：顶栏的投影要压在 tab 条上 */
-  background: var(--paper);
-  border-bottom: 1px solid var(--line);
-}
-/* display:flex 会盖掉 hidden 属性的 display:none，必须显式补一条 */
-.module-tabs[hidden] { display: none; }
+/* build:module-nav */
 /*
- * 记账视图里**保留**这条 tab 条（上游同样保留顶栏的旅行导航），
- * 否则进了记账就再也跳不回行程模块，只剩 wordmark 一条退路。
- * 代价是记账页要少算 47px 高度，见下方 .ledger-view 的补偿。
+ * 顶栏右侧的模块导航。上游那一段 .topbar .primary-navigation / .travel-navigation-menu
+ * 就在本文件上方（ledger.css:4-85），这里靠**写在后面**覆盖它。
  */
-body[data-active-view="ledger"] .ledger-view {
-  min-height: calc(100vh - 48px - var(--module-tabs-h));
-  min-height: calc(100dvh - 48px - var(--module-tabs-h));
-}
 
-/* 覆盖上游的浮层下拉（position:fixed + grid） */
-.module-tabs .travel-navigation-menu {
+/* 顶部模块导航与 wordmark 同行，wordmark 那一侧不许被挤扁 */
+.topbar .wordmark { flex: 0 0 auto; white-space: nowrap; }
+
+#travel-navigation {
+  min-width: 0;               /* 允许收缩，否则窄屏会把 wordmark 顶出屏幕 */
+  overflow-x: auto;           /* 放不下时横向滚，而不是撑破顶栏 */
+  overscroll-behavior-inline: contain;
+  scrollbar-width: none;
+}
+/* 作者样式里的 display:flex 会盖掉 hidden 自带的 display:none，必须显式补一条。
+   id 选择器(1,0,0) 胜过 .topbar .primary-navigation(0,2,0)，不用 !important。 */
+#travel-navigation[hidden] { display: none; }
+#travel-navigation::-webkit-scrollbar { display: none; }
+
+/* 把上游的浮层下拉（position:fixed + grid + 阴影）拉平成一行 */
+#travel-navigation .travel-navigation-menu {
   position: static;
+  top: auto;
+  right: auto;
+  left: auto;
   width: auto;
   margin: 0;
-  padding: 6px 12px;
+  padding: 0;
   display: flex;
-  gap: 4px;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
   border: 0;
   border-radius: 0;
   background: transparent;
   box-shadow: none;
   -webkit-backdrop-filter: none;
   backdrop-filter: none;
-  overflow-x: auto;
-  overscroll-behavior-inline: contain;
-  scroll-snap-type: x proximity;
-  scrollbar-width: none;
 }
-.module-tabs .travel-navigation-menu::-webkit-scrollbar { display: none; }
 
-.module-tabs .travel-navigation-menu a {
+#travel-navigation .travel-navigation-menu a {
   flex: 0 0 auto;
-  scroll-snap-align: center;
-  min-height: 34px;
-  padding: 0 13px;
-  display: inline-flex;
-  align-items: center;
-  border-radius: 999px;
-  color: var(--muted);
-  font-size: 13px;
-  font-weight: 680;
-  text-decoration: none;
+  min-width: 42px;
+  min-height: 40px;
+  padding: 0 9px;
+  font-size: 12px;
   white-space: nowrap;
 }
-.module-tabs .travel-navigation-menu a[aria-current="location"] {
+#travel-navigation .travel-navigation-menu a[aria-current="location"] {
   color: #fff;
   background: var(--ink);
 }
 
 /*
- * 点 tab 后标题不能被吸顶条盖住。上游 styles.css:96 写的是 48px
- * （只算了顶栏），这里重算：顶栏 + 安全区 + tab 条 + 8px 余量。
- * 靠 ledger.css 的层叠顺序覆盖，不改 styles.css。
+ * 点链接后标题不能被吸顶顶栏盖住。上游 styles.css 写的是 48px —— 只算了顶栏，
+ * 漏了安全区。这里补上 --safe-top 再加 8px 余量。
  */
-.section { scroll-margin-top: calc(48px + var(--safe-top) + var(--module-tabs-h) + 8px); }
+.section { scroll-margin-top: calc(48px + var(--safe-top) + 8px); }
 
-@media print { .module-tabs { display: none; } }
-/* /build:module-tabs */
+@media print { #travel-navigation { display: none; } }
+/* /build:module-nav */

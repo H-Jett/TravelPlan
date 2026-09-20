@@ -20,7 +20,7 @@
   <script src="ticket-pdf-preview.js?v=20260910-2" defer></script>
   <script src="ledger.js?v=20260910-3" defer></script>
   <script src="site-navigation.js?v=20260910-2" defer></script>
-  <script src="module-tabs.js" defer></script>
+  <script src="nav-highlight.js" defer></script>
 </head>
 <body>
   <!-- build:home-link -->
@@ -29,20 +29,19 @@
   <a class="skip-link" id="skip-link" href="#main">跳到主要内容</a>
   <header class="topbar" id="topbar">
     <a class="wordmark" id="wordmark" href="#top" aria-label="返回顶部"></a>
+    <!-- build:module-nav -->
+    <nav class="primary-navigation" id="travel-navigation" aria-label="模块导航" hidden>
+      <div class="travel-navigation-menu">
+        <a href="#flights" data-module="flights" hidden>航班</a>
+        <a href="#route" data-module="overview" hidden>路线</a>
+        <a href="#itinerary" data-module="itinerary" hidden>行程</a>
+        <a href="#drive" data-module="driving" hidden>自驾</a>
+        <a href="#prep" data-module="todo" hidden>Todo</a>
+        <a class="primary-navigation__ledger" id="ledger-navigation-link" href="#ledger" data-module="ledger" hidden>记账</a>
+      </div>
+    </nav>
+    <!-- /build:module-nav -->
   </header>
-
-  <!-- build:module-tabs -->
-  <nav class="module-tabs" id="travel-navigation" aria-label="模块导航" hidden>
-    <div class="travel-navigation-menu">
-      <a href="#flights" data-module="flights" hidden>航班</a>
-      <a href="#route" data-module="overview" hidden>路线</a>
-      <a href="#itinerary" data-module="itinerary" hidden>行程</a>
-      <a href="#drive" data-module="driving" hidden>自驾</a>
-      <a href="#prep" data-module="todo" hidden>Todo</a>
-      <a class="primary-navigation__ledger" id="ledger-navigation-link" href="#ledger" data-module="ledger" hidden>记账</a>
-    </div>
-  </nav>
-  <!-- /build:module-tabs -->
 
   <main id="main" data-site-view="travel">
     <section class="hero" id="top" aria-labelledby="trip-title">
