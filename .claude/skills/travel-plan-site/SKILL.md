@@ -238,6 +238,7 @@ npm run new -- --slug <slug> --title "<标题>" --dest "<主要目的地>" --sta
    | 会显示 | 怎么显示 |
    |---|---|
    | `days[].schedule[].{time,text,type}` | 日程项正文（`text` 是唯一可写长文的地方） |
+   | `days[].schedule[].notes[]` | 日程项上的「注意事项」入口 + 弹窗（`{kind,label,text}`，见坑 24） |
    | `days[].notes[]` | 该日卡片底部的细节说明 |
    | `days[].costReferences[]` | 费用标签（`item · CUR amount`，`app.js:371 costText`） |
    | `ticketPlanning.items[].{name,requirement,guidance[],officialUrl}` | 门票卡 + 弹窗；`guidance` 用「·」连接，`officialUrl` 渲染成可点链接 |
@@ -250,8 +251,8 @@ npm run new -- --slug <slug> --title "<标题>" --dest "<主要目的地>" --sta
    | `ticketPlanning.items[].price` | **弹窗只渲染 `requirement`/`guidance`/链接**，`price` 读了但不输出 —— 票价要写进 `guidance[]` 或该日的 `costReferences[]` |
    | `groundTransport.*` | `driving=false` 时不渲染；日程里的交通方式请写进 `schedule[].text` |
 
-   推论：**「待补充」「需现场确认」这类话必须写进 `days[].notes[]` 或 `preTrip.todoItems[]`**，
-   写进 `issuesAndUncertainties` 等于没写。
+   推论：**「待补充」「需现场确认」这类话必须写进 `schedule[].notes[]`（坑 24）、
+   `days[].notes[]` 或 `preTrip.todoItems[]`**，写进 `issuesAndUncertainties` 等于没写。
 
 7. **查证结果要可点、可复核，就把出处放进 `guidance` / `notes` / `officialUrl`。**
    模板没有通用的「来源」字段，但 `ticketPlanning.items[].officialUrl` 会渲染成
@@ -392,6 +393,55 @@ npm run new -- --slug <slug> --title "<标题>" --dest "<主要目的地>" --sta
     - 顺手修掉折叠留下的指代不明（「上面这个票价」→「船票价格」、「上面这条天空步道」→
       「松岛天空步道」）—— 正文搬家之后，「上面」指向的可能是另一条时间点。
 
+24. **`schedule[].text` 只写行程主干，注意事项拆进 `schedule[].notes[]`（弹窗）。**
+    （用户 2026-09-21 要求：「每个时间点先写行程，然后再写注意事项，弄成弹窗的形式，
+    然后需要精简内容并且结构化」。设计是用户在两轮选项里拍板的。）
+
+    ```jsonc
+    { "id": "d2-02", "time": "09:30", "type": "transfer",
+      "text": "抵达城山港，在 우도가는배 售票处买牛岛往返船票。",   // ← 只留「去哪/怎么去/多久」
+      "notes": [
+        { "kind": "alert", "label": "排队",     "text": "中秋连休收尾 + 周日，建议 09:00 前到售票处。" },
+        { "kind": "price", "label": "成人往返", "text": "11,000 KRW（去程 6,000 = 船费 5,000 + 道立公园 1,000）。" },
+        { "kind": "info",  "label": "证件与购票", "text": "必须出示护照；无线上预约，现场买票。" }
+      ] }
+    ```
+
+    **契约：**
+    - `kind` 三档：`alert` ⚠注意 / `price` 💰票价 / `info` ℹ说明。
+      弹窗**按这三档分组、固定顺序**渲染，每组上方一条带分隔线的小标题。
+      表外的 `kind` **不丢弃**，静默归入 `info`（说明组）——所以打错字不会丢数据。
+    - `label` 是**短标题**（正文左侧那一栏，宽 86px）→ **控制在 8 个汉字以内**，
+      超了就换行、行高会不一致。别写「宫旁加站 · 古宫博物馆」这种（改「古宫博物馆」）。
+    - **`notes` 为空/缺省 → 该时间点不渲染任何入口**，旧数据不改也照常显示。
+      所以「没事可提醒」的时间点就该老老实实不写 `notes`，别硬凑。
+    - `notes[].text` 里**不要再带 ⚠ / 💰 / ℹ 标记** —— 组标题上已经有一个了，重复标记很吵。
+      韩国 d7-05 原来有一条行内「⚠️ 开放时间两个官方来源打架」，正确做法是把它
+      **拆成独立的一条 alert**（两处官方口径冲突本来就是会白跑一趟的事，属于注意组）。
+    - 行上渲染成一颗药丸：`⚠ 2 · 💰 1 · ℹ 2　注意事项`，点开弹窗，
+      `aria-label` 是「查看注意事项：注意 2 条，票价 1 条，说明 2 条」。计数由数据算出，不用手写。
+
+    **精简与结构化怎么写：**
+    - 正文一句话说清「去哪、怎么去、待多久」。事件本身的名字 + 时长就够，
+      别在正文里塞票价、别塞排队提示。
+    - 拆的时候顺手删掉两类东西（用户要的「精简」）：
+      **排程推理**（「（11:30 出发、按 40–55 分车程，约 12:10–12:25 到；这里取 12:15。）」
+      —— 结论已经写在 `time` 里了）和**今天用不上的备选**（韩国 d2-01 写了五日市集，
+      但那天全天在城山，赶不上）。
+    - **但事实一条都不能删**：票价档位、休馆日、末班时刻、官方口径冲突、
+      「未核到官方数字」的如实标注，全部原样搬进 `notes[]`。
+      改写这类数据前先备份，并写一组「关键信息必须还在」的存在性断言
+      （韩国那次是 45 项，逐项断言 `text + notes 拼接` 里仍能找到）——
+      纯手改一定会漏，而且漏了页面照样渲染、不报错。
+
+25. **弹窗/入口是纯运行时能力，数据侧只要写 `notes[]` 就行；模板侧不要手改。**
+    实现在 `scripts/patch-template.mjs`（`SCHEDULE_NOTE_CSS` / `SCHEDULE_NOTE_DIALOG_HTML` /
+    `SCHEDULE_NOTE_JS` 三块，标记 `build:schedule-note`）。三个插入点：
+    `.schedule-text` 与门票块之间插入口、时间线点击委托加 `[data-note-open]` 分支、
+    `setupTicketDialog()` 之后挂 `setupScheduleNoteDialog()`。
+    复用门票弹窗的外壳（`.ticket-dialog` + `.ticket-dialog__body`），所以尺寸/滚动/焦点归还
+    都是既有行为；样式写在 `ledger.css`（层叠顺序见坑 20）。
+
 ### 3. 构建
 
 ```bash
@@ -444,6 +494,11 @@ npm run preview    # 起静态服务器，终端会打印实际地址（含首�
    还要确认它**确实在顶栏那一行里**（`#travel-navigation` 的父节点是 `header.topbar`）、
    **全页只有一行导航**（`document.querySelectorAll(".module-tabs").length === 0`），
    以及与 wordmark 同行不重叠 —— 这三条是用户点名要的形态，坏掉了页面照样能跑。
+8. **有 `schedule[].notes[]` 的目的地**：入口数应等于「有 notes 的时间点数」，
+   计数药丸（`⚠ 2 · 💰 1 · ℹ 2`）与 `aria-label` 都要与数据逐条对得上；
+   把每个入口都点开一次，确认分组数、组标题、每行的短标题与正文与数据完全一致，
+   且弹窗里**没有未分组的裸文本节点**（漏进分组的正文在页面上看不出来）。
+   再确认没有任何没 notes 的时间点凭空长出入口。
 
 需要自动化时，可以用无头浏览器把上面几条断言跑一遍 —— 但**断言要盯着真实 DOM**：
 `elementFromPoint` 用视口坐标，元素不在视口里会一直返回 `null`（看起来像「热区没生效」，
@@ -451,6 +506,11 @@ npm run preview    # 起静态服务器，终端会打印实际地址（含首�
 更稳的做法是单开一个高视口（如 390×3000）页面，宽度仍按真机，整页一屏放得下。
 另外**元素盒尺寸不等于可点范围**：模板用 `::before` 透明热区扩大命中区，
 量 `.getBoundingClientRect()` 会得到偏小的结论。
+**断言比对的对象要从构建产物里读**（`home/site/trips/<slug>/trip-data.json`），
+别在测试里手抄一份期望值 —— 手抄的那份会跟着代码一起错。
+还有一处容易自己骗自己：组标题在 DOM 里是 `<span aria-hidden>⚠</span>注意`，
+`textContent` 拿到的是 `⚠注意`（**没有空格**），视觉上的间距来自 `display:flex; gap:7px`。
+按 `textContent` 断言成 `⚠ 注意` 会得到一整片假失败。
 
 > **测滚动行为不要用 `chrome --dump-dom`。** 那个模式没有合成器，`window.scrollTo` /
 > `scrollIntoView` 全是**空操作**（`scrollY` 恒为 0，页面看起来「没滚动」），
