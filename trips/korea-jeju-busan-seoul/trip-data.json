@@ -66,7 +66,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T13:49:08.083Z"
+        "generatedAt": "2026-09-20T13:51:09.306Z"
       },
       "busan": {
         "fingerprint": "8d69b92823219bde",
@@ -103,7 +103,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T13:49:08.089Z"
+        "generatedAt": "2026-09-20T13:51:09.313Z"
       },
       "seoul": {
         "fingerprint": "2c273a83409a3c92",
@@ -140,7 +140,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T13:49:08.103Z"
+        "generatedAt": "2026-09-20T13:51:09.326Z"
       }
     }
   },
@@ -1846,7 +1846,8 @@
           "没有线上或电话预约渠道，到城山港售票处现场买",
           "9 月每天 22 班：城山发 08:00–18:30；官方注明实际按 10–30 分钟间隔加班，表列是最低服务量",
           "风浪停航是常事（2026-09-18 就因风浪注意报提前到 17:00 收班），出发当天打 064-782-5670 确认"
-        ]
+        ],
+        "officialUrl": "http://udoboat.smart9.net/m/index.php"
       },
       {
         "id": "t-ktx-seoul",
@@ -1876,7 +1877,8 @@
           "预售窗口为发车前 1 个月 07:00 开卖，10/2 的票现在就能买",
           "10/2 是三天连假前的周五，需求高，越早订越好",
           "Korail 官网 / KorailTalk App 支持中文，可用境外信用卡；T-money 不能直接刷进站"
-        ]
+        ],
+        "officialUrl": "https://www.letskorail.com"
       },
       {
         "id": "t-blueline-park",
@@ -1984,7 +1986,8 @@
           "登顶单程约 30–40 分钟，往返约 1 小时",
           "门票含免费的海女潜水表演（入口左侧 우뭇개 海岸区，通常每天 14:00 一场约 15 分钟；官方页未印时间）",
           "无预约系统，现场电子售票"
-        ]
+        ],
+        "officialUrl": "https://www.visitjeju.net/kr/detail/view?contentsid=CONT_000000000500349"
       }
     ]
   },
