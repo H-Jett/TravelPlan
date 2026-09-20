@@ -191,7 +191,7 @@ ${entries.length ? cards : empty}
   </main>
 
   <footer class="home-footer">
-    <p>纯静态站点，可直接部署到 GitHub Pages / Cloudflare Pages。</p>
+    <p>纯静态站点，发布在 GitHub Pages。页面上的勾选状态只存在你自己的浏览器里。</p>
   </footer>
 </body>
 </html>
@@ -316,6 +316,9 @@ const buildable = entries.filter((entry) => entry.hasData);
 
 // 1. 先重建底图，让 trip-data.json 带上最新的 routeMap
 const mapResult = rebuildMaps(buildable.map((entry) => entry.slug));
+// 底图没建出来的目的地不能进站点：routeMap 缺失会渲染出一个没有地图的空壳页面。
+// 直接把它当失败跳过，而不是发布半成品。
+const mapFailed = new Set(mapResult.failed);
 
 // 2. 搭站点骨架
 {
@@ -346,6 +349,7 @@ const failed = [];
   const tick = log.progress("目的地", buildable.length, { every: 1, minIntervalMs: 0 });
   for (const entry of buildable) {
     try {
+      if (mapFailed.has(entry.slug)) throw new Error("底图重建失败，已跳过（见上方 ERROR）");
       const trip = loadTrip(entry.slug);
       if (trip.error) throw new Error(trip.error);
       const { routeMaps, copiedAssets } = materializeTrip(trip);
@@ -366,6 +370,7 @@ const failed = [];
   const cards = [];
   for (const entry of entries) {
     if (!entry.hasData) { cards.push(entry); continue; }
+    if (mapFailed.has(entry.slug)) continue; // 底图失败的目的地不进首页，避免链到空壳页面
     const trip = loadTrip(entry.slug);
     cards.push({ ...entry, ...trip, title: entry.title || trip.title });
   }
