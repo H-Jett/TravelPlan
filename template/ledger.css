@@ -485,3 +485,64 @@ body[data-active-view="ledger"] .topbar { background: rgba(250, 251, 249, .93); 
 
 @media print { #travel-navigation { display: none; } }
 /* /build:module-nav */
+
+/* build:ticket-dialog */
+.ticket-dialog__label {
+  margin: 16px 0 6px;
+  color: var(--muted, #5b6b62);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+/*
+ * 正文第一块紧跟在状态行后面。状态行（上游 .ticket-dialog__status）margin 是 0，
+ * 列表也是 0 —— 单组弹窗（没有小标题）时首条会**贴到状态行上**，实测间距 0px。
+ * 所以给「状态行之后的第一个块」统一补上间距，两种情况（有/无小标题）都覆盖。
+ */
+.ticket-dialog__status + .ticket-dialog__list,
+.ticket-dialog__status + .ticket-dialog__label { margin-top: 14px; }
+
+.ticket-dialog__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ticket-dialog__list li {
+  position: relative;
+  padding: 0 0 0 16px;
+  margin-bottom: 7px;
+  color: #47575b;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.ticket-dialog__list li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: .62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .45;
+}
+.ticket-dialog__list li:last-child { margin-bottom: 0; }
+
+/* 已确认：把「票已经在我手上」这部分框出来，一眼能跳过 */
+.ticket-dialog__list.is-confirmed {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #edf6f5;
+}
+.ticket-dialog__list.is-confirmed li { color: #205e6b; font-weight: 600; }
+.ticket-dialog__list.is-confirmed li::before { opacity: .7; }
+
+/* 注意：真正会误事的那几条 */
+.ticket-dialog__list.is-alert li { color: #a2563a; }
+.ticket-dialog__list.is-alert li::before { opacity: .8; }
+
+@media (max-width: 420px) {
+  .ticket-dialog__list li { font-size: 12.5px; }
+}
+/* /build:ticket-dialog */

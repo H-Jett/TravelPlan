@@ -412,9 +412,42 @@ function ticketTitle(ticket) {
   return ticket.name || ticket.attraction?.nameZh || ticket.attraction?.name || "门票详情";
 }
 
-function ticketGuidance(ticket) {
+function ticketGuidanceItems(ticket) {
   const guidance = ticket.guidance || ticket.notes || [];
-  return Array.isArray(guidance) ? guidance.join("·") : String(guidance || "");
+  const list = Array.isArray(guidance) ? guidance : [guidance];
+  return list.map((text) => String(text == null ? "" : text).trim()).filter(Boolean);
+}
+
+function ticketGuidance(ticket) {
+  return ticketGuidanceItems(ticket).join("·");
+}
+
+// 分组只看开头，不猜语义：判错的代价是某条落进「说明」，不会丢内容
+function isTicketConfirmed(text) {
+  return /^已(出票|购票|预订|预约|确认|订)/.test(text);
+}
+
+function isTicketAlert(text) {
+  return /^[\u26a0\u2757\u2755\u203c]/.test(text) || /^注意[:：]/.test(text);
+}
+
+function ticketGuidanceList(ticket) {
+  const items = ticketGuidanceItems(ticket);
+  if (!items.length) return "";
+  const confirmed = items.filter(isTicketConfirmed);
+  const alerts = items.filter((text) => !isTicketConfirmed(text) && isTicketAlert(text));
+  const notes = items.filter((text) => !isTicketConfirmed(text) && !isTicketAlert(text));
+  const rest = notes.length + alerts.length;
+  const label = (text) => `<p class="ticket-dialog__label">${text}</p>`;
+  const list = (group, cls) => group.length
+    ? `<ul class="ticket-dialog__list${cls ? " " + cls : ""}">${group.map((text) => `<li>${escapeHtml(text)}</li>`).join("")}</ul>`
+    : "";
+  // 只有一组时不出小标题 —— 一条列表上面顶个「说明」纯属噪音
+  return [
+    confirmed.length ? `${rest ? label("已确认") : ""}${list(confirmed, "is-confirmed")}` : "",
+    rest ? `${confirmed.length ? label("说明") : ""}${list(notes, "")}` : "",
+    alerts.length ? `${label("注意")}${list(alerts, "is-alert")}` : "",
+  ].join("");
 }
 
 function ticketDocument(ticket) {
@@ -437,7 +470,7 @@ function inlineTicketMarkup(ticket) {
         <span class="schedule-ticket__content">
           <span class="schedule-ticket__status">${purchased ? "已购票" : escapeHtml(ticketRequirement(ticket))}</span>
           <strong>${escapeHtml(title)}</strong>
-          <small>${escapeHtml(ticketGuidance(ticket))}</small>
+          <small>${escapeHtml(ticketGuidanceItems(ticket)[0] || "")}</small>
         </span>
       </label>
       <button type="button" class="schedule-ticket__open" data-ticket-open="${escapeHtml(ticket.id)}" aria-haspopup="dialog" aria-controls="ticket-dialog">查看</button>
@@ -871,7 +904,7 @@ function openTicketDialog(ticketId, opener) {
   ].filter(Boolean).join("");
   $("#ticket-dialog-body").innerHTML = `
     <p class="ticket-dialog__status">${escapeHtml(isTicketPurchased(ticket) ? "已标记购票" : ticketRequirement(ticket))}</p>
-    ${ticketGuidance(ticket) ? `<p class="ticket-dialog__guidance">${escapeHtml(ticketGuidance(ticket))}</p>` : ""}
+    ${ticketGuidanceList(ticket)}
     ${preview || (!links ? `<p class="ticket-dialog__empty">当前没有可预览的票据文件或官方链接。</p>` : "")}
     ${links ? `<div class="ticket-dialog__links">${links}</div>` : ""}`;
   if (typeof dialog.showModal === "function") dialog.showModal();

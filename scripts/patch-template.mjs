@@ -16,6 +16,8 @@
  *   template/route-ui.js  OSM 底图署名（build:osm-attribution，ODbL 要求各视图可见）
  *   template/styles.css   署名样式（build:osm-attribution）
  *   template/app.js       门票「现场购买」档（onsite-purchase）
+ *   template/app.js       门票弹窗正文结构化（guidance[] 分组成列表，见下）
+ *   template/ledger.css   门票弹窗分组的样式（build:ticket-dialog）
  *   template/index.html   顶部模块导航，替换上游的「旅行信息 ▾」下拉（build:module-nav）
  *   template/ledger.css   导航样式 + 重算 .section 的 scroll-margin-top（build:module-nav）
  *   template/nav-highlight.js  新建：滚动高亮（由本脚本写出，不是 vendored 文件）
@@ -130,6 +132,146 @@ ${ATTR_MARKER_END}
  */
 const TICKET_REQ_ANCHOR = '"needs-confirmation": "购票方式待确认"';
 const TICKET_REQ_PATCHED = `${TICKET_REQ_ANCHOR},\n    "onsite-purchase": "现场购票（无需预约）"`;
+
+/*
+ * 门票弹窗正文结构化。
+ *
+ * 上游把 guidance[] 用「·」拼成一整段平铺文本（ticketGuidance()），
+ * 卡片摘要和弹窗正文共用这一个函数 —— 于是弹窗里 5~7 条互不相干的信息
+ * （票价 / 时刻 / 预约方式 / 注意事项）连成一大坨，读的人得自己断句。
+ *
+ * 这里改成分组列表：把 guidance[] 拆成「已确认 / 说明 / 注意」三组，
+ * 每组一个小标题 + 一条一项的 <ul>。分组判据只看每条的**开头**，
+ * 不猜语义 —— 判错的代价只是某条落进「说明」组，不会丢内容。
+ *
+ * 卡片上的 <small> 只留第一条（ticketGuidanceItems()[0]）：卡片本来就窄，
+ * 铺 7 条只会把卡片撑得比正文还高。完整内容点开弹窗看。
+ */
+const TICKET_DIALOG_MARK = "function ticketGuidanceList(ticket)";
+
+const TICKET_GUIDANCE_ANCHOR = [
+  "function ticketGuidance(ticket) {",
+  "  const guidance = ticket.guidance || ticket.notes || [];",
+  '  return Array.isArray(guidance) ? guidance.join("·") : String(guidance || "");',
+  "}",
+].join("\n");
+
+// 用单引号逐行拼：这几行里含反引号与 ${}，写成模板字面量要一路转义，反而更难读。
+const TICKET_GUIDANCE_PATCHED = [
+  "function ticketGuidanceItems(ticket) {",
+  "  const guidance = ticket.guidance || ticket.notes || [];",
+  "  const list = Array.isArray(guidance) ? guidance : [guidance];",
+  '  return list.map((text) => String(text == null ? "" : text).trim()).filter(Boolean);',
+  "}",
+  "",
+  "function ticketGuidance(ticket) {",
+  '  return ticketGuidanceItems(ticket).join("·");',
+  "}",
+  "",
+  "// 分组只看开头，不猜语义：判错的代价是某条落进「说明」，不会丢内容",
+  "function isTicketConfirmed(text) {",
+  '  return /^已(出票|购票|预订|预约|确认|订)/.test(text);',
+  "}",
+  "",
+  "function isTicketAlert(text) {",
+  '  return /^[\\u26a0\\u2757\\u2755\\u203c]/.test(text) || /^注意[:：]/.test(text);',
+  "}",
+  "",
+  "function ticketGuidanceList(ticket) {",
+  "  const items = ticketGuidanceItems(ticket);",
+  '  if (!items.length) return "";',
+  "  const confirmed = items.filter(isTicketConfirmed);",
+  "  const alerts = items.filter((text) => !isTicketConfirmed(text) && isTicketAlert(text));",
+  "  const notes = items.filter((text) => !isTicketConfirmed(text) && !isTicketAlert(text));",
+  "  const rest = notes.length + alerts.length;",
+  '  const label = (text) => `<p class="ticket-dialog__label">${text}</p>`;',
+  '  const list = (group, cls) => group.length',
+  '    ? `<ul class="ticket-dialog__list${cls ? " " + cls : ""}">${group.map((text) => `<li>${escapeHtml(text)}</li>`).join("")}</ul>`',
+  '    : "";',
+  "  // 只有一组时不出小标题 —— 一条列表上面顶个「说明」纯属噪音",
+  "  return [",
+  '    confirmed.length ? `${rest ? label("已确认") : ""}${list(confirmed, "is-confirmed")}` : "",',
+  '    rest ? `${confirmed.length ? label("说明") : ""}${list(notes, "")}` : "",',
+  '    alerts.length ? `${label("注意")}${list(alerts, "is-alert")}` : "",',
+  '  ].join("");',
+  "}",
+].join("\n");
+
+// 弹窗正文那一行（openTicketDialog 里）
+const TICKET_DIALOG_BODY_ANCHOR =
+  '    ${ticketGuidance(ticket) ? `<p class="ticket-dialog__guidance">${escapeHtml(ticketGuidance(ticket))}</p>` : ""}';
+const TICKET_DIALOG_BODY_PATCHED = "    ${ticketGuidanceList(ticket)}";
+
+// 卡片上那行摘要（inlineTicketMarkup 里）
+const TICKET_CARD_ANCHOR = "          <small>${escapeHtml(ticketGuidance(ticket))}</small>";
+const TICKET_CARD_PATCHED = '          <small>${escapeHtml(ticketGuidanceItems(ticket)[0] || "")}</small>';
+
+/*
+ * 弹窗分组的样式，写在 ledger.css（层叠顺序见文件顶部的说明）。
+ * 上游 styles.css 里的 .ticket-dialog__guidance 就不再被用到了 ——
+ * 留着无害（没有元素带这个 class 了），删它要给 styles.css 做减法补丁，不值得。
+ */
+const TICKET_DIALOG_CSS = `/* build:ticket-dialog */
+.ticket-dialog__label {
+  margin: 16px 0 6px;
+  color: var(--muted, #5b6b62);
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: .08em;
+}
+
+/*
+ * 正文第一块紧跟在状态行后面。状态行（上游 .ticket-dialog__status）margin 是 0，
+ * 列表也是 0 —— 单组弹窗（没有小标题）时首条会**贴到状态行上**，实测间距 0px。
+ * 所以给「状态行之后的第一个块」统一补上间距，两种情况（有/无小标题）都覆盖。
+ */
+.ticket-dialog__status + .ticket-dialog__list,
+.ticket-dialog__status + .ticket-dialog__label { margin-top: 14px; }
+
+.ticket-dialog__list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.ticket-dialog__list li {
+  position: relative;
+  padding: 0 0 0 16px;
+  margin-bottom: 7px;
+  color: #47575b;
+  font-size: 13px;
+  line-height: 1.65;
+}
+.ticket-dialog__list li::before {
+  content: "";
+  position: absolute;
+  left: 3px;
+  top: .62em;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: currentColor;
+  opacity: .45;
+}
+.ticket-dialog__list li:last-child { margin-bottom: 0; }
+
+/* 已确认：把「票已经在我手上」这部分框出来，一眼能跳过 */
+.ticket-dialog__list.is-confirmed {
+  padding: 10px 12px;
+  border-radius: 10px;
+  background: #edf6f5;
+}
+.ticket-dialog__list.is-confirmed li { color: #205e6b; font-weight: 600; }
+.ticket-dialog__list.is-confirmed li::before { opacity: .7; }
+
+/* 注意：真正会误事的那几条 */
+.ticket-dialog__list.is-alert li { color: #a2563a; }
+.ticket-dialog__list.is-alert li::before { opacity: .8; }
+
+@media (max-width: 420px) {
+  .ticket-dialog__list li { font-size: 12.5px; }
+}
+/* /build:ticket-dialog */
+`;
 
 /*
  * 顶部模块导航：把上游的「旅行信息 ▾」下拉（<details>，要点两下才展开）
@@ -456,8 +598,9 @@ function patchLedgerCss(file) {
   // 上一版那条独立吸顶 tab 条的样式块，连同它的 --module-tabs-h 一起摘掉
   css = stripBlock(css, "/* build:module-tabs */", "/* /build:module-tabs */").text;
   css = upsertBlock(css, "/* build:module-nav */", "/* /build:module-nav */", NAV_CSS).text;
+  css = upsertBlock(css, "/* build:ticket-dialog */", "/* /build:ticket-dialog */", TICKET_DIALOG_CSS).text;
   if (css === before) {
-    log.debug("ledger.css 的 module-nav 块已是最新，跳过");
+    log.debug("ledger.css 的补丁块已是最新，跳过");
     return false;
   }
   fs.writeFileSync(file, css, "utf8");
@@ -501,16 +644,31 @@ function patchCss(file) {
   return true;
 }
 
+/*
+ * 三处补丁共用一个文件，逐处独立判定 —— 不能像早先那样「第一处已打过就整体跳过」，
+ * 否则后加的补丁在这个文件上永远不生效（本仓库最典型的一类静默坑）。
+ */
 function patchAppJs(file) {
-  const js = fs.readFileSync(file, "utf8");
-  if (js.includes(TICKET_REQ_PATCHED)) {
-    log.debug("app.js 已含 onsite-purchase 档，跳过");
-    return false;
+  let js = fs.readFileSync(file, "utf8");
+  const before = js;
+  const targets = [
+    [TICKET_REQ_ANCHOR, TICKET_REQ_PATCHED, TICKET_REQ_PATCHED, "onsite-purchase 档"],
+    [TICKET_GUIDANCE_ANCHOR, TICKET_GUIDANCE_PATCHED, TICKET_DIALOG_MARK, "弹窗分组函数"],
+    [TICKET_DIALOG_BODY_ANCHOR, TICKET_DIALOG_BODY_PATCHED, TICKET_DIALOG_BODY_PATCHED, "弹窗正文"],
+    [TICKET_CARD_ANCHOR, TICKET_CARD_PATCHED, TICKET_CARD_PATCHED, "卡片摘要"],
+  ];
+  for (const [anchor, patched, doneMark, label] of targets) {
+    if (js.includes(doneMark)) {
+      log.debug(`app.js 已含${label}，跳过`);
+      continue;
+    }
+    if (!js.includes(anchor)) {
+      throw new Error(`app.js 中找不到${label}的插入锚点「${anchor}」，模板结构可能已变，请人工确认`);
+    }
+    js = js.replace(anchor, patched);
   }
-  if (!js.includes(TICKET_REQ_ANCHOR)) {
-    throw new Error(`app.js 中找不到门票档位插入锚点「${TICKET_REQ_ANCHOR}」，模板结构可能已变，请人工确认`);
-  }
-  fs.writeFileSync(file, js.replace(TICKET_REQ_ANCHOR, TICKET_REQ_PATCHED), "utf8");
+  if (js === before) return false;
+  fs.writeFileSync(file, js, "utf8");
   return true;
 }
 
