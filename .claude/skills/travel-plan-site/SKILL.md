@@ -50,10 +50,30 @@ npm run new -- --slug <slug> --title "<标题>" --dest "<主要目的地>" --sta
 
 - **STEP 3 的模块确认**：只确认前五项，跳过记账。
 - **STEP 5 只写一份输入**：只改 `trips/<slug>/trip-data.json`。禁止手写 `routeMap`、SVG path、地图坐标（那是 `build-map.mjs` 的活）。
+- **`map.places[]` 必须写 `geo: { lat, lng }`**（见下），否则该目的地只能停在示意底图。
 - 目的地专属素材放 `trips/<slug>/assets/`，在数据里用相对 trip 的路径引用。
 - 用户没给的内容留空数组，或在已启用模块里标「待补充」，**不要编造事实**；To Do 不要凭常识补充。
 
 字段速查见上游 SKILL.md 的「首次写入字段速查」。
+
+#### `map.places[].geo` 必须写：真实地图底图靠它
+
+每个地点都要有**真实经纬度**：
+
+```json
+{ "id": "p-bukchon", "name": "Bukchon Hanok Village", "nameZh": "北村韩屋村",
+  "geo": { "lat": 37.5826, "lng": 126.9830 }, ... }
+```
+
+有 `geo` 的目的地，`npm run build` 会抓 OSM 瓦片拼真实底图并按墨卡托重投影（见 README「底图是怎么来的」）。
+**一个地点缺 `geo`，整个目的地就降级保留示意底图**（构建会打 WARN），而不是只丢那一个点。
+
+- 坐标要**逐个查证**（OSM/Nominatim、官方地址），不要凭印象估 —— 底图是对的，
+  坐标错了看起来就像地图错了。机场用航站楼、景区用入口/主门，别用整个景区的几何中心。
+- 查完可用 `npm run verify:projection` 复核：它会逐对比较地图方位与真实方位，
+  方位误差大说明坐标或投影有问题。注意它能查「相对位置自洽」，**查不出全部一起偏**。
+- 一个地点都没有 `geo` 时构建不报错、只是降级 —— 所以新增目的地后请确认
+  `verify:projection` 的输出里**没有**把它列进「未覆盖」。
 
 ### 本站实测踩过的坑（务必遵守）
 
@@ -121,11 +141,17 @@ npm run new -- --slug <slug> --title "<标题>" --dest "<主要目的地>" --sta
 ### 3. 构建
 
 ```bash
-npm run build      # 重建 routeMap + 生成 home/site/
-npm run check      # 结构自检，看 WARN/ERROR
+npm run build             # 重建 routeMap + 生成 home/site/
+npm run check             # 结构自检，看 WARN/ERROR
+npm run verify:projection # 校验地图位置对不对（有 geo 的目的地应全部 ✅）
 ```
 
-`npm run build` 会用 `template/scripts/build-map.mjs` 为每个 trip 重建 `routeMap`，然后把站点组装到 `home/site/`。**不要手写 `home/site/` 里的任何文件** —— 它是产物，每次 build 整个重建。
+`npm run build` 分两段重建 `routeMap`：先用 `template/scripts/build-map.mjs` 做**示意投影**
+（定区域划分与路线分段），再由 `scripts/lib/build-real-map.mjs` 用真实经纬度**重算几何**
+（抓 OSM 瓦片拼底图 + 墨卡托重投影 + 重新求解标签）。第二段必须留在流水线内部 ——
+第一段每次构建都会原地重写 `trip-data.json`。详见 README「底图是怎么来的：两段式」。
+
+然后把站点组装到 `home/site/`。**不要手写 `home/site/` 里的任何文件** —— 它是产物，每次 build 整个重建。
 
 ### 4. 预览
 
@@ -146,6 +172,9 @@ npm run preview    # 起静态服务器，终端会打印实际地址（含首�
 2. 展开一两天的日程卡，确认日程项、门票勾选、地图快捷按钮、费用标签都在。
 3. 桌面（1440）与手机（390）各看一遍，手机重点看地图是否横向溢出、圆点是否点得中。
 4. 控制台无报错、无 404。
+5. **地图位置是不是真的**：确认每个区域的底图是真实地图（能看到真实路网/海岸线/河流），
+   地点落在该落的地方 —— 例如机场在图上的海边、江两岸的点分别在江两侧。
+   再跑 `npm run verify:projection`，有 `geo` 的区域应全部 ✅ 且不出现在「未覆盖」里。
 
 需要自动化时，可以用无头浏览器把上面几条断言跑一遍 —— 但**断言要盯着真实 DOM**：
 `elementFromPoint` 用视口坐标，元素不在视口里会一直返回 `null`（看起来像「热区没生效」，

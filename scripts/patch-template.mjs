@@ -1,18 +1,20 @@
 #!/usr/bin/env node
 /**
- * 给 vendored template/ 打最小补丁：在旅行页顶部加一个「← 全部攻略」返回入口。
+ * 给 vendored template/ 打最小补丁。
  *
  * 为什么单独一个脚本、而不是散在 build 里：
  *   - template/ 是第三方 vendored 代码（SKILL.md 明令普通生成不得修改），
  *     改动必须集中、可审查、可重复执行；
- *   - 本脚本幂等，靠 HTML 注释标记定位，重复跑不会重复插入；
+ *   - 本脚本幂等，靠注释标记 / 锚点定位，重复跑不会重复插入；
  *   - 改的是 template/ 这一份源，build 时再拷贝到每个 trip，天然全站生效。
  *
- * 补丁清单（全部用 <!-- build:xxx --> / /* build:xxx *​/ 标记包裹，便于移除与幂等判定）：
+ * 补丁清单（HTML/CSS 用 <!-- build:xxx --> / /* build:xxx *​/ 包裹，便于移除与幂等判定）：
  *   template/index.html   顶部加一个返回首页的链接（build:home-link）
  *   template/index.html   补 favicon（build:favicon）
  *   template/styles.css   返回首页链接的样式（build:home-link）
  *   template/styles.css   移动端每日地图点击热区（build:tap-target）
+ *   template/route-ui.js  OSM 底图署名（build:osm-attribution，ODbL 要求各视图可见）
+ *   template/styles.css   署名样式（build:osm-attribution）
  *
  * 注意：链接是 ../../ —— 只对 home/site/trips/<slug>/ 这个层级成立。
  * 单独把 template/ 拿去当单站部署时，这个链接会 404（不影响页面其余功能）。
@@ -33,6 +35,10 @@ const CSS_MARKER_START = "/* build:home-link */";
 const CSS_MARKER_END = "/* /build:home-link */";
 const TAP_MARKER_START = "/* build:tap-target */";
 const TAP_MARKER_END = "/* /build:tap-target */";
+const ATTR_MARKER_START = "/* build:osm-attribution */";
+const ATTR_MARKER_END = "/* /build:osm-attribution */";
+// route-ui.js 用 JS 注释做幂等标记（该文件不是 CSS/HTML）
+const ATTR_JS_MARKER = "build:osm-attribution";
 
 const HOME_LINK_HTML = `${MARKER_START}
   <a class="home-link" href="../../" aria-label="返回全部攻略">← 全部攻略</a>
@@ -81,6 +87,35 @@ const TAP_TARGET_CSS = `${TAP_MARKER_START}
 ${TAP_MARKER_END}
 `;
 
+/*
+ * OSM 署名（ODbL 要求可见）。必须**每个视图**都在 ——
+ * 上游的 disclaimer 只在总览视图渲染（route-ui.js:116 的每日分支是硬编码文案），
+ * 所以署名塞进两个视图共用的 .map-utility 栏里。
+ *
+ * 只在本区域确实用了真实底图时才显示：成都仍是模板插画底图，给它挂 OSM 署名是**假署名**。
+ * 判据取 projection.type（真实底图由 build-real-map.mjs 写成 web-mercator）。
+ */
+const OSM_LINK = '<a class="map-attribution" href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">© OpenStreetMap contributors</a>';
+const ROUTE_UI_ANCHOR = '<button type="button" data-expand-map="${id}">放大 ↗</button>';
+// \${ 转义成字面量 ${，让生成的代码在运行时做判断；${OSM_LINK} 这里就要替换进去
+const ROUTE_UI_PATCHED =
+  `\${source.projection&&source.projection.type==="web-mercator"?'${OSM_LINK}':''}${ROUTE_UI_ANCHOR}`;
+
+const ATTRIBUTION_CSS = `${ATTR_MARKER_START}
+.map-utility .map-attribution {
+  /* margin-left:auto 吃掉全部剩余空间，把署名+放大按钮一起顶到右边 */
+  margin-left: auto;
+  margin-right: 10px;
+  color: var(--muted, #5b6b62);
+  font-size: 11px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+.map-utility .map-attribution:hover { text-decoration: underline; }
+@media print { .map-utility .map-attribution { text-decoration: none; } }
+${ATTR_MARKER_END}
+`;
+
 const changes = [];
 
 function patchHtml(file) {
@@ -111,6 +146,19 @@ function patchHtml(file) {
   return true;
 }
 
+function patchRouteUi(file) {
+  const js = fs.readFileSync(file, "utf8");
+  if (js.includes(ROUTE_UI_PATCHED)) {
+    log.debug("route-ui.js 已含 OSM 署名，跳过");
+    return false;
+  }
+  if (!js.includes(ROUTE_UI_ANCHOR)) {
+    throw new Error(`route-ui.js 中找不到 OSM 署名插入锚点「${ROUTE_UI_ANCHOR}」，模板结构可能已变，请人工确认`);
+  }
+  fs.writeFileSync(file, js.replace(ROUTE_UI_ANCHOR, ROUTE_UI_PATCHED), "utf8");
+  return true;
+}
+
 function patchCss(file) {
   let css = fs.readFileSync(file, "utf8");
   let appended = "";
@@ -118,14 +166,16 @@ function patchCss(file) {
   else log.debug("styles.css 已含 home-link，跳过");
   if (!css.includes(TAP_MARKER_START)) appended += `\n${TAP_TARGET_CSS}`;
   else log.debug("styles.css 已含 tap-target，跳过");
+  if (!css.includes(ATTR_MARKER_START)) appended += `\n${ATTRIBUTION_CSS}`;
+  else log.debug("styles.css 已含 osm-attribution，跳过");
   if (!appended) return false;
   fs.writeFileSync(file, `${css.trimEnd()}${appended}`, "utf8");
   return true;
 }
 
-const done = log.phase("打 home-link 补丁");
+const done = log.phase("打模板补丁");
 
-for (const [rel, fn] of [["index.html", patchHtml], ["styles.css", patchCss]]) {
+for (const [rel, fn] of [["index.html", patchHtml], ["styles.css", patchCss], ["route-ui.js", patchRouteUi]]) {
   const file = path.join(TEMPLATE_DIR, rel);
   if (!fs.existsSync(file)) {
     log.error(`缺少 ${rel}，跳过`);

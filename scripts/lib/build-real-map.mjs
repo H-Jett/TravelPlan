@@ -27,6 +27,20 @@ import { fetchTiles, tilesForWindow } from "./tiles.mjs";
 import { buildMosaic } from "./mosaic.mjs";
 import { layoutLabels } from "./label-layout.mjs";
 
+/**
+ * 真实底图的免责声明，覆盖 trip-data.json 里手写的那条。
+ *
+ * 手写那条说的是「本图为模板化行程示意图……不代表真实比例或精确地理边界」——
+ * 在示意底图时代是实话，换成真实 OSM 底图后就成了**假话**（地理边界恰恰是准的）。
+ * 本模块正是把底图变真的人，所以由它来负责改口。
+ * 仍然要声明的两条：标注位置为避重叠做过微调、国际航段不画。
+ * 署名本身不写在这里 —— patch-template.mjs 会在两个视图都在的 .map-utility 栏里
+ * 挂一个可点的 OSM 署名链接，写两遍反而重复。
+ */
+const REAL_MAP_DISCLAIMER =
+  "本图底图为 OpenStreetMap 真实地图，地点按真实经纬度做墨卡托投影定位；" +
+  "标注位置为避免重叠做过微调，国际航段不在图内。";
+
 /** 与模板 GOLDEN 一致：路线配色按 (day-1) % 6 取。 */
 const ROUTE_COLORS = ["#397dc1", "#e77e22", "#618344", "#209aaa", "#8865a5", "#df6185"];
 
@@ -243,6 +257,8 @@ export async function rebuildRegion(region, { tripData, tripDir, tileCache, logg
     scope: "real-basemap",
     mapMode: "web-mercator-osm",
     mapModeReason: "real-basemap-osm-tiles",
+    // 覆盖继承来的手写免责声明：底图换成真实 OSM 后那句「不代表真实地理边界」已是假话
+    disclaimer: REAL_MAP_DISCLAIMER,
     ariaLabel: `${region.label}真实地图旅行路线图，共${region.days.length}天`,
     routes,
     places,

@@ -66,7 +66,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T11:56:39.840Z"
+        "generatedAt": "2026-09-20T12:01:55.127Z"
       },
       "busan": {
         "fingerprint": "8d69b92823219bde",
@@ -103,7 +103,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T11:56:39.852Z"
+        "generatedAt": "2026-09-20T12:01:55.139Z"
       },
       "seoul": {
         "fingerprint": "2c273a83409a3c92",
@@ -140,7 +140,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T11:56:39.867Z"
+        "generatedAt": "2026-09-20T12:01:55.154Z"
       }
     }
   },
@@ -2645,7 +2645,7 @@
         "title": "济州 · 釜山 · 首尔 行程示意图",
         "ariaLabel": "济州岛真实地图旅行路线图，共4天",
         "description": "济州岛 4 日行程示意图",
-        "disclaimer": "本图为模板化行程示意图，按真实经纬度投影到模板底图上，仅表达地点的相对方位与路线顺序，不代表精确地理边界；国际航段不在图内。",
+        "disclaimer": "本图底图为 OpenStreetMap 真实地图，地点按真实经纬度做墨卡托投影定位；标注位置为避免重叠做过微调，国际航段不在图内。",
         "heading": {
           "x": 33,
           "y": 105,
@@ -3081,7 +3081,7 @@
         "title": "济州 · 釜山 · 首尔 行程示意图",
         "ariaLabel": "釜山真实地图旅行路线图，共3天",
         "description": "釜山 3 日行程示意图",
-        "disclaimer": "本图为模板化行程示意图，按真实经纬度投影到模板底图上，仅表达地点的相对方位与路线顺序，不代表精确地理边界；国际航段不在图内。",
+        "disclaimer": "本图底图为 OpenStreetMap 真实地图，地点按真实经纬度做墨卡托投影定位；标注位置为避免重叠做过微调，国际航段不在图内。",
         "heading": {
           "x": 33,
           "y": 105,
@@ -3546,7 +3546,7 @@
         "title": "济州 · 釜山 · 首尔 行程示意图",
         "ariaLabel": "首尔真实地图旅行路线图，共4天",
         "description": "首尔 4 日行程示意图",
-        "disclaimer": "本图为模板化行程示意图，按真实经纬度投影到模板底图上，仅表达地点的相对方位与路线顺序，不代表精确地理边界；国际航段不在图内。",
+        "disclaimer": "本图底图为 OpenStreetMap 真实地图，地点按真实经纬度做墨卡托投影定位；标注位置为避免重叠做过微调，国际航段不在图内。",
         "heading": {
           "x": 33,
           "y": 105,
