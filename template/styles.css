@@ -467,3 +467,9 @@ button:focus-visible,a:focus-visible {outline:2px solid var(--lake);outline-offs
 .home-link:hover { color: var(--ink, #1c2b23); }
 @media print { .home-link { display: none; } }
 /* /build:home-link */
+/* build:tap-target */
+@media (max-width: 699px) {
+  .is-daily .map-place-dot::before { content: ""; position: absolute; inset: -8px; border-radius: 50%; }
+  .is-daily .transport-pin::before { inset: -5px; }
+}
+/* /build:tap-target */

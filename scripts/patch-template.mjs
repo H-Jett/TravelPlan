@@ -8,9 +8,11 @@
  *   - 本脚本幂等，靠 HTML 注释标记定位，重复跑不会重复插入；
  *   - 改的是 template/ 这一份源，build 时再拷贝到每个 trip，天然全站生效。
  *
- * 补丁清单（全部用 <!-- build:home-link --> ... 包裹，便于移除）：
- *   template/index.html   顶部加一个返回首页的链接
- *   template/styles.css   对应的样式
+ * 补丁清单（全部用 <!-- build:xxx --> / /* build:xxx *​/ 标记包裹，便于移除与幂等判定）：
+ *   template/index.html   顶部加一个返回首页的链接（build:home-link）
+ *   template/index.html   补 favicon（build:favicon）
+ *   template/styles.css   返回首页链接的样式（build:home-link）
+ *   template/styles.css   移动端每日地图点击热区（build:tap-target）
  *
  * 注意：链接是 ../../ —— 只对 home/site/trips/<slug>/ 这个层级成立。
  * 单独把 template/ 拿去当单站部署时，这个链接会 404（不影响页面其余功能）。
@@ -29,6 +31,8 @@ const FAVICON_START = "<!-- build:favicon -->";
 const FAVICON_END = "<!-- /build:favicon -->";
 const CSS_MARKER_START = "/* build:home-link */";
 const CSS_MARKER_END = "/* /build:home-link */";
+const TAP_MARKER_START = "/* build:tap-target */";
+const TAP_MARKER_END = "/* /build:tap-target */";
 
 const HOME_LINK_HTML = `${MARKER_START}
   <a class="home-link" href="../../" aria-label="返回全部攻略">← 全部攻略</a>
@@ -59,6 +63,22 @@ const HOME_LINK_CSS = `${CSS_MARKER_START}
 .home-link:hover { color: var(--ink, #1c2b23); }
 @media print { .home-link { display: none; } }
 ${CSS_MARKER_END}
+`;
+
+/*
+ * 上游在小屏（<=699px）把每日地图的地点圆点缩到 14px（视觉 8px），
+ * 手机上只有 ~2.5mm，远低于 WCAG 2.5.8 的 24px 与 Apple HIG 的 44px，实测很难点中。
+ *
+ * 这里**不动视觉**，只按上游对 .transport-pin 已有的同款做法（::before { inset:-Npx }）
+ * 给圆点补一层透明热区：14px + 2×8px = 30px 可点范围，外观与上游完全一致。
+ * 放在 patch 里而不是直接改 styles.css，是为了让 vendored 模板的偏离集中、可审查、可重复应用。
+ */
+const TAP_TARGET_CSS = `${TAP_MARKER_START}
+@media (max-width: 699px) {
+  .is-daily .map-place-dot::before { content: ""; position: absolute; inset: -8px; border-radius: 50%; }
+  .is-daily .transport-pin::before { inset: -5px; }
+}
+${TAP_MARKER_END}
 `;
 
 const changes = [];
@@ -93,11 +113,13 @@ function patchHtml(file) {
 
 function patchCss(file) {
   let css = fs.readFileSync(file, "utf8");
-  if (css.includes(CSS_MARKER_START)) {
-    log.debug("styles.css 已含 home-link，跳过");
-    return false;
-  }
-  fs.writeFileSync(file, `${css.trimEnd()}\n\n${HOME_LINK_CSS}`, "utf8");
+  let appended = "";
+  if (!css.includes(CSS_MARKER_START)) appended += `\n\n${HOME_LINK_CSS}`;
+  else log.debug("styles.css 已含 home-link，跳过");
+  if (!css.includes(TAP_MARKER_START)) appended += `\n${TAP_TARGET_CSS}`;
+  else log.debug("styles.css 已含 tap-target，跳过");
+  if (!appended) return false;
+  fs.writeFileSync(file, `${css.trimEnd()}${appended}`, "utf8");
   return true;
 }
 
