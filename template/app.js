@@ -403,7 +403,8 @@ function ticketRequirement(ticket) {
   return ({
     "advance-required": "需提前购票",
     "advance-recommended": "建议预约",
-    "needs-confirmation": "购票方式待确认"
+    "needs-confirmation": "购票方式待确认",
+    "onsite-purchase": "现场购票（无需预约）"
   })[ticket.requirement] || "门票信息";
 }
 

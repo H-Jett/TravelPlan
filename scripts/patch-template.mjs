@@ -116,6 +116,17 @@ const ATTRIBUTION_CSS = `${ATTR_MARKER_START}
 ${ATTR_MARKER_END}
 `;
 
+/*
+ * 门票「现场购买」这一档。
+ *
+ * 上游 ticketRequirement() 只认三种 requirement，其余一律回退成「门票信息」——
+ * 但济州牛岛渡轮、城山日出峰这类是**没有预约系统、只能到现场买**的，
+ * 标成「购票方式待确认」是错的，回退成「门票信息」又没说清楚要不要提前订。
+ * 补一个 onsite-purchase 档，让这类门票的标签如实。
+ */
+const TICKET_REQ_ANCHOR = '"needs-confirmation": "购票方式待确认"';
+const TICKET_REQ_PATCHED = `${TICKET_REQ_ANCHOR},\n    "onsite-purchase": "现场购票（无需预约）"`;
+
 const changes = [];
 
 function patchHtml(file) {
@@ -173,9 +184,22 @@ function patchCss(file) {
   return true;
 }
 
+function patchAppJs(file) {
+  const js = fs.readFileSync(file, "utf8");
+  if (js.includes(TICKET_REQ_PATCHED)) {
+    log.debug("app.js 已含 onsite-purchase 档，跳过");
+    return false;
+  }
+  if (!js.includes(TICKET_REQ_ANCHOR)) {
+    throw new Error(`app.js 中找不到门票档位插入锚点「${TICKET_REQ_ANCHOR}」，模板结构可能已变，请人工确认`);
+  }
+  fs.writeFileSync(file, js.replace(TICKET_REQ_ANCHOR, TICKET_REQ_PATCHED), "utf8");
+  return true;
+}
+
 const done = log.phase("打模板补丁");
 
-for (const [rel, fn] of [["index.html", patchHtml], ["styles.css", patchCss], ["route-ui.js", patchRouteUi]]) {
+for (const [rel, fn] of [["index.html", patchHtml], ["styles.css", patchCss], ["route-ui.js", patchRouteUi], ["app.js", patchAppJs]]) {
   const file = path.join(TEMPLATE_DIR, rel);
   if (!fs.existsSync(file)) {
     log.error(`缺少 ${rel}，跳过`);
