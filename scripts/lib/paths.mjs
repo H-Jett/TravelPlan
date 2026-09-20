@@ -28,7 +28,10 @@ export const RUNTIME_FILES = [
   "app.js",
   "ticket-pdf-preview.js",
   "ledger.js",
-  "site-navigation.js"
+  "site-navigation.js",
+  // 由 scripts/patch-template.mjs 写出（不是 vendored 文件），
+  // 不在这个白名单里 build 就不会拷进站点，页面静默没有滚动高亮。
+  "module-tabs.js"
 ];
 
 /** site 根要带的静态杂项（没有内容，但影响托管行为）。 */
