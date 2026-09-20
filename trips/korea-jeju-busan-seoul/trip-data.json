@@ -66,7 +66,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T14:14:42.459Z"
+        "generatedAt": "2026-09-20T14:42:45.584Z"
       },
       "busan": {
         "fingerprint": "8d69b92823219bde",
@@ -103,7 +103,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T14:14:42.465Z"
+        "generatedAt": "2026-09-20T14:42:45.590Z"
       },
       "seoul": {
         "fingerprint": "2c273a83409a3c92",
@@ -140,7 +140,7 @@
         "attribution": "© OpenStreetMap contributors",
         "sourceUrl": "https://tile.openstreetmap.org/{z}/{x}/{y}.png",
         "reused": true,
-        "generatedAt": "2026-09-20T14:14:42.479Z"
+        "generatedAt": "2026-09-20T14:42:45.604Z"
       }
     }
   },
@@ -315,7 +315,7 @@
           "id": "d1-03",
           "type": "transfer",
           "time": "22:30",
-          "text": "抵达济州国际机场，办理入境、提取行李。⚠️ 济州免签（제주 무사증）只允许在济州岛内活动、最长 30 天；要飞釜山或从仁川出境，须事先取得「체류지역 확대허가」——见出行前待办第 13 条。",
+          "text": "抵达济州国际机场，办理入境、提取行李。持韩国签证入境，在韩国全境移动无限制。（注：「체류지역 확대허가」只针对济州免签入境者——免签入济州仅能停留济州岛内，去本土或从仁川出境才需另行申请；本行程持签证入境，不适用该手续。）",
           "placeIds": []
         },
         {
@@ -2075,8 +2075,8 @@
       },
       {
         "id": "todo-13",
-        "text": "⚠️ 确认韩国签证：济州免签只允许在济州岛内活动，去釜山/首尔或从仁川出境需要「체류지역 확대허가」，中国普通护照在需要该许可的名单内",
-        "completed": false
+        "text": "韩国签证已确认（持签证入境）：可在韩国全境移动，无需「체류지역 확대허가」",
+        "completed": true
       },
       {
         "id": "todo-14",
